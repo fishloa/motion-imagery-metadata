@@ -1,0 +1,31 @@
+[package]
+name    = "motion-imagery-metadata"
+version = "0.1.0"
+edition = "2024"
+description = "Typed MISB ST 0601 UAS Datalink Local Set item values, decoded by the `misb` crate: typed ST 0102 Security and ST 0903 VMTI nested sets, raw packs and lists."
+license      = "MIT OR Apache-2.0"
+authors      = ["Alex Fishlock <alex.fishlock@racingjag.com>"]
+keywords = ["misb", "klv", "uas", "metadata", "st0601"]
+categories = ["parser-implementations", "multimedia", "no-std"]
+repository   = "https://github.com/fishloa/rust-broadcast"
+readme       = "README.md"
+rust-version.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[dependencies]
+broadcast-common = { path = "../broadcast-common", version = "13.1.0", default-features = false }
+# ST 0601 / ST 0102 / ST 0903 / ST 1201 decoding. no_std, no dependencies. Its
+# types never appear in this crate's public API.
+misb = { version = "0.2.0", default-features = false }
+
+[dev-dependencies]
+test-fixtures = { path = "../test-fixtures" }
+
+[features]
+default = []
+
+[lints]
+workspace = true
