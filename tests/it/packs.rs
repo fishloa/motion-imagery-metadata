@@ -1,4 +1,4 @@
-use motion_imagery_metadata::{Pack, St0601Value, decode};
+use motion_imagery_metadata::{Pack, St0102ObjectCountryCodingMethod, St0601Value, decode};
 
 // KWIVER h264_klv.ts packet values, as cross-checked by misb's own tests.
 const KW_FRAME_RATE: &[u8] = &[131, 212, 96, 135, 105];
@@ -197,7 +197,10 @@ fn oid_lists_yield_each_id() {
 fn country_codes_by_position() {
     // ST 0601.19 §8.122 example: Canada, (unknown country), France.
     let c = pack(122, KW_COUNTRY).country_codes().unwrap();
-    assert_eq!(c.coding_method(), 14);
+    assert_eq!(
+        c.coding_method(),
+        Some(St0102ObjectCountryCodingMethod::GencThreeLetter)
+    );
     assert_eq!(c.overflight(), Some("CAN"));
     assert_eq!(c.operator(), None);
     assert_eq!(c.manufacture(), Some("FRA"));

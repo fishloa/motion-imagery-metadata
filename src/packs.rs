@@ -9,6 +9,7 @@
 
 use misb::st0601::packs as decoder;
 
+use crate::St0102ObjectCountryCodingMethod;
 use crate::geo::{self, GeoPoint};
 use crate::{
     Pack, TAG_ACTIVE_PAYLOADS, TAG_ACTIVE_WAVELENGTH_LIST, TAG_AIRBASE_LOCATIONS,
@@ -129,10 +130,12 @@ pub struct St0601CountryCodes<'a> {
 }
 
 impl<'a> St0601CountryCodes<'a> {
-    /// How the codes are written: the ST 0102 country coding method value,
-    /// for example 14 for GENC three-letter codes.
-    pub fn coding_method(&self) -> u64 {
-        self.coding_method
+    /// How the codes are written, from the ST 0102 Item 12 enumeration
+    /// (ST 0601.19 §8.122). A value above 255 is `None`.
+    pub fn coding_method(&self) -> Option<St0102ObjectCountryCodingMethod> {
+        u8::try_from(self.coding_method)
+            .ok()
+            .map(St0102ObjectCountryCodingMethod::from_u8)
     }
 
     /// Country being flown over.
