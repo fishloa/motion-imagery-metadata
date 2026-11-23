@@ -55,7 +55,7 @@ transmux = { version = "0.33", features = ["motion-imagery-metadata"] }
 ## Dependencies
 
 ```toml
-motion-imagery-metadata = "0.1"
+motion-imagery-metadata = "0.2"
 ```
 
 Depends on `broadcast-common`, `misb` and `jiff`. No `misb` type appears in the

@@ -65,7 +65,7 @@ checksum = "d696c0de8f9fcdaa3545b02749fa617c2e756e8e812e2d57c0b68d334aaf6367"
 
 [[package]]
 name = "motion-imagery-metadata"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "broadcast-common",
  "jiff",
