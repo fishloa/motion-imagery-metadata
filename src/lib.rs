@@ -66,6 +66,10 @@ pub use st0903::{
 
 use broadcast_common::impl_spec_display;
 
+#[cfg(doctest)]
+#[doc = include_str!("../README.md")]
+struct ReadmeDoctests;
+
 /// Which standard a nested ST 0601 Local Set item carries.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[non_exhaustive]
