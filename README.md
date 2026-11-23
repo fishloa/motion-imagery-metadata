@@ -60,7 +60,7 @@ public API or in any trait impl.
 ## Credits
 
 The ST 0601 tag table and the ST 0102 / ST 0903 / ST 1201 decoders come from
-the [`misb`](https://crates.io/crates/misb) crate by Matthew Busel.
+the [`misb`](https://crates.io/crates/misb) crate by Matt Busel.
 
 MISB standards are published by the NSG MISB. This repository contains no spec
 text; the test suite reads optional spec transcriptions from a directory named
