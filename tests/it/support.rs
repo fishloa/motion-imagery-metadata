@@ -50,9 +50,7 @@ pub fn fixture(rel: &str) -> Vec<u8> {
 
 fn private_dir(test: &str) -> Option<std::path::PathBuf> {
     let Some(dir) = std::env::var_os("MIM_PRIVATE_DIR") else {
-        if std::env::var_os("MIM_REQUIRE_PRIVATE").as_deref()
-            == Some(std::ffi::OsStr::new("1"))
-        {
+        if std::env::var_os("MIM_REQUIRE_PRIVATE").as_deref() == Some(std::ffi::OsStr::new("1")) {
             panic!("{test}: MIM_PRIVATE_DIR is required when MIM_REQUIRE_PRIVATE=1");
         }
         use std::io::Write as _;
