@@ -68,8 +68,9 @@ pub use st0102::{
     St0102ObjectCountryCodingMethod, St0102Security,
 };
 pub use st0903::{
-    St0903GeoPoint, St0903Target, St0903TargetError, St0903TargetItem, St0903Targets, St0903Vmti,
-    St0903VmtiItem,
+    St0903Algorithm, St0903Algorithms, St0903GeoPoint, St0903Ontologies, St0903Ontology,
+    St0903SeriesError, St0903Target, St0903TargetError, St0903TargetItem, St0903Targets,
+    St0903Vmti, St0903VmtiItem,
 };
 
 use broadcast_common::impl_spec_display;

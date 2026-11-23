@@ -272,11 +272,11 @@ fn st0903_vmti_set_decodes_every_typed_item() {
             assert!((vmti.horizontal_fov().expect("hfov") - 12.5).abs() < 1e-6);
             assert!((vmti.vertical_fov().expect("vfov") - 10.0).abs() < 1e-6);
             assert_eq!(vmti.raw(St0903VmtiItem::MiisId), None);
-            assert_eq!(vmti.raw(St0903VmtiItem::OntologySeries), None);
-            assert_eq!(
-                vmti.raw(St0903VmtiItem::AlgorithmSeries),
-                Some(algorithm_series.as_slice())
-            );
+            assert_eq!(vmti.algorithms().count(), 1);
+            let algorithm_9 = vmti.algorithm(9).expect("algorithm 9");
+            assert_eq!(algorithm_9.name(), Some("k6_yolo_9000_tracker"));
+            assert_eq!(algorithm_9.frames(), Some(10));
+            assert_eq!(vmti.ontologies().count(), 0);
 
             let mut targets = vmti.targets();
             let target = targets.next().expect("one target").expect("valid target");

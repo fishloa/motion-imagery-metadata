@@ -20,17 +20,12 @@ use broadcast_common::impl_spec_display;
 
 use crate::geo::{self, GeoPoint};
 
-/// A VMTI LS item that `misb` leaves as raw bytes (ST 0903.6 items 13, 102
-/// and 103).
+/// A VMTI LS item that `misb` leaves as raw bytes (ST 0903.6 item 13).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[non_exhaustive]
 pub enum St0903VmtiItem {
     /// MIIS Core Identifier (MISB ST 1204 binary identifier).
     MiisId,
-    /// Series of Algorithm Local Sets.
-    AlgorithmSeries,
-    /// Series of Ontology Local Sets.
-    OntologySeries,
 }
 
 impl St0903VmtiItem {
@@ -38,8 +33,6 @@ impl St0903VmtiItem {
     pub fn name(&self) -> &'static str {
         match self {
             Self::MiisId => "miisId",
-            Self::AlgorithmSeries => "algorithmSeries",
-            Self::OntologySeries => "ontologySeries",
         }
     }
 }
@@ -263,6 +256,154 @@ impl fmt::Display for St0903TargetError {
 
 impl core::error::Error for St0903TargetError {}
 
+/// An Algorithm or Ontology LS in a series did not parse (malformed length).
+/// The underlying framing error's detail is not exposed.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct St0903SeriesError;
+
+impl fmt::Display for St0903SeriesError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("malformed ST 0903 series element")
+    }
+}
+
+impl core::error::Error for St0903SeriesError {}
+
+/// One Algorithm LS (ST 0903.6 Table 16): the detector or tracker that
+/// produced targets.
+#[derive(Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct St0903Algorithm<'a> {
+    algorithm: misb::st0903::Algorithm<'a>,
+}
+
+impl<'a> St0903Algorithm<'a> {
+    fn from_misb(algorithm: misb::st0903::Algorithm<'a>) -> Self {
+        Self { algorithm }
+    }
+
+    /// Algorithm ID (item 1), the value targets refer to.
+    pub fn id(&self) -> Option<u64> {
+        self.algorithm.id()
+    }
+
+    /// Algorithm name (item 2).
+    pub fn name(&self) -> Option<&'a str> {
+        self.algorithm.name()
+    }
+
+    /// Algorithm version (item 3).
+    pub fn version(&self) -> Option<&'a str> {
+        self.algorithm.version()
+    }
+
+    /// Algorithm type, such as detector or classifier (item 4).
+    pub fn class(&self) -> Option<&'a str> {
+        self.algorithm.class()
+    }
+
+    /// Number of frames the algorithm operates over (item 5).
+    pub fn frames(&self) -> Option<u64> {
+        self.algorithm.frames()
+    }
+}
+
+impl fmt::Debug for St0903Algorithm<'_> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("St0903Algorithm")
+            .field("id", &self.id())
+            .field("name", &self.name())
+            .field("version", &self.version())
+            .field("class", &self.class())
+            .field("frames", &self.frames())
+            .finish()
+    }
+}
+
+/// Iterator over the Algorithm LSs of a [`St0903Vmti`].
+#[derive(Clone)]
+#[non_exhaustive]
+pub struct St0903Algorithms<'a> {
+    algorithms: misb::st0903::SetSeries<'a, misb::st0903::Algorithm<'a>>,
+}
+
+impl<'a> Iterator for St0903Algorithms<'a> {
+    type Item = Result<St0903Algorithm<'a>, St0903SeriesError>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.algorithms.next().map(|result| {
+            result
+                .map(St0903Algorithm::from_misb)
+                .map_err(|_| St0903SeriesError)
+        })
+    }
+}
+
+/// One Ontology LS (ST 0903.6 Table 17): the class of a target as an entry in
+/// an OWL ontology.
+#[derive(Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct St0903Ontology<'a> {
+    ontology: misb::st0903::Ontology<'a>,
+}
+
+impl<'a> St0903Ontology<'a> {
+    fn from_misb(ontology: misb::st0903::Ontology<'a>) -> Self {
+        Self { ontology }
+    }
+
+    /// Ontology ID (item 1).
+    pub fn id(&self) -> Option<u64> {
+        self.ontology.id()
+    }
+
+    /// Parent ID (item 2): the ontology entry this one refines.
+    pub fn parent_id(&self) -> Option<u64> {
+        self.ontology.parent_id()
+    }
+
+    /// IRI of the OWL ontology (item 3).
+    pub fn ontology_iri(&self) -> Option<&'a str> {
+        self.ontology.iri()
+    }
+
+    /// IRI of the entity within the ontology (item 4).
+    pub fn entity_iri(&self) -> Option<&'a str> {
+        self.ontology.class()
+    }
+}
+
+impl fmt::Debug for St0903Ontology<'_> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("St0903Ontology")
+            .field("id", &self.id())
+            .field("parent_id", &self.parent_id())
+            .field("ontology_iri", &self.ontology_iri())
+            .field("entity_iri", &self.entity_iri())
+            .finish()
+    }
+}
+
+/// Iterator over the Ontology LSs of a [`St0903Vmti`].
+#[derive(Clone)]
+#[non_exhaustive]
+pub struct St0903Ontologies<'a> {
+    ontologies: misb::st0903::SetSeries<'a, misb::st0903::Ontology<'a>>,
+}
+
+impl<'a> Iterator for St0903Ontologies<'a> {
+    type Item = Result<St0903Ontology<'a>, St0903SeriesError>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.ontologies.next().map(|result| {
+            result
+                .map(St0903Ontology::from_misb)
+                .map_err(|_| St0903SeriesError)
+        })
+    }
+}
+
 /// A decoded MISB ST 0903.6 VMTI Local Set (ST 0601 tag 74).
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
@@ -339,13 +480,32 @@ impl<'a> St0903Vmti<'a> {
         }
     }
 
+    /// The Algorithm Series (item 102): the detectors and trackers that
+    /// produced the targets. A target names its algorithm with
+    /// [`St0903Target::algorithm_id`].
+    pub fn algorithms(&self) -> St0903Algorithms<'a> {
+        St0903Algorithms {
+            algorithms: self.set.algorithms(),
+        }
+    }
+
+    /// The algorithm with Algorithm ID `id`, if the Algorithm Series has it.
+    pub fn algorithm(&self, id: u64) -> Option<St0903Algorithm<'a>> {
+        self.set.algorithm(id).map(St0903Algorithm::from_misb)
+    }
+
+    /// The Ontology Series (item 103): the classes a target may belong to.
+    pub fn ontologies(&self) -> St0903Ontologies<'a> {
+        St0903Ontologies {
+            ontologies: self.set.ontologies(),
+        }
+    }
+
     /// The raw value of an item `misb` leaves undecoded; `None` when absent.
     /// The bytes are not interpreted here.
     pub fn raw(&self, item: St0903VmtiItem) -> Option<&'a [u8]> {
         self.set.raw(match item {
             St0903VmtiItem::MiisId => misb::st0903::Tag::MiisId,
-            St0903VmtiItem::AlgorithmSeries => misb::st0903::Tag::AlgorithmSeries,
-            St0903VmtiItem::OntologySeries => misb::st0903::Tag::OntologySeries,
         })
     }
 }

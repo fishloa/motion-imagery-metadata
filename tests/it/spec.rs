@@ -68,12 +68,10 @@ fn st0903_tables_cover_every_decoded_and_raw_item() {
         (11, "vmtiHorizontalFov"),
         (12, "vmtiVerticalFov"),
         (101, "vTargetSeries"),
-    ];
-    const VMTI_RAW: &[(u32, &str)] = &[
-        (13, "miisId"),
         (102, "algorithmSeries"),
         (103, "ontologySeries"),
     ];
+    const VMTI_RAW: &[(u32, &str)] = &[(13, "miisId")];
     const VMTI_STANDALONE_ONLY: &[(u32, &str)] = &[(1, "checkSum")];
 
     for (tag, name) in VMTI_DECODED

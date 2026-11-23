@@ -19,11 +19,7 @@ const TARGET_ITEMS: [St0903TargetItem; 13] = [
     St0903TargetItem::VObjectSeries,
 ];
 
-const VMTI_ITEMS: [St0903VmtiItem; 3] = [
-    St0903VmtiItem::MiisId,
-    St0903VmtiItem::AlgorithmSeries,
-    St0903VmtiItem::OntologySeries,
-];
+const VMTI_ITEMS: [St0903VmtiItem; 1] = [St0903VmtiItem::MiisId];
 
 fn exercise_pack(pack: Pack<'_>) {
     let _ = format!("{:?}", pack.image_horizon());
@@ -63,6 +59,13 @@ fuzz_target!(|input: (u32, &[u8])| {
         if let Some(vmti) = set.vmti() {
             for item in VMTI_ITEMS {
                 let _ = vmti.raw(item);
+            }
+            for algorithm in vmti.algorithms().flatten() {
+                let _ = format!("{algorithm:?}");
+                let _ = algorithm.id().map(|id| vmti.algorithm(id));
+            }
+            for ontology in vmti.ontologies().flatten() {
+                let _ = format!("{ontology:?}");
             }
             let width = vmti.frame_width().unwrap_or(0);
             for target in vmti.targets().flatten() {

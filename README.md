@@ -39,8 +39,9 @@ transmux = { version = "0.33", features = ["motion-imagery-metadata"] }
 - **MISB ST 0102.12** Security Metadata Local Set: `NestedSet::security()`
   returns the typed `St0102Security` view.
 - **MISB ST 0903.6** Video Moving Target Indicator Local Set:
-  `NestedSet::vmti()` returns `St0903Vmti`, with typed VMTI items, targets and
-  raw views for items the decoder does not interpret.
+  `NestedSet::vmti()` returns `St0903Vmti`, with typed VMTI items, the
+  algorithm and ontology series, targets, and a raw view for the MIIS ID item
+  the decoder does not interpret.
 - **Other nested Local Sets** (ST 0806, ST 1206, ST 1002, ST 1601, ST 1602,
   ST 1607): named by `NestedSet::standard()` and available uninterpreted
   through `NestedSet::raw()`.
