@@ -15,3 +15,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   48 and 74), and packs/lists with their tag and raw value. Decoding is
   delegated to the `misb` crate; no `misb` type is public. Items that decoder
   leaves raw stay raw and are documented.
+- `St0903Vmti::timestamp()` returns a `jiff::Timestamp`, matching
+  `St0601Value::Time`; a value outside its range is `None`.

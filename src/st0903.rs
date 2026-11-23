@@ -313,9 +313,11 @@ impl<'a> St0903Vmti<'a> {
         Self { set }
     }
 
-    /// Precision Time Stamp (item 2), microseconds since 1970 UTC.
-    pub fn timestamp(&self) -> Option<u64> {
-        self.set.timestamp()
+    /// Precision Time Stamp (item 2); `None` when absent or outside the
+    /// range a `jiff::Timestamp` represents.
+    pub fn timestamp(&self) -> Option<jiff::Timestamp> {
+        let micros = i64::try_from(self.set.timestamp()?).ok()?;
+        jiff::Timestamp::from_microsecond(micros).ok()
     }
 
     /// VMTI System Name (item 3).

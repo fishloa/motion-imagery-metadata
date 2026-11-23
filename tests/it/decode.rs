@@ -257,7 +257,10 @@ fn st0903_vmti_set_decodes_every_typed_item() {
     match motion_imagery_metadata::decode(74, &body) {
         St0601Value::Nested(set) => {
             let vmti = set.vmti().expect("ST 0903 view");
-            assert_eq!(vmti.timestamp(), Some(987_654_321_000_000));
+            assert_eq!(
+                vmti.timestamp().map(|ts| ts.as_microsecond()),
+                Some(987_654_321_000_000)
+            );
             assert_eq!(vmti.system_name(), Some("DSTO_ADSS_VMTI"));
             assert_eq!(vmti.version(), Some(6));
             assert_eq!(vmti.total_targets_detected(), Some(28));
@@ -367,5 +370,22 @@ fn display_matches_name() {
     match motion_imagery_metadata::decode(73, &[]) {
         St0601Value::Nested(set) => assert_eq!(set.standard().to_string(), "ST 0806"),
         other => panic!("{other:?}"),
+    }
+}
+
+#[test]
+fn vmti_timestamp_outside_the_jiff_range_is_none() {
+    for micros in [u64::MAX, 253_402_300_800_000_000] {
+        let body = ber_item(2, &micros.to_be_bytes());
+        match motion_imagery_metadata::decode(74, &body) {
+            St0601Value::Nested(set) => {
+                assert_eq!(
+                    set.vmti().expect("ST 0903 view").timestamp(),
+                    None,
+                    "{micros}"
+                );
+            }
+            other => panic!("{other:?}"),
+        }
     }
 }
