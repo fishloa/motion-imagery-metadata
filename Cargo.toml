@@ -21,7 +21,7 @@ rustdoc-args = ["--cfg", "docsrs"]
 broadcast-common = { version = "14", default-features = false }
 # ST 0601 / ST 0102 / ST 0903 / ST 1201 decoding. no_std, no dependencies. Its
 # types never appear in this crate's public API.
-misb = { version = "0.2", default-features = false }
+misb = { version = "0.5", default-features = false }
 # UTC instants, no_std by default.
 jiff = { version = "1", default-features = false }
 
