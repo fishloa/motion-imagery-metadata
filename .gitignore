@@ -1,7 +1,6 @@
 /target
 /.delegate/
 /.cargo/
-/Cargo.lock
 /fuzz/target
 /fuzz/corpus
 /fuzz/artifacts
