@@ -15,28 +15,40 @@ fn scaled_number() {
 }
 
 #[test]
-fn precision_time_is_microseconds_since_the_epoch() {
-    let micros = 1_700_000_000_123_456u64;
+fn precision_time_round_trips_exact_microseconds() {
+    for micros in [0u64, 42, 1_245_257_585_099_653] {
+        match motion_imagery_metadata::decode(2, &micros.to_be_bytes()) {
+            St0601Value::Time(ts) => assert_eq!(
+                ts.as_microsecond(),
+                i64::try_from(micros).expect("test instant fits i64")
+            ),
+            other => panic!("{micros}: {other:?}"),
+        }
+    }
+}
+
+#[test]
+fn time_above_the_signed_range_is_invalid() {
     assert_eq!(
-        motion_imagery_metadata::decode(2, &micros.to_be_bytes()),
-        St0601Value::Time(micros)
+        motion_imagery_metadata::decode(2, &u64::MAX.to_be_bytes()),
+        St0601Value::Invalid
     );
 }
 
 #[test]
-fn time_keeps_the_full_u64_microsecond_range() {
+fn time_outside_the_jiff_range_is_invalid() {
     assert_eq!(
-        motion_imagery_metadata::decode(2, &u64::MAX.to_be_bytes()),
-        St0601Value::Time(u64::MAX)
+        motion_imagery_metadata::decode(2, &253_402_300_800_000_000u64.to_be_bytes()),
+        St0601Value::Invalid
     );
 }
 
 #[test]
 fn two_byte_tag_decodes_as_time() {
-    assert_eq!(
-        motion_imagery_metadata::decode(131, &42u64.to_be_bytes()),
-        St0601Value::Time(42)
-    );
+    match motion_imagery_metadata::decode(131, &42u64.to_be_bytes()) {
+        St0601Value::Time(ts) => assert_eq!(ts.as_microsecond(), 42),
+        other => panic!("{other:?}"),
+    }
 }
 
 #[test]

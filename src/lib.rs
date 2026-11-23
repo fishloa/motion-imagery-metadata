@@ -174,8 +174,8 @@ pub enum St0601Value<'a> {
     Signed(i64),
     /// UTF-8 text.
     Text(&'a str),
-    /// A UTC instant: microseconds since the POSIX epoch.
-    Time(u64),
+    /// A UTC instant.
+    Time(jiff::Timestamp),
     /// A nested Local Set, with its standard named.
     Nested(NestedSet<'a>),
     /// A pack or list whose typed accessors do not exist yet.
@@ -278,7 +278,15 @@ pub fn decode(tag: u32, value: &[u8]) -> St0601Value<'_> {
         Value::Text(_) => core::str::from_utf8(value)
             .map(St0601Value::Text)
             .unwrap_or(St0601Value::Invalid),
-        Value::Time(micros) => St0601Value::Time(micros),
+        Value::Time(micros) => {
+            let instant = i64::try_from(micros)
+                .ok()
+                .and_then(|micros| jiff::Timestamp::from_microsecond(micros).ok());
+            match instant {
+                Some(ts) => St0601Value::Time(ts),
+                None => St0601Value::Invalid,
+            }
+        }
         Value::Security(set) => St0601Value::Nested(NestedSet {
             standard: NestedStandard::Security,
             raw: value,
