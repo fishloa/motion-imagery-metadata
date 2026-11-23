@@ -7,25 +7,25 @@ license      = "MIT OR Apache-2.0"
 authors      = ["Alex Fishlock <alex.fishlock@racingjag.com>"]
 keywords = ["misb", "klv", "uas", "metadata", "st0601"]
 categories = ["parser-implementations", "multimedia", "no-std"]
-repository   = "https://github.com/fishloa/rust-broadcast"
+repository   = "https://github.com/fishloa/motion-imagery-metadata"
+homepage     = "https://github.com/fishloa/motion-imagery-metadata"
 readme       = "README.md"
-rust-version.workspace = true
+rust-version = "1.95.0"
 
 [package.metadata.docs.rs]
 all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
-broadcast-common = { path = "../broadcast-common", version = "13.1.0", default-features = false }
+broadcast-common = { version = "14", default-features = false }
 # ST 0601 / ST 0102 / ST 0903 / ST 1201 decoding. no_std, no dependencies. Its
 # types never appear in this crate's public API.
-misb = { version = "0.2.0", default-features = false }
-
-[dev-dependencies]
-test-fixtures = { path = "../test-fixtures" }
+misb = { version = "0.2", default-features = false }
+# UTC instants, no_std by default.
+jiff = { version = "1", default-features = false }
 
 [features]
 default = []
 
-[lints]
-workspace = true
+[lints.rust]
+unsafe_code = "deny"
