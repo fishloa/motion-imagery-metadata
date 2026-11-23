@@ -4,9 +4,14 @@ use broadcast_common::klv::{KlvItem, decode_ber_length};
 const BER_OID_CONTINUATION: u8 = 0x80;
 const BER_LOW7_MASK: u8 = 0x7F;
 
-pub fn packet(name: &str) -> Option<Vec<u8>> {
-    let path = test_fixtures::private(name)?;
-    Some(std::fs::read(path).expect("read the MISB fixture"))
+pub fn packet(name: &str) -> Vec<u8> {
+    let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("fixtures")
+        .join(name);
+    match std::fs::read(&path) {
+        Ok(bytes) => bytes,
+        Err(error) => panic!("read {}: {error}", path.display()),
+    }
 }
 
 pub fn items(packet: &[u8]) -> Vec<(u32, &[u8])> {

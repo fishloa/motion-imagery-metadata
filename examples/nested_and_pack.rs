@@ -2,8 +2,6 @@
 //! UAS Datalink packet.
 //!
 //! Run with `cargo run -p motion-imagery-metadata --example nested_and_pack`.
-//! The fixture lives in the private submodule; without a checkout the example
-//! reports that and exits 0.
 
 mod common;
 
@@ -12,10 +10,7 @@ use motion_imagery_metadata::St0601Value;
 const PACKET: &str = "misb/DynamicConstantMISMMSPacketData.bin";
 
 fn main() {
-    let Some(packet) = common::packet(PACKET) else {
-        println!("{PACKET}: private fixtures are not checked out; skipping");
-        return;
-    };
+    let packet = common::packet(PACKET);
     for (tag, value) in common::items(&packet) {
         match motion_imagery_metadata::decode(tag, value) {
             St0601Value::Number(degrees) if tag == 5 => {

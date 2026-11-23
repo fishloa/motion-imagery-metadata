@@ -1,4 +1,4 @@
-use crate::support::uas_items;
+use crate::support::{fixture, uas_items};
 use motion_imagery_metadata::{
     St0102Classification, St0102CountryCodingMethod, St0102ObjectCountryCodingMethod, St0601Value,
 };
@@ -6,19 +6,13 @@ use motion_imagery_metadata::{
 const DYNAMIC_ONLY: &str = "misb/DynamicOnlyMISMMSPacketData.bin";
 const DYNAMIC_CONSTANT: &str = "misb/DynamicConstantMISMMSPacketData.bin";
 
-fn packet(name: &str) -> Option<Vec<u8>> {
-    let path = test_fixtures::private(name)?;
-    Some(std::fs::read(&path).expect("read the MISB fixture"))
+fn packet(name: &str) -> Vec<u8> {
+    fixture(name)
 }
 
 #[test]
 fn committed_uas_packet_decodes_its_security_set() {
-    let Some(bytes) = packet(DYNAMIC_CONSTANT) else {
-        eprintln!(
-            "SKIPPED committed_uas_packet_decodes_its_security_set: private fixtures not checked out"
-        );
-        return;
-    };
+    let bytes = packet(DYNAMIC_CONSTANT);
     let items = uas_items(&bytes);
     assert!(
         !items.iter().any(|(tag, _)| *tag == 74),
@@ -61,12 +55,7 @@ fn committed_uas_packet_decodes_its_security_set() {
 #[test]
 fn committed_uas_packets_decode_their_heading_and_a_binary_identifier() {
     for name in [DYNAMIC_ONLY, DYNAMIC_CONSTANT] {
-        let Some(bytes) = packet(name) else {
-            eprintln!(
-                "SKIPPED committed_uas_packets_decode_their_heading_and_a_binary_identifier: private fixtures not checked out"
-            );
-            return;
-        };
+        let bytes = packet(name);
         let items = uas_items(&bytes);
         let (_, heading) = items
             .iter()

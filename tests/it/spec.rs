@@ -7,7 +7,7 @@ use motion_imagery_metadata::{
 fn st0102_enumerations_match_the_transcription() {
     let Some(text) = spec(
         "misc/misb/st0102-security-ls.md",
-        "motion-imagery-metadata ST 0102 enumerations",
+        "st0102_enumerations_match_the_transcription",
     ) else {
         return;
     };
@@ -59,7 +59,7 @@ fn st0102_enumerations_match_the_transcription() {
 fn st0903_tables_cover_every_decoded_and_raw_item() {
     let Some(text) = spec(
         "misc/misb/st0903-vmti-ls.md",
-        "motion-imagery-metadata ST 0903 tables",
+        "st0903_tables_cover_every_decoded_and_raw_item",
     ) else {
         return;
     };
@@ -189,7 +189,7 @@ fn item_value(encoding: &str, bytes: &str) -> Vec<u8> {
 fn st0601_tag_table_kinds_match_the_decoder() {
     let Some(text) = spec(
         "misc/misb/st0601-tag-table.md",
-        "motion-imagery-metadata ST 0601 tag table",
+        "st0601_tag_table_kinds_match_the_decoder",
     ) else {
         return;
     };

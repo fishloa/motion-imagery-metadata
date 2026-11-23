@@ -30,8 +30,36 @@ pub fn series(entries: &[Vec<u8>]) -> Vec<u8> {
     out
 }
 
-pub fn spec(rel: &str, who: &str) -> Option<String> {
-    test_fixtures::spec_string(rel, who)
+pub fn spec(rel: &str, test: &str) -> Option<String> {
+    let path = private_dir(test)?.join("specs-verified").join(rel);
+    match std::fs::read_to_string(&path) {
+        Ok(text) => Some(text),
+        Err(error) => panic!("{test}: cannot read {}: {error}", path.display()),
+    }
+}
+
+pub fn fixture(rel: &str) -> Vec<u8> {
+    let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("fixtures")
+        .join(rel);
+    match std::fs::read(&path) {
+        Ok(bytes) => bytes,
+        Err(error) => panic!("cannot read {}: {error}", path.display()),
+    }
+}
+
+fn private_dir(test: &str) -> Option<std::path::PathBuf> {
+    let Some(dir) = std::env::var_os("MIM_PRIVATE_DIR") else {
+        if std::env::var_os("MIM_REQUIRE_PRIVATE").as_deref()
+            == Some(std::ffi::OsStr::new("1"))
+        {
+            panic!("{test}: MIM_PRIVATE_DIR is required when MIM_REQUIRE_PRIVATE=1");
+        }
+        use std::io::Write as _;
+        let _ = writeln!(std::io::stderr(), "SKIP {test}: MIM_PRIVATE_DIR not set");
+        return None;
+    };
+    Some(std::path::PathBuf::from(dir))
 }
 
 pub fn section<'a>(text: &'a str, start: &str, end: &str) -> &'a str {
