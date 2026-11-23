@@ -83,3 +83,38 @@ fn committed_uas_packets_decode_their_heading_and_a_binary_identifier() {
         }
     }
 }
+
+fn stored_and_computed_checksum(packet: &[u8]) -> (u16, u16) {
+    let (body, stored) = packet.split_at(packet.len() - 2);
+    (
+        u16::from_be_bytes([stored[0], stored[1]]),
+        misb::klv::checksum(body),
+    )
+}
+
+#[test]
+fn dynamic_only_packet_verifies_its_checksum() {
+    let (stored, computed) = stored_and_computed_checksum(&packet(DYNAMIC_ONLY));
+    assert_eq!(computed, stored);
+}
+
+#[test]
+fn dynamic_constant_packet_carries_a_bad_checksum() {
+    let (stored, computed) = stored_and_computed_checksum(&packet(DYNAMIC_CONSTANT));
+    assert_eq!(stored, 0xAA43);
+    assert_eq!(computed, 0x3E1E);
+}
+
+#[test]
+fn dynamic_constant_packet_differs_from_st0902_annex_c_only_in_tag_20() {
+    const TAG_20_VALUE: core::ops::Range<usize> = 125..129;
+    let mut bytes = packet(DYNAMIC_CONSTANT);
+    assert_eq!(
+        bytes[TAG_20_VALUE.start - 2..TAG_20_VALUE.start],
+        [0x14, 0x04]
+    );
+    assert_eq!(bytes[TAG_20_VALUE], [0x7D, 0xC5, 0x5E, 0xCE]);
+    bytes[TAG_20_VALUE].fill(0);
+    let (stored, computed) = stored_and_computed_checksum(&bytes);
+    assert_eq!(computed, stored);
+}
