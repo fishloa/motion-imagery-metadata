@@ -8,13 +8,9 @@ Video Moving Target Indicator Metadata
 
 # 1 Scope
 
-This standard defines Video Moving Target1 Indicator (VMTI) metadata for describing both
+This standard defines Video Moving Target1 Indicator (VMTI) metadata for describing both moving and static objects such as a vehicle in motion or labeling buildings within the scene.
 
-moving and static objects such as a vehicle in motion or labeling buildings within the scene.
-
-Systems may use VMTI metadata to support populating situational awareness products, Common Operating Pictures with VMTI and track overlays on Motion Imagery, input to tracking
-
-and data fusion systems (e.g., NATO STANAG 4676 [1] ISR tracking systems), storing the results of Artificial Intelligence/Machine Learning (AI/ML) processing, or for other purposes consistent with the VMTI Processing Model.
+Systems may use VMTI metadata to support populating situational awareness products, Common Operating Pictures with VMTI and track overlays on Motion Imagery, input to tracking and data fusion systems (e.g., NATO STANAG 4676 [1] ISR tracking systems), storing the results of Artificial Intelligence/Machine Learning (AI/ML) processing, or for other purposes consistent with the VMTI Processing Model.
 
 The VMTI metadata extends and applies MISB Key-Length-Value (KLV) encoding, which is a derivation of SMPTE KLV. This standard defines VMTI metadata as a KLV Local Set (LS), which allows use as either an independent standalone metadata set or as subordinate to other MISB standards, which results in efficiencies through the leveraging of parent metadata items.
 
@@ -54,13 +50,9 @@ Minor Version.
 
 [10] MISB ST 1204.3 Motion Imagery Identification System (MIIS) Core Identifier, Feb 2020.
 
-[11] ISO/IEC 9834:2014 Information technology - Procedures for the operation of object identifier registration authorities - Part 8: Generation of universally unique identifiers
+[11] ISO/IEC 9834:2014 Information technology - Procedures for the operation of object identifier registration authorities - Part 8: Generation of universally unique identifiers (UUIDs) and their use in object identifiers.
 
-(UUIDs) and their use in object identifiers.
-
-[12] Smith, et. al., "The OBO Foundry: coordinated evolution of ontologies to support
-
-biomedical data integration," Nature Biotechnology, vol. 25, no. 11, pp. 1251-1255, 2007.
+[12] Smith, et. al., "The OBO Foundry: coordinated evolution of ontologies to support biomedical data integration," Nature Biotechnology, vol. 25, no. 11, pp. 1251-1255, 2007.
 
 [13] OBO Foundry, "Ontology Tools and Resources," [Online]. Available:
 
@@ -132,25 +124,15 @@ http://www.obofoundry.org/resources.
 
 # 5 Introduction
 
-Object detection and tracking provides a rich source of intelligence for determining activities in the scene. Standardized methods to describe and disseminate such information enable sharing
+Object detection and tracking provides a rich source of intelligence for determining activities in the scene. Standardized methods to describe and disseminate such information enable sharing and reuse during a mission, thereby enriching intelligence analysis. This document defines a metadata standard for characterizing objects in Motion Imagery and associated indicators of their motion. This metadata standard specifies the constructs for reporting the motions of entities, the history of their motions, and the types of the entities reported.
 
-and reuse during a mission, thereby enriching intelligence analysis. This document defines a metadata standard for characterizing objects in Motion Imagery and associated indicators of their
-
-motion. This metadata standard specifies the constructs for reporting the motions of entities, the
-
-history of their motions, and the types of the entities reported.
-
-The VMTI LS offers a rich set of object detection qualities for identifying and detailing a
-
-multitude of objects within a single image or across frames of a Motion Imagery stream2. As such, this standard optimizes the VMTI metadata for situations where the metadata accompanies
+The VMTI LS offers a rich set of object detection qualities for identifying and detailing a multitude of objects within a single image or across frames of a Motion Imagery stream2. As such, this standard optimizes the VMTI metadata for situations where the metadata accompanies
 
 Motion Imagery over low bandwidth transmission links. Leveraging existing metadata within a parent MISB ST 0601 LS [3] is one way to reduce the data required. Appendix B provides additional guidance for minimizing data overhead.
 
 # 6 VMTI Scenarios
 
-The VMTI standard defines metadata to support two use-case scenarios: 1) detection of objects
-
-(i.e., targets) within Motion Imagery frames, and 2) detection and tracking of targets occurring over a time sequence of Motion Imagery frames. Figure 1 shows a nominal VMTI processing model for scenario 1 -- detection of objects.
+The VMTI standard defines metadata to support two use-case scenarios: 1) detection of objects (i.e., targets) within Motion Imagery frames, and 2) detection and tracking of targets occurring over a time sequence of Motion Imagery frames. Figure 1 shows a nominal VMTI processing model for scenario 1 -- detection of objects.
 
 Frames
 
@@ -164,29 +146,11 @@ Figure 1: Scenario 1 – Nominal VMTI Processing Model
 
 2 The MISB prefers the term “Motion Imagery” rather than “Video” as Motion Imagery has strict criteria, such as providing intelligence information. The Motion Imagery Handbook discusses these differences. As this standard preceded this preference in terminology, and to provide continuity, this document continues with video in deference to Motion Imagery.
 
-The input to the VMTI processing model is a sequence of Motion Imagery frames which may
+The input to the VMTI processing model is a sequence of Motion Imagery frames which may have zero, one, or more targets (shown as small circles). With scenario one, the Detection system detects targets and stores state information about each target. The system compares current target detections with earlier target detections to decide if it needs to a) update the target’s information, or b) create a new target. Target information provides the details about the target, for example: location of target in the image and/or on the ground, target information such as shape and color, target priority, etc.
 
-have zero, one, or more targets (shown as small circles). With scenario one, the Detection system detects targets and stores state information about each target. The system compares current target detections with earlier target detections to decide if it needs to a) update the target’s information,
+The VMTI processing model assumes systems maintain a lifecycle with state information for each target, which, at a minimum has the states described in Section 7.2. The model assumes systems constantly manage the target information, either updating a target’s state, adding new targets, or removing targets. The methods of management, including timeouts for targets, are implementation dependent. At some frequency, decided by the system, the system generates a list of targets from the state information and reports them to the end user. The system decides which targets to report based on priority and bandwidth; therefore, the system does not need to report all targets in the target list. The target list does not include targets in the Dropped state.
 
-or b) create a new target. Target information provides the details about the target, for example: location of target in the image and/or on the ground, target information such as shape and color,
-
-target priority, etc.
-
-The VMTI processing model assumes systems maintain a lifecycle with state information for
-
-each target, which, at a minimum has the states described in Section 7.2. The model assumes
-
-systems constantly manage the target information, either updating a target’s state, adding new targets, or removing targets. The methods of management, including timeouts for targets, are implementation dependent. At some frequency, decided by the system, the system generates a list of targets from the state information and reports them to the end user. The system decides
-
-which targets to report based on priority and bandwidth; therefore, the system does not need to report all targets in the target list. The target list does not include targets in the Dropped state.
-
-Figure 2 shows a nominal VMTI processing with tracking model for scenario 2, which adds an optional Tracking system (shown with the dotted lines) producing a track for each target in the
-
-target list. When reporting the target list to the user, the target information includes the track data
-
-for each target. VMTI track data includes track identifier, position and time history, confidence,
-
-target kinematics, etc.
+Figure 2 shows a nominal VMTI processing with tracking model for scenario 2, which adds an optional Tracking system (shown with the dotted lines) producing a track for each target in the target list. When reporting the target list to the user, the target information includes the track data for each target. VMTI track data includes track identifier, position and time history, confidence, target kinematics, etc.
 
 Frames
 
@@ -214,19 +178,9 @@ Each target has a lifecycle, starting at target creation and ending with the sys
 
 ## 7.1 Target Overview
 
-Motion Imagery is a series of images, where each image is a picture of the scene. The scene has
+Motion Imagery is a series of images, where each image is a picture of the scene. The scene has two types of objects of interest: Stationary Targets and Moving Targets. Stationary Targets are any object in the image which the system decides is important to detect and the object is not moving relative to the scene. Stationary objects include buildings, roads, bridges, parked vehicles, storage containers, etc.
 
-two types of objects of interest: Stationary Targets and Moving Targets. Stationary Targets are any object in the image which the system decides is important to detect and the object is not
-
-moving relative to the scene. Stationary objects include buildings, roads, bridges, parked
-
-vehicles, storage containers, etc.
-
-Moving targets are any object in the image which the system decides is important to detect and is
-
-showing movement relative to the scene. Moving targets include vehicles driving, people
-
-walking, etc.
+Moving targets are any object in the image which the system decides is important to detect and is showing movement relative to the scene. Moving targets include vehicles driving, people walking, etc.
 
 Each target, either stationary or moving, has a set of attributes organized into four groups:
 
@@ -236,9 +190,7 @@ Administrative, Image, Geospatial, and Tracking.
 
 Administrative attributes provide information about the detection for management of the target.
 
-When the system detects a new target, the system assigns each target a unique identifier and sets
-
-the detection status to Active. Additionally, the system may assign priority, confidence, history, and an algorithm description. Table 1 provides short descriptions for each of these attributes.
+When the system detects a new target, the system assigns each target a unique identifier and sets the detection status to Active. Additionally, the system may assign priority, confidence, history, and an algorithm description. Table 1 provides short descriptions for each of these attributes.
 
 Table 1: Target Attributes - Administrative
 
@@ -253,13 +205,7 @@ Table 1: Target Attributes - Administrative
 
 ### 7.1.2 Image
 
-Image attributes provide information about the target within the context of the image, and thus,
-
-the pixels themselves. The image attributes for a target are pixel contour, pixel bounding box,
-
-centroid, percentage of target pixels, color, intensity, image chip, image mask, features, and object label. Figure 3 illustrates an image with three targets and shows some of the image attributes. The blue value pairs at the corners are the pixel coordinates; all image positions are
-
-relative to these corners.
+Image attributes provide information about the target within the context of the image, and thus, the pixels themselves. The image attributes for a target are pixel contour, pixel bounding box, centroid, percentage of target pixels, color, intensity, image chip, image mask, features, and object label. Figure 3 illustrates an image with three targets and shows some of the image attributes. The blue value pairs at the corners are the pixel coordinates; all image positions are relative to these corners.
 
 Figure 3: Image Attributes
 
@@ -282,9 +228,7 @@ Table 2: Target Attributes - Image
 
 ### 7.1.3 Geospatial
 
-Geospatial attributes provide information about the target within the scene. The geospatial
-
-attributes for a target are location, geospatial bounding box, and geospatial contour. Table 3 provides short descriptions for each of the geospatial attributes.
+Geospatial attributes provide information about the target within the scene. The geospatial attributes for a target are location, geospatial bounding box, and geospatial contour. Table 3 provides short descriptions for each of the geospatial attributes.
 
 Table 3: Target Attributes - Geospatial
 
@@ -296,19 +240,11 @@ Table 3: Target Attributes - Geospatial
 
 ### 7.1.4 Tracking
 
-Tracking attributes only apply to systems that construct tracks from multiple detections. The VMTI Processing Model does not require performing the detection process and tracking process
+Tracking attributes only apply to systems that construct tracks from multiple detections. The VMTI Processing Model does not require performing the detection process and tracking process at the same time. For example, a VMTI system may create detections in real-time on-board an aircraft, while the tracking process may operate at a ground control station, taking time to analyze larger temporal windows of the detections and build tracks.
 
-at the same time. For example, a VMTI system may create detections in real-time on-board an
+Tracking attributes provide historical context to a detection. When tracking, the system may assign a unique track identifier and detection status. Tracking algorithms may identify two or more historical detection lists which are the same object; therefore, tracking may be the combination of two object lists with different target identifiers (see Table 1). The unique tracking identifier is a way of merging them into one track. The detection status has the same state model as a detection in Table 1.
 
-aircraft, while the tracking process may operate at a ground control station, taking time to analyze larger temporal windows of the detections and build tracks.
-
-Tracking attributes provide historical context to a detection. When tracking, the system may assign a unique track identifier and detection status. Tracking algorithms may identify two or more historical detection lists which are the same object; therefore, tracking may be the combination of two object lists with different target identifiers (see Table 1). The unique tracking identifier is a way of merging them into one track. The detection status has the same state model
-
-as a detection in Table 1.
-
-Additional attributes include the observation time, a list of the historical track points of the
-
-detection, a bounding area enclosing a track, a confidence in the track, the count of track points (or detections), the current velocity and acceleration of the target, and the name of the tracking algorithm. Table 4 provides short descriptions for each of the tracking attributes.
+Additional attributes include the observation time, a list of the historical track points of the detection, a bounding area enclosing a track, a confidence in the track, the count of track points (or detections), the current velocity and acceleration of the target, and the name of the tracking algorithm. Table 4 provides short descriptions for each of the tracking attributes.
 
 Table 4: Target Attributes - Tracking
 
@@ -325,13 +261,7 @@ Table 4: Target Attributes - Tracking
 
 ## 7.2 Target Lifecycle
 
-The detection system detects targets (such as vehicles) within a frame using various system
-
-dependent algorithms. The original purpose of the VMTI standard was to support “Moving Target Indicator (MTI)” detections; however, the concept of a target has evolved to include
-
-moving objects (e.g., vehicles) and static objects, such as roads, buildings, and bridges. Each target has a lifecycle, and this standard represents the lifecycle as a state machine with five
-
-detection states: Active-Moving, Active-Stopped, Active-Coasting, Inactive, and Dropped. Figure 4 illustrates these states and their interconnectivity and Table 5 provides the definitions.
+The detection system detects targets (such as vehicles) within a frame using various system dependent algorithms. The original purpose of the VMTI standard was to support “Moving Target Indicator (MTI)” detections; however, the concept of a target has evolved to include moving objects (e.g., vehicles) and static objects, such as roads, buildings, and bridges. Each target has a lifecycle, and this standard represents the lifecycle as a state machine with five detection states: Active-Moving, Active-Stopped, Active-Coasting, Inactive, and Dropped. Figure 4 illustrates these states and their interconnectivity and Table 5 provides the definitions.
 
 Systems may use different or more detailed states internally, but when reporting a target, the target’s state needs to map to the VMTI states.
 
@@ -356,51 +286,21 @@ Table 5: Detection Status Values
 | 3 | Active-Stopped | The target is stationary. System maintains visual detection of stationary targets. |
 | 4 | Active-Coasting | The system is waiting for the target’s coasting time to expire. The target may be reacquired in future detections. |
 
-The system manages the target’s state data throughout the target’s lifecycle. The lifecycle starts when a system detects a target within a frame (i.e., Target Created). The method of detection is
+The system manages the target’s state data throughout the target’s lifecycle. The lifecycle starts when a system detects a target within a frame (i.e., Target Created). The method of detection is system dependent, which may use any number of techniques, including frame differencing, image segmentation, or AI/ML algorithms. When the system creates a target, the system assigns the target a unique identifier and sets the state to “Active-Moving” or “Active-Stopped”. For systems initiating a detection based on target movement, the first state to use is “Active-Moving”. For systems performing detection without movement, the system sets the detection’s first state to “Active-Stopped”. The system only uses the unique identifier for this target and the system does not reuse the identifier for any other target, even if the target is no longer part of the target list (i.e., dropped from the list).
 
-system dependent, which may use any number of techniques, including frame differencing, image segmentation, or AI/ML algorithms. When the system creates a target, the system assigns the target a unique identifier and sets the state to “Active-Moving” or “Active-Stopped”. For systems initiating a detection based on target movement, the first state to use is “Active-Moving”. For systems performing detection without movement, the system sets the detection’s first state to “Active-Stopped”. The system only uses the unique identifier for this target and the
+While the system continues to detect the target in the scene, the target remains in the Active-Moving or Active-Stopped state. In cases where a detection may stop momentarily (e.g., car behind a tree), the detection system sets the targets state to Active-Coasting. The system governs the duration, called the coasting time, to maintain the target in the Active-Coasting state. For example, if the coasting time is 10 seconds the system waits 10 seconds before switching the targets state to either Inactive or Dropped, in case the target is reacquired (e.g., car reappears from behind a tree). If a system chooses it can set the coasting time to zero, then the target changes from either the Active-Moving or Active-Stopped state to Inactive or Dropped as soon as the system does not detect the target in a frame.
 
-system does not reuse the identifier for any other target, even if the target is no longer part of the
+While tracking a moving target (i.e., Active-Moving), if the target comes to a stop in the scene and the target is still visible and detectable, the state changes to the Active-Stopped state. If the target starts moving it returns to the Active-Moving state. If the system loses any Active-Moving or Active-Stopped target, the system may set its state to Active-Coasting, Inactive, or Dropped. When a system no longer detects a target and the coasting time has elapsed, the system may change the state to Inactive, which means there is no detection, but the system may detect the target again. To prevent states from vacillating frequently (e.g., Inactive to Active-Moving back to Inactive), systems may employ a hysteresis delay for any state change. Systems decide on the hysteresis which delays the state change until the system is certain the state needs to change.
 
-target list (i.e., dropped from the list).
-
-While the system continues to detect the target in the scene, the target remains in the Active-Moving or Active-Stopped state. In cases where a detection may stop momentarily (e.g., car behind a tree), the detection system sets the targets state to Active-Coasting. The system governs the duration, called the coasting time, to maintain the target in the Active-Coasting state. For example, if the coasting time is 10 seconds the system waits 10 seconds before switching the
-
-targets state to either Inactive or Dropped, in case the target is reacquired (e.g., car reappears from behind a tree). If a system chooses it can set the coasting time to zero, then the target changes from either the Active-Moving or Active-Stopped state to Inactive or Dropped as soon as the system does not detect the target in a frame.
-
-While tracking a moving target (i.e., Active-Moving), if the target comes to a stop in the scene and the target is still visible and detectable, the state changes to the Active-Stopped state. If the
-
-target starts moving it returns to the Active-Moving state. If the system loses any Active-Moving
-
-or Active-Stopped target, the system may set its state to Active-Coasting, Inactive, or Dropped. When a system no longer detects a target and the coasting time has elapsed, the system may change the state to Inactive, which means there is no detection, but the system may detect the
-
-target again. To prevent states from vacillating frequently (e.g., Inactive to Active-Moving back to Inactive), systems may employ a hysteresis delay for any state change. Systems decide on the hysteresis which delays the state change until the system is certain the state needs to change.
-
-When a system decides to discontinue managing a target, the system changes the state to Dropped and the system removes the target from the target list. This standard assumes when a
-
-system drops a target the detection system “forgets” the target. For example, if the system
-
-reacquires the same target later, the system does not “remember” it and therefore cannot reuse
-
-the same identifier; instead, the system assigns a new target identifier. To avoid this behavior, systems may leave a target in the Inactive state indefinitely.
+When a system decides to discontinue managing a target, the system changes the state to Dropped and the system removes the target from the target list. This standard assumes when a system drops a target the detection system “forgets” the target. For example, if the system reacquires the same target later, the system does not “remember” it and therefore cannot reuse the same identifier; instead, the system assigns a new target identifier. To avoid this behavior, systems may leave a target in the Inactive state indefinitely.
 
 ## 7.3 Object and Feature Labeling
 
-When a VMTI system detects a target, the system may include one or more AI/ML image classifiers which label the target with one or more object-predictions of the target. Each object-prediction includes an object-label (i.e., what the type of the object is), an object-confidence
+When a VMTI system detects a target, the system may include one or more AI/ML image classifiers which label the target with one or more object-predictions of the target. Each object-prediction includes an object-label (i.e., what the type of the object is), an object-confidence value (i.e., the certainty the label is correct), and optional feature-labels (e.g., antenna, rifle, etc.) with corresponding feature-confidence levels. Object-label and feature-labels are ontology references, see Section 7.3.1.
 
-value (i.e., the certainty the label is correct), and optional feature-labels (e.g., antenna, rifle, etc.) with corresponding feature-confidence levels. Object-label and feature-labels are ontology
+The object-confidence and feature-confidence values are numbers which range from zero to 100%. An object-confidence value of 100% indicates the object-label perfectly reflects what the object is, while a value of 0% means no certainty the assigned object-label is correct. Similarly, a feature-confidence value of 100% indicates the feature-label perfectly reflects what the feature is, while a value of 0% means no certainty the assigned feature-label is correct.
 
-references, see Section 7.3.1.
-
-The object-confidence and feature-confidence values are numbers which range from zero to 100%. An object-confidence value of 100% indicates the object-label perfectly reflects what the
-
-object is, while a value of 0% means no certainty the assigned object-label is correct. Similarly, a feature-confidence value of 100% indicates the feature-label perfectly reflects what the feature
-
-is, while a value of 0% means no certainty the assigned feature-label is correct.
-
-Figure 5 shows an example where a VMTI system assigns three object-predictions in blue to a
-
-blob of moving pixels (i.e., the “Target”) in green: (1) a Vehicle with object-confidence of 90%, (2) a Car with object-confidence 70%, and (3) a Motorcycle with object-confidence of 50%. If the blob of pixels includes a vertical object, each of these object-predictions may have custom features (each including a feature-label and feature-confidence level) in yellow; for example, the car may include an Antenna with feature-confidence of 80%, while the motorcycle may include an Antenna with feature-confidence of 45% and Rifle with feature-confidence of 60%.
+Figure 5 shows an example where a VMTI system assigns three object-predictions in blue to a blob of moving pixels (i.e., the “Target”) in green: (1) a Vehicle with object-confidence of 90%, (2) a Car with object-confidence 70%, and (3) a Motorcycle with object-confidence of 50%. If the blob of pixels includes a vertical object, each of these object-predictions may have custom features (each including a feature-label and feature-confidence level) in yellow; for example, the car may include an Antenna with feature-confidence of 80%, while the motorcycle may include an Antenna with feature-confidence of 45% and Rifle with feature-confidence of 60%.
 
 Target (Object)
 
@@ -419,13 +319,9 @@ Figure 5: Illustration of Object-Predictions
 
 This standard does not define the target (i.e., object) or feature labels, but the standard does require labels be part of a well-defined ontology using the Web Ontology Language (OWL) [4].
 
-Ontologies provide a consistent means (i.e., common and agreed upon by a body of people and/or organizations) to define terms (e.g., types of objects) and their relationship to other terms,
+Ontologies provide a consistent means (i.e., common and agreed upon by a body of people and/or organizations) to define terms (e.g., types of objects) and their relationship to other terms, with a coherent set of semantics (e.g., defining terms using other ontology terms). See Appendix A for an exemplar ontology.
 
-with a coherent set of semantics (e.g., defining terms using other ontology terms). See Appendix A for an exemplar ontology.
-
-There are two parts to an ontology reference: an ontology identifier, and an entity identifier. The ontology identifier is an Internationalized Resource Identifier (IRI) that names the ontology used. The entity identifier is the IRI of the object-label or feature-label defined in the specified
-
-ontology. For example, to provide a normative label for “car” using the example ontology from Appendix A:
+There are two parts to an ontology reference: an ontology identifier, and an entity identifier. The ontology identifier is an Internationalized Resource Identifier (IRI) that names the ontology used. The entity identifier is the IRI of the object-label or feature-label defined in the specified ontology. For example, to provide a normative label for “car” using the example ontology from Appendix A:
 
 ontology IRI = http://purl.obolibrary.org/obo/envo.owl entity IRI = http://purl.obolibrary.org/obo/ENVO_01000605
 
@@ -443,23 +339,17 @@ metadata.
 
 ## 8.1 Linkage Considerations
 
-A system configuration where there are Ns imagery sources greater than one, but less than Ns transmitted to a user, may have VMTI “linkage” issues. A linkage issue is where the imagery source for the VMTI processing (i.e., VMTI-MI) and metadata may not be a part of the
-
-transmitted imagery to the user (i.e., user-MI). A configuration illustrating a linkage issue is a real-time system with a visual sensor (e.g., RGB) and an IR sensor which transmits only one sensor’s Motion Imagery at a time.
+A system configuration where there are Ns imagery sources greater than one, but less than Ns transmitted to a user, may have VMTI “linkage” issues. A linkage issue is where the imagery source for the VMTI processing (i.e., VMTI-MI) and metadata may not be a part of the transmitted imagery to the user (i.e., user-MI). A configuration illustrating a linkage issue is a real-time system with a visual sensor (e.g., RGB) and an IR sensor which transmits only one sensor’s Motion Imagery at a time.
 
 Figure 6 illustrates a notional two sensor configuration (Visual and IR) each producing Motion Imagery (blue lines) and metadata (green lines). This standard defines VMTI-MI to indicate the
 
-Motion Imagery input to the VMTI Processing; in this example, the VMTI Processing operates on the Visual sensor. The A/B Switch determines which sensor’s data passes to the Encoder for down-stream viewing by users. This standard defines user-MI to indicate the Motion Imagery
-
-the user will view.
+Motion Imagery input to the VMTI Processing; in this example, the VMTI Processing operates on the Visual sensor. The A/B Switch determines which sensor’s data passes to the Encoder for down-stream viewing by users. This standard defines user-MI to indicate the Motion Imagery the user will view.
 
 There are two choices for multiplexing the VMTI Processing output (red line) with the user-MI:
 
 embedded-VMTI (see Section 8.2) or standalone-VMTI (see Section 8.3). Embedded-VMTI (Choice 1) provides bandwidth efficiencies in sending VMTI data to end users. With embedded-VMTI, the VMTI data timing needs to match the sensor’s metadata data timing so the VMTI data can properly utilize the parent metadata when computing location information.
 
-Implementers should be aware that timing synchronization may introduce latency, and thus, impact real-time delivery. Standalone-VMTI (Choice 2) while less bandwidth efficient reduces
-
-potential latency issues for real-time transmittal, although there may be latency between the Motion Imagery and the displayed VMTI information.
+Implementers should be aware that timing synchronization may introduce latency, and thus, impact real-time delivery. Standalone-VMTI (Choice 2) while less bandwidth efficient reduces potential latency issues for real-time transmittal, although there may be latency between the Motion Imagery and the displayed VMTI information.
 
 VMTI-MI Motion Imagery VMTI
 
@@ -467,25 +357,17 @@ Visual Metadata Processing
 
 A Choice 2 MPEG
 
-TS A/B Switch Encoder
-
-w/KLV B Choice 1
+TS A/B Switch Encoder w/KLV B Choice 1
 
 IR User-MI
 
 Figure 6: Notional Two Sensor Implementation Configuration
 
-The example illustrates an implementation configuration where the user-MI may be different
-
-than the VMTI-MI at any time; therefore, this standard provides requirements to prevent mismatches between VMTI metadata and other system metadata. For example, timing, field of
-
-views (FOV), frame sizes, etc. may be different for different sensors metadata.
+The example illustrates an implementation configuration where the user-MI may be different than the VMTI-MI at any time; therefore, this standard provides requirements to prevent mismatches between VMTI metadata and other system metadata. For example, timing, field of views (FOV), frame sizes, etc. may be different for different sensors metadata.
 
 ## 8.2 Embedded-VMTI
 
-Embedded-VMTI is a VMTI LS which is subordinate to (i.e., a child of) a parent set and relies on metadata items in the parent set. Table 6 lists both Required and Optional parent metadata in
-
-embedded-VMTI use cases.
+Embedded-VMTI is a VMTI LS which is subordinate to (i.e., a child of) a parent set and relies on metadata items in the parent set. Table 6 lists both Required and Optional parent metadata in embedded-VMTI use cases.
 
 Table 6: Parent Metadata Supporting Items
 
@@ -509,9 +391,7 @@ ST0601 Stream VMTI VMTI VMTI VMTI Item 74 Item 74 Item 74 Item 74
 
 Figure 7: Embedded-VMTI Illustration
 
-The inclusion of some embedded-VMTI metadata items depends on their usage. Table 7 lists conditionally optional LS items based on requirements for the specific item; see each item’s full description for the requirements when using embedded-VMTI. Table 8 lists those items which
-
-can leverage metadata within a parent Local Set (e.g., MISB ST 0601).
+The inclusion of some embedded-VMTI metadata items depends on their usage. Table 7 lists conditionally optional LS items based on requirements for the specific item; see each item’s full description for the requirements when using embedded-VMTI. Table 8 lists those items which can leverage metadata within a parent Local Set (e.g., MISB ST 0601).
 
 Table 7: Embedded-VMTI conditionally optional items
 
@@ -535,13 +415,7 @@ Table 8: Embedded-VMTI Items leveraging a parent set
 
 ## 8.3 Standalone-VMTI
 
-Standalone-VMTI is a self-contained VMTI LS which is not contained within a parent set. In
-
-contrast to embedded-VMTI (Section 8.2), standalone-VMTI does not rely on auxiliary metadata
-
-(i.e., geospatial) from a parent LS (e.g., the ST 0601 Datalink LS) to support its functionality. An example of standalone-VMTI is transmitting VMTI detections via a separate UDP/IP stream from a Motion Imagery Transport Stream containing the Datalink LS. A second example is encapsulating the VMTI data as a separate private data stream within a MPEG-2 Transport Stream. Figure 8 illustrates two separate streams of metadata where the VMTI Packets do not rely on information from the Datalink Packets Their transmission to end users may use separate
-
-communication channels.
+Standalone-VMTI is a self-contained VMTI LS which is not contained within a parent set. In contrast to embedded-VMTI (Section 8.2), standalone-VMTI does not rely on auxiliary metadata (i.e., geospatial) from a parent LS (e.g., the ST 0601 Datalink LS) to support its functionality. An example of standalone-VMTI is transmitting VMTI detections via a separate UDP/IP stream from a Motion Imagery Transport Stream containing the Datalink LS. A second example is encapsulating the VMTI data as a separate private data stream within a MPEG-2 Transport Stream. Figure 8 illustrates two separate streams of metadata where the VMTI Packets do not rely on information from the Datalink Packets Their transmission to end users may use separate communication channels.
 
 ST0601 Stream Datalink Packet Datalink Packet Datalink Packet Datalink Packet
 
@@ -555,11 +429,7 @@ ST 0903.6-116 Where using standalone-VMTI, VTarget LS instances shall omit items
 
 ## 8.4 Timing Considerations
 
-Motion Imagery is a series of Spatio-Temporally Related Images (see [5]), meaning each frame spatially relates to the previous and the time of each frame is known. When performing object
-
-detection and tracking the detection results (i.e., VMTI metadata) relate directly to the time of
-
-the frame. The combination of implementation configuration, VMTI processing latency, Motion Imagery system latency, and desired output latency/bandwidth, plays a role in the reporting of the VMTI packet time.
+Motion Imagery is a series of Spatio-Temporally Related Images (see [5]), meaning each frame spatially relates to the previous and the time of each frame is known. When performing object detection and tracking the detection results (i.e., VMTI metadata) relate directly to the time of the frame. The combination of implementation configuration, VMTI processing latency, Motion Imagery system latency, and desired output latency/bandwidth, plays a role in the reporting of the VMTI packet time.
 
 For example, referring to the notional implementation in Figure 6, if the VMTI Processing takes one second to complete its object detection and the system operates over a constrained bandwidth channel, the system implementor could choose embedded-VMTI. The encoder then needs to either (1) buffer the Motion Imagery and metadata to match the latency of the VMTI
 
@@ -571,9 +441,7 @@ however, delaying the Motion Imagery may be both impractical and undesirable. Me
 
 Imagery latency to the end user. Both methods are valid approaches, so careful consideration of the timestamps when embedding the VMTI data is necessary for properly interpreting the results.
 
-A receiving system must know which image the VMTI data associates with; therefore, it is critical for readers to be able to ascertain the correct time of the VMTI data, either by the
-
-timestamp existing in the VMTI LS or the parent metadata. MISB standards require every image in a MI stream to contain a Precision Time Stamp. VMTI processing operates on one image of the VMTI-MI which therefore has an image timestamp. When a VMTI system processes an image in VMTI-MI and produces a VMTI LS, the VMTI-MI-Timestamp is the VMTI-MI image’s timestamp. The VMTI system conditionally includes the VMTI-MI-Timestamp into the
+A receiving system must know which image the VMTI data associates with; therefore, it is critical for readers to be able to ascertain the correct time of the VMTI data, either by the timestamp existing in the VMTI LS or the parent metadata. MISB standards require every image in a MI stream to contain a Precision Time Stamp. VMTI processing operates on one image of the VMTI-MI which therefore has an image timestamp. When a VMTI system processes an image in VMTI-MI and produces a VMTI LS, the VMTI-MI-Timestamp is the VMTI-MI image’s timestamp. The VMTI system conditionally includes the VMTI-MI-Timestamp into the
 
 VMTI LS.
 
@@ -587,11 +455,7 @@ ST 0903.6-117 Where the VMTI LS is standalone-VMTI, the VMTI LS instance shall c
 
 ST 0903.6-118 Where the VMTI LS is embedded-VMTI and the parent instance contains a Precision Time Stamp not equal to the VMTI-MI-Timestamp, the VMTI LS instance shall contain the precisionTimeStamp item (Item 2) equal to the VMTI-MI-Timestamp.
 
-For embedded-VMTI which is temporally inconsistent (see method (2) example above), there is
-
-an issue when using offset items (i.e., VTarget LS Items 10, 11, 13, 14, 15, and 16 - listed in Table 8). The offset items rely on the parent’s Frame Center Latitude/Longitude, and when there is a temporal inconsistency the addition of the offset items and the frame center position will
-
-result in position errors. Therefore, when the difference between the VMTI LS precisionTimeStamp and the (current) parent timestamp exceeds the period of two frames, use the absolute metadata items (i.e., VTarget targetLocation (Item 17) and geospatialContourSeries (Item 18)) instead of the offset items.
+For embedded-VMTI which is temporally inconsistent (see method (2) example above), there is an issue when using offset items (i.e., VTarget LS Items 10, 11, 13, 14, 15, and 16 - listed in Table 8). The offset items rely on the parent’s Frame Center Latitude/Longitude, and when there is a temporal inconsistency the addition of the offset items and the frame center position will result in position errors. Therefore, when the difference between the VMTI LS precisionTimeStamp and the (current) parent timestamp exceeds the period of two frames, use the absolute metadata items (i.e., VTarget targetLocation (Item 17) and geospatialContourSeries (Item 18)) instead of the offset items.
 
 Requirement
 
@@ -601,11 +465,7 @@ ST 0903.6-142 Where the VMTI LS is embedded-VMTI and the difference between the 
 
 ## 9.1 Data Types
 
-The Motion Imagery Handbook [5] details the syntax and semantics for KLV items and common
-
-complex types3 found in this standard. MISB ST 0107 [6] provides a set of baseline requirements
-
-for using KLV, and defines Tag, Length, and Value encodings for numeric (e.g., floating point) and string KLV items. In this standard many items have a designated fixed length. Some items allow a flexible number of bytes depending on their value specified by the notation “Vmax”, where max is the maximum number of bytes allocated. For example, “V4” indicates an encoded value specified with a minimum of one byte to a maximum of four bytes.
+The Motion Imagery Handbook [5] details the syntax and semantics for KLV items and common complex types3 found in this standard. MISB ST 0107 [6] provides a set of baseline requirements for using KLV, and defines Tag, Length, and Value encodings for numeric (e.g., floating point) and string KLV items. In this standard many items have a designated fixed length. Some items allow a flexible number of bytes depending on their value specified by the notation “Vmax”, where max is the maximum number of bytes allocated. For example, “V4” indicates an encoded value specified with a minimum of one byte to a maximum of four bytes.
 
 Requirement
 
@@ -617,23 +477,15 @@ ST 0903.4-01 All metadata shall be expressed in accordance with MISB ST 0107.
 
 This standard uses the IMAP algorithms of MISB ST 1201 [7] for floating-point values. For specific items, this standard defines special bit patterns to signal out-of-range and User Defined Special Values:
 
-• When an item’s measured value exceeds the limits set in this standard the VMTI system
-
-sends an out-of-range signal of the measured value. ST 1201 provides two out-of-range
-
-signals: IMAP_BELOW_MINIMUM and IMAP_ABOVE_MAXIMUM. If an item’s measured value is below this standard’s defined range the VMTI system sends the
+• When an item’s measured value exceeds the limits set in this standard the VMTI system sends an out-of-range signal of the measured value. ST 1201 provides two out-of-range signals: IMAP_BELOW_MINIMUM and IMAP_ABOVE_MAXIMUM. If an item’s measured value is below this standard’s defined range the VMTI system sends the
 
 IMAP_BELOW_MINIMUM signal value in place of the measurement. Likewise, if an item’s measured value is above this standard’s defined range the VMTI system sends the
 
 IMAP_ABOVE_MAXIMUM in place of the measurement. For example, the VTarget targetHae item defines an IMAP range from -900 to 19,000 meters; if the measured value is 20,000 meters the VMTI system would send the IMAP_ABOVE_MAXIMUM value. See ST 1201 for further details.
 
-• Some measured or computed items in the VMTI structure may result in illegal values. In
+• Some measured or computed items in the VMTI structure may result in illegal values. In these cases, this standard defines an “Invalid” signal. For example, a divide by zero or projecting a ray from the image to the ground for a geospatial bounding box corner and the corner does not intersect with the ground, i.e., it lies above the horizon. VMTI systems specify the “Invalid” signal using an IMAP User Defined Special Value of byte
 
-these cases, this standard defines an “Invalid” signal. For example, a divide by zero or projecting a ray from the image to the ground for a geospatial bounding box corner and the corner does not intersect with the ground, i.e., it lies above the horizon. VMTI systems specify the “Invalid” signal using an IMAP User Defined Special Value of byte
-
-0xC1. For packs requiring fixed length, the software pads the value with zero bytes to
-
-accommodate the correct length, e.g., 0xC100 0000, for a pack item requiring 4 bytes.
+0xC1. For packs requiring fixed length, the software pads the value with zero bytes to accommodate the correct length, e.g., 0xC100 0000, for a pack item requiring 4 bytes.
 
 Requirement
 
@@ -645,9 +497,7 @@ This document defines an Array type as a collection of simple data types, such a
 
 ### 9.1.3 Series Type
 
-This document defines a Series type as a collection of structured data elements, all the same type encoded as a variable length pack. Since all elements are of the same type, element order is not
-
-important.
+This document defines a Series type as a collection of structured data elements, all the same type encoded as a variable length pack. Since all elements are of the same type, element order is not important.
 
 Figure 9 shows the structure of a Series type, where the Value is a collection of length-element pairs with the length (“L”) specifying the number of bytes of the “Element”. The element type is known a priori from the Tag definition (in this document) enabling parsing of the element. The number of elements in the collection is determined by parsing the entire list in the Value.
 
@@ -662,29 +512,21 @@ Figure 9: Series Type
 
 ## 9.2 Local Set
 
-The VMTI LS uses byte 6 = 0x2B meaning BER-OID tags and BER short/long lengths, which allows for an unlimited number of items and each item does not have a size limit. All other LSs
-
-embedded in this standard (e.g., VMask, VObject) use byte 6 = 0x03 meaning 1-byte UINT tags and BER short/long lengths, which limits the number of items to 255, but each item does not have a size limit. Refer to the MISB Motion Imagery Handbook for guidance on KLV encoding.
+The VMTI LS uses byte 6 = 0x2B meaning BER-OID tags and BER short/long lengths, which allows for an unlimited number of items and each item does not have a size limit. All other LSs embedded in this standard (e.g., VMask, VObject) use byte 6 = 0x03 meaning 1-byte UINT tags and BER short/long lengths, which limits the number of items to 255, but each item does not have a size limit. Refer to the MISB Motion Imagery Handbook for guidance on KLV encoding.
 
 ### 9.2.1 Local Set Uniqueness
 
-The general definition of a Local Set allows for the repetition of the same item multiple times
-
-within a single Local Set. This standard does not allow for repetitive items in all the VMTI LS.
+The general definition of a Local Set allows for the repetition of the same item multiple times within a single Local Set. This standard does not allow for repetitive items in all the VMTI LS.
 
 Requirement
 
-ST 0903.5-98 Within an instance of a Local Set, items within that Local Set shall be used only
-
-once.
+ST 0903.5-98 Within an instance of a Local Set, items within that Local Set shall be used only once.
 
 ### 9.2.2 Timestamps
 
 Timestamps specified in this standard utilize the Precision Time Stamp defined in MISB ST
 
-0603 [8] as an eight-byte unsigned integer counter of the number of SI Seconds (in
-
-microseconds) which have elapsed since midnight (00:00:00), January 1, 1970 (1970-01-
+0603 [8] as an eight-byte unsigned integer counter of the number of SI Seconds (in microseconds) which have elapsed since midnight (00:00:00), January 1, 1970 (1970-01-
 
 01T00:00:00Z).
 
@@ -694,11 +536,7 @@ ST 0903.4-13 Timestamps specifying a Precision Time Stamp shall comply with MISB
 
 ### 9.2.3 Target Coordinates
 
-This standard supports both pixel-based coordinates and geospatial coordinates descriptions for
-
-defining items such as the position or location of a target (known as a centroid), and user-defined bounding boxes around a target within an image. The VMTI LS assumes an image with pixel
-
-width/height defined by its source sensor.
+This standard supports both pixel-based coordinates and geospatial coordinates descriptions for defining items such as the position or location of a target (known as a centroid), and user-defined bounding boxes around a target within an image. The VMTI LS assumes an image with pixel width/height defined by its source sensor.
 
 #### 9.2.3.1 Pixel Based Representation
 
@@ -706,9 +544,7 @@ For pixel-based coordinates relative to an image there are two ways to specify a
 
 as a two-dimensional row/column pixel-pair.
 
-Row-major addressing is the count of the pixel number starting at the top left pixel then proceeding from left to right and from top to bottom. Computing the row-major address of a pixel number from the row and column position requires knowing the Motion Imagery frame
-
-width, i.e., the number of elements of each row. Both the row and column numbering start with
+Row-major addressing is the count of the pixel number starting at the top left pixel then proceeding from left to right and from top to bottom. Computing the row-major address of a pixel number from the row and column position requires knowing the Motion Imagery frame width, i.e., the number of elements of each row. Both the row and column numbering start with
 
 1, at the top left pixel. The row-major address, or pixel number, given the pixel’s row and column is:
 
@@ -752,15 +588,11 @@ Column = (7 - (2 - 1) * 4) = 3
 
 #### 9.2.3.2 Geospatial Based Representation
 
-In this standard, geospatial values have two representations, either full coordinates, or as offset coordinates. The Local Set item description will indicate which method to use. Full coordinates
-
-specify the latitude, longitude, and height above ellipsoid with their full ranges, e.g., -90 to +90 for latitude. Offset coordinates leverage values in parent metadata (e.g., a MISB ST 0601 LS
+In this standard, geospatial values have two representations, either full coordinates, or as offset coordinates. The Local Set item description will indicate which method to use. Full coordinates specify the latitude, longitude, and height above ellipsoid with their full ranges, e.g., -90 to +90 for latitude. Offset coordinates leverage values in parent metadata (e.g., a MISB ST 0601 LS
 
 parent) for representing geospatial values, thereby saving bandwidth.
 
-When computing geospatial coordinates, it is possible to have situations where the computational results do not intersect the earth surface and therefore are non-existent. For example, projecting a ray from the image to the ground for a geospatial bounding box corner and the corner does not
-
-intersect with the ground, i.e., it lies above the horizon. In these cases, either do not report the value or report the value using the “Invalid” value, see Section 9.1.1.
+When computing geospatial coordinates, it is possible to have situations where the computational results do not intersect the earth surface and therefore are non-existent. For example, projecting a ray from the image to the ground for a geospatial bounding box corner and the corner does not intersect with the ground, i.e., it lies above the horizon. In these cases, either do not report the value or report the value using the “Invalid” value, see Section 9.1.1.
 
 ### 9.2.4 Local Set Table Structure
 
@@ -770,23 +602,15 @@ Local Set tables in this standard follow a common structure with column designat
 
 • Name is the label associated with the Tag
 
-• Units specifies the Value’s units o Units of “N/A” indicates no units apply
+• Units specifies the Value’s units o Units of “N/A” indicates no units apply o All other Units are SI enumerations (e.g., µs is micro-seconds, ° is degrees) • Format indicates the item’s KLV format for the Value
 
-o All other Units are SI enumerations (e.g., µs is micro-seconds, ° is degrees) • Format indicates the item’s KLV format for the Value
-
-• Len indicates the nominal length of an item in bytes. See Section 9.1 for nomenclature of
-
-variable length assignments. • Description provides a brief description of the metadata item
+• Len indicates the nominal length of an item in bytes. See Section 9.1 for nomenclature of variable length assignments. • Description provides a brief description of the metadata item
 
 # 10 VMTI LS Structure
 
 The VMTI LS encompasses the core information applicable to all reported phenomena within a Motion Imagery frame. Figure 11 is a UML model of the VMTI data construct. The following lists the nomenclature and provides notes regarding the VMTI model:
 
-▪ Orange color denotes Local Sets; blue color indicates Pack structures; green color is a mix of Pack/Local Sets. ▪ The class name reflects the collective meaning of the attributes within the class. Class
-
-attributes are the informational items defining the class content. The attribute trait name is a single word or phrase starting with a lowercase letter and in lower camel case. The attribute trait type defines the data representation of the attribute value once the class has
-
-been instantiated.
+▪ Orange color denotes Local Sets; blue color indicates Pack structures; green color is a mix of Pack/Local Sets. ▪ The class name reflects the collective meaning of the attributes within the class. Class attributes are the informational items defining the class content. The attribute trait name is a single word or phrase starting with a lowercase letter and in lower camel case. The attribute trait type defines the data representation of the attribute value once the class has been instantiated.
 
 • - <attribute> is for Pack items e.g., -latitude in the Location Pack.
 
@@ -937,13 +761,7 @@ Acceleration Pack
 ```
 Figure 11: VMTI LS UML Model
 
-The VMTI LS supports information regarding identification and labeling of multiple detections
-
-within a Motion Imagery frame. When the VMTI LS is using embedded-VMTI, for example, within MISB ST 0601 (i.e., ST 0601 Item 74), the VMTI LS has a choice to express the frame
-
-center geographic coordinate as offsets from the frame center geographic coordinate provided in
-
-the parent versus including absolute coordinates. However, when used as a standalone-VMTI, the VMTI LS expresses these items in absolute geographic coordinates.
+The VMTI LS supports information regarding identification and labeling of multiple detections within a Motion Imagery frame. When the VMTI LS is using embedded-VMTI, for example, within MISB ST 0601 (i.e., ST 0601 Item 74), the VMTI LS has a choice to express the frame center geographic coordinate as offsets from the frame center geographic coordinate provided in the parent versus including absolute coordinates. However, when used as a standalone-VMTI, the VMTI LS expresses these items in absolute geographic coordinates.
 
 For example, Figure 12 illustrates the VMTI LS structure referenced subordinate to MISB ST 0601 as Item 74. The BER Length is the number of bytes the Value uses. The Value is composed of TLV items from the VMTI LS, and in this example, includes a vTargetSeries variable length pack (VLP) (Item 101 of the VMTI LS).
 
@@ -986,9 +804,7 @@ The LS begins with a ST 0601 Tag 74 signaling the presence of a VMTI LS (in blue
 
 Motion Imagery frame), and Item 101 indicates a vTargetSeries Pack, which contains two VTarget Packs (indicated in green). The Value portion of the first VTarget Pack includes a BER-OID encoded targetId, targetCentroid (Item 1), targetColor (Item 8), and targetPriority (Item 4).
 
-The Value portion of the second VTarget Pack is similar, except it has targetCentroid (Item 1),
-
-targetLocationOffsetLat (Item 10), and targetLocationOffsetLon (Item 11). The example assumes each targetId is one byte. Following the vTargetSeries are the algorithmSeries, ontologySeries, vmtiLsVersionNum and checkSum items.
+The Value portion of the second VTarget Pack is similar, except it has targetCentroid (Item 1), targetLocationOffsetLat (Item 10), and targetLocationOffsetLon (Item 11). The example assumes each targetId is one byte. Following the vTargetSeries are the algorithmSeries, ontologySeries, vmtiLsVersionNum and checkSum items.
 
 ## 10.1 VMTI LS
 
@@ -996,9 +812,7 @@ The VMTI LS 16-Byte Universal Label (UL) “Key” registered in MISB ST 0807 [9
 
 06.0E.2B.34.02.0B.01.01.0E.01.03.03.06.00.00.00 (CRC 51307)
 
-Table 9 summarizes the VMTI LS. See Section Local Set Table Structure Section 9.2.4 for
-
-column designations.
+Table 9 summarizes the VMTI LS. See Section Local Set Table Structure Section 9.2.4 for column designations.
 
 Table 9: VMTI LS
 
@@ -1040,15 +854,11 @@ ST 0903.6-119 Where the VMTI LS is standalone-VMTI, the checkSum shall be a runn
 
 ST 0903.4-17 Where the VMTI LS is standalone-VMTI, the VMTI LS instance shall have the checkSum (Item 1) be the last item in the instance.
 
-ST 0903.6-120 Where the VMTI LS is embedded-VMTI, the VMTI LS checkSum (Item 1) shall be
-
-omitted.
+ST 0903.6-120 Where the VMTI LS is embedded-VMTI, the VMTI LS checkSum (Item 1) shall be omitted.
 
 ### 10.1.2 VMTI LS: Item 2 – precisionTimeStamp
 
-Defined in MISB ST 0603, the Precision Time Stamp is the number of microseconds elapsed
-
-since the MISP Time System epoch of midnight (00:00:00), January 1, 1970, and the microsecond count does NOT include leap seconds. The VMTI LS precisionTimeStamp (Item 2)
+Defined in MISB ST 0603, the Precision Time Stamp is the number of microseconds elapsed since the MISP Time System epoch of midnight (00:00:00), January 1, 1970, and the microsecond count does NOT include leap seconds. The VMTI LS precisionTimeStamp (Item 2)
 
 is equal to VMTI-MI-Timestamp.
 
@@ -1067,9 +877,7 @@ ST 0903.4-14 Where a precisionTimeStamp (Item 2) is present in a VMTI LS, it sha
 
 The vmtiSystemName item is the name or description of the VMTI system producing the VMTI
 
-targets identified as a string of 32 UTF-8 characters. Note that UTF-8 allows up to four bytes per character; thus, this value can expand up to 128 bytes maximum. The vmtiSystemName is free
-
-text.
+targets identified as a string of 32 UTF-8 characters. Note that UTF-8 allows up to four bytes per character; thus, this value can expand up to 128 bytes maximum. The vmtiSystemName is free text.
 
 | Example Value | Example Encoded LS Value |  |  |
 |---|---|---|---|
@@ -1093,9 +901,7 @@ ST 0903.5-99 All instances of the VMTI LS shall contain vmtiLsVersionNum (Item 4
 
 ### 10.1.5 VMTI LS: Item 5 – totalNumTargetsDetected
 
-The totalNumTargetsDetected item is the total number of targets in the VMTI processing
-
-model’s target list; this value may be different than the number of elements in the vTargetSeries.
+The totalNumTargetsDetected item is the total number of targets in the VMTI processing model’s target list; this value may be different than the number of elements in the vTargetSeries.
 
 To save bandwidth, the VMTI system may only report a subset of the VMTI processing model’s target list. Section 6 describes the different scenarios for generating and reporting target lists. A value of zero represents no targets detected in the VMTI processing model’s list.
 
@@ -1110,9 +916,7 @@ ST 0903.4-18 Where the VMTI LS totalNumTargetsDetected in a frame (Item 5) is di
 
 ### 10.1.6 VMTI LS: Item 6 – numTargetsReported
 
-The numTargetsReported item is the count of a subset of the target list. Reporting only a subset
-
-of the target list improves bandwidth efficiency.
+The numTargetsReported item is the count of a subset of the target list. Reporting only a subset of the target list improves bandwidth efficiency.
 
 | Example Value | Example Encoded LS Value |  |  |
 |---|---|---|---|
@@ -1129,9 +933,7 @@ ST 0903.6 deprecates this item; refer to versions prior to ST 0903.6 for informa
 
 ### 10.1.8 VMTI LS: Item 8 – frameWidth
 
-The frameWidth item specifies the width of the VMTI-MI frame in pixels, which corresponds to the number of pixels in a row of the image where pixels appear in row-major order. Do not use a
-
-value of zero.
+The frameWidth item specifies the width of the VMTI-MI frame in pixels, which corresponds to the number of pixels in a row of the image where pixels appear in row-major order. Do not use a value of zero.
 
 | Example Value | Example Encoded LS Value |  |  |
 |---|---|---|---|
@@ -1144,9 +946,7 @@ ST 0903.6-121 Where a VMTI LS instance includes metadata items using the pixel n
 
 ### 10.1.9 VMTI LS: Item 9 – frameHeight
 
-The frameHeight item specifies the height of the VMTI-MI frame in pixels, which corresponds to the number of rows of pixels in the image where pixels appear in row-major order. The
-
-frameHeight is not a required value. Do not use a value of zero.
+The frameHeight item specifies the height of the VMTI-MI frame in pixels, which corresponds to the number of rows of pixels in the image where pixels appear in row-major order. The frameHeight is not a required value. Do not use a value of zero.
 
 | Example Value | Example Encoded LS Value |  |  |
 |---|---|---|---|
@@ -1157,11 +957,7 @@ frameHeight is not a required value. Do not use a value of zero.
 
 The vmtiSourceSensor item is a free text identifier for the source of the VMTI-MI, e.g., 'EO Nose', 'EO Zoom (DLTV)', 'EO Spotter', 'IR Mitsubishi PtSi Model 500', 'IR InSb Amber Model
 
-TBT', 'LYNX SAR Imagery', 'TESAR Imagery', etc. The vmtiSourceSensor identifies the source
-
-for systems where there are multiple sensors. Any change to the VMTI-MI requires updating this metadata item. The value is a free text string of 128 UTF-8 characters. UTF-8 allows up to four
-
-bytes per character, so this value can expand up to 512 bytes maximum.
+TBT', 'LYNX SAR Imagery', 'TESAR Imagery', etc. The vmtiSourceSensor identifies the source for systems where there are multiple sensors. Any change to the VMTI-MI requires updating this metadata item. The value is a free text string of 128 UTF-8 characters. UTF-8 allows up to four bytes per character, so this value can expand up to 512 bytes maximum.
 
 | Example Value | Example Encoded LS Value |  |  |
 |---|---|---|---|
@@ -1170,9 +966,7 @@ bytes per character, so this value can expand up to 512 bytes maximum.
 
 ### 10.1.11 VMTI LS: Item 11 – vmtiHorizontalFov
 
-The vmtiHorizontalFov item is the VMTI sensor horizontal field of view (HFOV) of the source
-
-input. ST 0903 requires Item 11 in two cases: 1) standalone-VMTI, or 2) embedded-VMTI and the VMTI-MI is different from the user-MI. Otherwise, the parent (e.g., ST 0601 LS Item 16) provides the HFOV value.
+The vmtiHorizontalFov item is the VMTI sensor horizontal field of view (HFOV) of the source input. ST 0903 requires Item 11 in two cases: 1) standalone-VMTI, or 2) embedded-VMTI and the VMTI-MI is different from the user-MI. Otherwise, the parent (e.g., ST 0601 LS Item 16) provides the HFOV value.
 
 Valid Values: The set of real numbers from 0 to 180 inclusive.
 
@@ -1189,11 +983,7 @@ ST 0903.6-122 Where the VMTI LS is standalone-VMTI, the VMTI LS shall contain th
 
 ### 10.1.12 VMTI LS: Item 12 – vmtiVerticalFov
 
-The vmtiVerticalFov item is the vertical field of view (VFOV) of the source input. This is a
-
-required item in two cases: 1) standalone-VMTI, or 2) embedded-VMTI and the VMTI-MI is
-
-different from the user-MI. Otherwise, the parent (e.g., ST 0601 LS Item 17) provides the VFOV
+The vmtiVerticalFov item is the vertical field of view (VFOV) of the source input. This is a required item in two cases: 1) standalone-VMTI, or 2) embedded-VMTI and the VMTI-MI is different from the user-MI. Otherwise, the parent (e.g., ST 0601 LS Item 17) provides the VFOV
 
 value.
 
@@ -1226,21 +1016,15 @@ ST 0903.6-125 Where the VMTI LS is standalone-VMTI, the VMTI LS shall contain th
 
 ### 10.1.14 VMTI LS: Item 101 – vTargetSeries
 
-The vTargetSeries item is a Series type which contains VTarget Packs only (see Figure 14). The Series Length is the number of bytes the vTargetSeries Value uses. The Value is comprised of
-
-one or more VTarget Packs, each of which can be of a different size according to its VTarget
+The vTargetSeries item is a Series type which contains VTarget Packs only (see Figure 14). The Series Length is the number of bytes the vTargetSeries Value uses. The Value is comprised of one or more VTarget Packs, each of which can be of a different size according to its VTarget
 
 Pack Length (L). Each VTarget Pack in the vTargetSeries is for a unique target, i.e., a VTargetSeries cannot contain two VTarget Packs both using the same VTarget Pack targetId.
 
 The example in Figure 14 shows the VMTI LS’s first data is a TLV Item 5|1|2 indicating Item 5
 
-“Total Number of Targets Detected in the Frame”, a Length of 1 byte, and a Value of 2 indicating two VTarget Packs. Tag 101 indicates a vTargetSeries with the Series Length
+“Total Number of Targets Detected in the Frame”, a Length of 1 byte, and a Value of 2 indicating two VTarget Packs. Tag 101 indicates a vTargetSeries with the Series Length indicated by L, i.e., the sum of the sizes of each VTargetPack in the Series. The size of each VTargetPack is the number of bytes for the VTarget Pack Length and the number of bytes for the
 
-indicated by L, i.e., the sum of the sizes of each VTargetPack in the Series. The size of each VTargetPack is the number of bytes for the VTarget Pack Length and the number of bytes for the
-
-VTarget Pack Value. Two VTarget Packs within the vTargetSeries follow; the VTarget Pack length (L) in each VTarget Pack specifies the respective pack’s length for parsing. The number circled in red is the targetId of the VTarget Pack, which must be unique within the vTargetSeries. The remaining information in each VTarget Pack are specifics about the target such as centroid
-
-pixel number and target location latitude and longitude.
+VTarget Pack Value. Two VTarget Packs within the vTargetSeries follow; the VTarget Pack length (L) in each VTarget Pack specifies the respective pack’s length for parsing. The number circled in red is the targetId of the VTarget Pack, which must be unique within the vTargetSeries. The remaining information in each VTarget Pack are specifics about the target such as centroid pixel number and target location latitude and longitude.
 
 ```
 MISB ST 0601                                    VMTI LS Value
@@ -1257,9 +1041,7 @@ Figure 14: VMTI LS vTargetSeries Example
 
 Requirement
 
-ST 0903.6-126 Each VTarget Pack element in a VMTI LS vTargetSeries (Item 101) shall have a
-
-unique targetId.
+ST 0903.6-126 Each VTarget Pack element in a VMTI LS vTargetSeries (Item 101) shall have a unique targetId.
 
 | Example Value | Example Encoded LS Value |  |  |
 |---|---|---|---|
@@ -1274,17 +1056,13 @@ VTarget Pack. BER-OID Target IDs (i.e., 0x01, 0x02, 0x03) and the remaining VTar
 
 ### 10.1.15 VMTI LS: Item 102 – algorithmSeries
 
-The algorithmSeries item is a Series type which contains one or more Algorithm Local Sets. The length for the series is the number of bytes the algorithmSeries value uses. The value is
-
-comprised of one or more Algorithm LS, each of which can be of a different size (thereby including different information) parsed according to the length provided for each LS.
+The algorithmSeries item is a Series type which contains one or more Algorithm Local Sets. The length for the series is the number of bytes the algorithmSeries value uses. The value is comprised of one or more Algorithm LS, each of which can be of a different size (thereby including different information) parsed according to the length provided for each LS.
 
 The algorithmSeries enables assigning an algorithm LS to a detected target or a generated track, see VTarget Item 22 and VTracker Item 12.
 
 ### 10.1.16 VMTI LS: Item 103 – ontologySeries
 
-The ontologySeries item is a Series type which contains one or more Ontology Local Sets. The length for the series is the number of bytes the ontologySeries value uses. The value is comprised
-
-of one or more Ontology LS, each of which can be of a different size (thereby including different information) parsed according to the length provided for each LS.
+The ontologySeries item is a Series type which contains one or more Ontology Local Sets. The length for the series is the number of bytes the ontologySeries value uses. The value is comprised of one or more Ontology LS, each of which can be of a different size (thereby including different information) parsed according to the length provided for each LS.
 
 The ontologySeries enables assigning multiple ontologies to each VTarget (see VTarget Item 107) and multiple features to each VObject (see VObject Item 5).
 
@@ -1316,23 +1094,17 @@ Length  targetId T L targetCentroid T L targetColor T L targetPriority T L vObje
 
 Figure 16: VTarget Pack Example
 
-The targetId in a VTarget Pack is mandatory; while other TLV items are optional, at least one
-
-needs to be present. This construct saves bandwidth. For example, in the simplest case, a VTarget Pack might consist of only a targetId and a targetCentroid.
+The targetId in a VTarget Pack is mandatory; while other TLV items are optional, at least one needs to be present. This construct saves bandwidth. For example, in the simplest case, a VTarget Pack might consist of only a targetId and a targetCentroid.
 
 Requirement
 
-ST 0903.4-10 Where using a VTarget Pack, at least one Tag-Length-Value item shall follow the
-
-targetId.
+ST 0903.4-10 Where using a VTarget Pack, at least one Tag-Length-Value item shall follow the targetId.
 
 The TLV structure follows the same parsing rules for an embedded Local Set as defined in
 
 Section 9.2.
 
-Table 10 summarizes the VTarget Pack. See Section Local Set Table Structure Section 9.2.4 for
-
-column designations.
+Table 10 summarizes the VTarget Pack. See Section Local Set Table Structure Section 9.2.4 for column designations.
 
 Table 10: VTarget Pack (and Local Sets)
 
@@ -1401,9 +1173,7 @@ ST 0903.6-129 When a VMTI system creates a target, the targetId shall be unique 
 
 #### 10.2.2.2 VTarget Pack: Item 1 – targetCentroid
 
-The targetCentroid item specifies the position of a target centroid within a frame as a pixel number. See Section 9.2.3.1 for pixel number computation. See Section 10.2.1 for usage
-
-requirements.
+The targetCentroid item specifies the position of a target centroid within a frame as a pixel number. See Section 9.2.3.1 for pixel number computation. See Section 10.2.1 for usage requirements.
 
 Range: All integer values from 1 to 0xFFFFFFFFFFFF (281,474,976,710,655).
 
@@ -1462,9 +1232,7 @@ Valid Values: The set of integer values from 0 to 100 inclusive.
 
 #### 10.2.2.7 VTarget Pack: Item 6 – targetHistory
 
-The targetHistory is the number of times (i.e., frames) the system detects the same target with
-
-the same targetId. The targetHistory can indicate target persistence i.e., the number of previous detections of the same target and may provide useful context when a target reappears after no detection for a significant time. There is no requirement that detections be in consecutive frames.
+The targetHistory is the number of times (i.e., frames) the system detects the same target with the same targetId. The targetHistory can indicate target persistence i.e., the number of previous detections of the same target and may provide useful context when a target reappears after no detection for a significant time. There is no requirement that detections be in consecutive frames.
 
 Valid Values: 0 to 65535 frames, where a value of 0 denotes the target as a new detection.
 
@@ -1475,9 +1243,7 @@ Valid Values: 0 to 65535 frames, where a value of 0 denotes the target as a new 
 
 #### 10.2.2.8 VTarget Pack: Item 7 – percentageOfTargetPixels
 
-The percentageOfTargetPixels item specifies the ratio of the target pixels to the size of the
-
-bounding box, multiplied by 100. The range is 1 to 100, where 100 signifies the target completely fills the bounding box.
+The percentageOfTargetPixels item specifies the ratio of the target pixels to the size of the bounding box, multiplied by 100. The range is 1 to 100, where 100 signifies the target completely fills the bounding box.
 
 Valid Values: The set of integer numbers from 1 to 100 inclusive.
 
@@ -1488,11 +1254,7 @@ Valid Values: The set of integer numbers from 1 to 100 inclusive.
 
 #### 10.2.2.9 VTarget Pack: Item 8 – targetColor
 
-The targetColor item is the dominant color of the target expressed using RGB color values, with
-
-general mapping of any multispectral dataset to an RGB value. VMTI systems may compute the dominant color by any desired method, for example averaging all the pixels, by bands, in the bounding box. The targetColor’s primary use is when transmitting metadata in the absence of the
-
-underlying Motion Imagery. Represent the RGB color value as: first byte = Red, second byte =
+The targetColor item is the dominant color of the target expressed using RGB color values, with general mapping of any multispectral dataset to an RGB value. VMTI systems may compute the dominant color by any desired method, for example averaging all the pixels, by bands, in the bounding box. The targetColor’s primary use is when transmitting metadata in the absence of the underlying Motion Imagery. Represent the RGB color value as: first byte = Red, second byte =
 
 Green, third byte = Blue.
 
@@ -1505,13 +1267,9 @@ Valid Values: All integer values from 0 to 0xFF (255) for each of three one-byte
 
 #### 10.2.2.10 VTarget Pack: Item 9 – targetIntensity
 
-The targetIntensity item is the dominant intensity of the target with dynamic range up to 24 bits. The targetIntensity provides a relative measure of how the different targets compare with each other. The intensity value comes directly from the source imagery and knowledge of the specific
+The targetIntensity item is the dominant intensity of the target with dynamic range up to 24 bits. The targetIntensity provides a relative measure of how the different targets compare with each other. The intensity value comes directly from the source imagery and knowledge of the specific bit-range or status (e.g., gain adjusted) is unknown. VMTI systems may compute the dominant intensity of a target by any desired method, for example using the maximum intensity in the target bounding box or averaging all the intensities in the bounding box.
 
-bit-range or status (e.g., gain adjusted) is unknown. VMTI systems may compute the dominant intensity of a target by any desired method, for example using the maximum intensity in the target bounding box or averaging all the intensities in the bounding box.
-
-The primary use of the targetIntensity is for infrared (IR) systems; for non-IR systems use the
-
-targetColor item (Item 8). The intensity value meaning (i.e., White-Hot, or Black-Hot) is consistent with IR Polarity specified in the parent set (e.g., MISB ST 0601), if present; if the IR
+The primary use of the targetIntensity is for infrared (IR) systems; for non-IR systems use the targetColor item (Item 8). The intensity value meaning (i.e., White-Hot, or Black-Hot) is consistent with IR Polarity specified in the parent set (e.g., MISB ST 0601), if present; if the IR
 
 Polarity is unknown, assume White Hot.
 
@@ -1575,13 +1333,7 @@ Valid Values: The set of real numbers from -900 to 19,000 inclusive.
 
 #### 10.2.2.14 VTarget Pack: Item 13 – boundingBoxTopLeftLatOffset
 
-The boundingBoxTopLeftLatOffset item is the latitude offset for the top left corner of target’s
-
-geospatial bounding box from the parent’s Frame Center Latitude (e.g., MISB ST 0601 - Item 23) based on the WGS84 ellipsoid. The boundingBoxTopLeftLatOffset adds to the Frame Center Latitude to determine the latitude of the top left corner of the target’s geospatial bounding box. Both data items need to be in decimal representation prior to their addition to determine the
-
-actual measured or calculated Motion Imagery target location. See Section 9.2.3.2 on reporting
-
-geographic values.
+The boundingBoxTopLeftLatOffset item is the latitude offset for the top left corner of target’s geospatial bounding box from the parent’s Frame Center Latitude (e.g., MISB ST 0601 - Item 23) based on the WGS84 ellipsoid. The boundingBoxTopLeftLatOffset adds to the Frame Center Latitude to determine the latitude of the top left corner of the target’s geospatial bounding box. Both data items need to be in decimal representation prior to their addition to determine the actual measured or calculated Motion Imagery target location. See Section 9.2.3.2 on reporting geographic values.
 
 Conversion: IMAPB (-19.2, 19.2, 3).
 
@@ -1594,13 +1346,7 @@ Valid Values: The set of real numbers from -19.2 to 19.2 inclusive.
 
 #### 10.2.2.15 VTarget Pack: Item 14 – boundingBoxTopLeftLonOffset
 
-The boundingBoxTopLeftLonOffset item is the longitude offset for the top left corner of target’s
-
-geospatial bounding box from the parent’s Frame Center Longitude (e.g., MISB ST 0601 - Item 24) based on the WGS84 ellipsoid. Added to the Frame Center Longitude from the parent ST 0601 to determine the longitude of the top left corner of the target’s geospatial bounding box. Both data items need to be in decimal representation prior to their addition to determine the
-
-actual measured or calculated Motion Imagery target location. See Section 9.2.3.2 on reporting
-
-geographic values.
+The boundingBoxTopLeftLonOffset item is the longitude offset for the top left corner of target’s geospatial bounding box from the parent’s Frame Center Longitude (e.g., MISB ST 0601 - Item 24) based on the WGS84 ellipsoid. Added to the Frame Center Longitude from the parent ST 0601 to determine the longitude of the top left corner of the target’s geospatial bounding box. Both data items need to be in decimal representation prior to their addition to determine the actual measured or calculated Motion Imagery target location. See Section 9.2.3.2 on reporting geographic values.
 
 Conversion: IMAPB(-19.2, 19.2, 3).
 
@@ -1613,11 +1359,7 @@ Valid Values: The set of real numbers from -19.2 to 19.2 inclusive.
 
 #### 10.2.2.16 VTarget Pack: Item 15 – boundingBoxBottomRightLatOffset
 
-The boundingBoxBottomRightLatOffset item is the latitude offset for the bottom right corner of
-
-target’s geospatial bounding box from the parent’s Frame Center Latitude (e.g., MISB ST 0601 - Item 23) based on the WGS84 ellipsoid. The boundingBoxBottomRightLatOffset adds to the Frame Center Latitude to determine the latitude of the bottom right corner of the target’s
-
-geospatial bounding box. Both data items need to be in decimal representation prior to their addition to determine the actual measured or calculated Motion Imagery target location. See
+The boundingBoxBottomRightLatOffset item is the latitude offset for the bottom right corner of target’s geospatial bounding box from the parent’s Frame Center Latitude (e.g., MISB ST 0601 - Item 23) based on the WGS84 ellipsoid. The boundingBoxBottomRightLatOffset adds to the Frame Center Latitude to determine the latitude of the bottom right corner of the target’s geospatial bounding box. Both data items need to be in decimal representation prior to their addition to determine the actual measured or calculated Motion Imagery target location. See
 
 Section 9.2.3.2 on reporting geographic values.
 
@@ -1632,11 +1374,7 @@ Valid Values: The set of real numbers from -19.2 to 19.2 inclusive.
 
 #### 10.2.2.17 VTarget Pack: Item 16 – boundingBoxBottomRightLonOffset
 
-The boundingBoxBottomRightLonOffset item is the longitude offset for the bottom right corner of target’s geospatial bounding box from the parent’s Frame Center Longitude based on the WGS84 ellipsoid. The boundingBoxBottomRightLonOffset adds to the Frame Center Longitude to determine the longitude of the bottom right corner of the target’s geospatial bounding box. Both data items need to be in decimal representation prior to their addition to determine the
-
-actual measured or calculated Motion Imagery target location. See Section 9.2.3.2 on reporting
-
-geographic values.
+The boundingBoxBottomRightLonOffset item is the longitude offset for the bottom right corner of target’s geospatial bounding box from the parent’s Frame Center Longitude based on the WGS84 ellipsoid. The boundingBoxBottomRightLonOffset adds to the Frame Center Longitude to determine the longitude of the bottom right corner of the target’s geospatial bounding box. Both data items need to be in decimal representation prior to their addition to determine the actual measured or calculated Motion Imagery target location. See Section 9.2.3.2 on reporting geographic values.
 
 Conversion: IMAPB(-19.2, 19.2, 3).
 
@@ -1653,13 +1391,7 @@ ST 0903.4-35 VTarget Pack boundaryBottomRightLonOffset (Item 16) shall only be p
 
 #### 10.2.2.18 VTarget Pack: Item 17 – targetLocation
 
-The targetLocation item provides detailed geo-positioning information for a target, optionally including the standard deviation and correlation coefficients. This item is of type Location which
-
-is a Defined Length Truncation Pack. To specify the geographic coordinates for a target with
-
-standalone-VMTI, use targetLocation in lieu of VTarget Pack - Item 10 targetLocationOffsetLat
-
-and Item 11 targetLocationOffsetLat. However, even when using embedded-VMTI, targetLocation is preferred vice offset calculations.
+The targetLocation item provides detailed geo-positioning information for a target, optionally including the standard deviation and correlation coefficients. This item is of type Location which is a Defined Length Truncation Pack. To specify the geographic coordinates for a target with standalone-VMTI, use targetLocation in lieu of VTarget Pack - Item 10 targetLocationOffsetLat and Item 11 targetLocationOffsetLat. However, even when using embedded-VMTI, targetLocation is preferred vice offset calculations.
 
 Requirement
 
@@ -1667,21 +1399,13 @@ ST 0903.6-130 Where a Standalone-VMTI VTarget LS instance includes detectionStat
 
 #### 10.2.2.19 VTarget Pack: Item 18 – geospatialContourSeries
 
-The geospatialContourSeries item is of type BoundarySeries, which provides detailed geo-positioning information for the contour around the target. An arbitrary number of vertices defines
+The geospatialContourSeries item is of type BoundarySeries, which provides detailed geo-positioning information for the contour around the target. An arbitrary number of vertices defines the contour. Each vertex is an element of type Location. The Location type captures geo-positioning data about a specific location on or near the surface of the Earth. Typical geospatial contours include boxes defined by two or four vertices, although other contours are possible.
 
-the contour. Each vertex is an element of type Location. The Location type captures geo-positioning data about a specific location on or near the surface of the Earth. Typical geospatial
-
-contours include boxes defined by two or four vertices, although other contours are possible.
-
-Use a geospatialContourSeries instead of a target’s geospatial bounding box (Items 13 through 16) when accuracy and correlation information is available and needed. Such information aids
-
-fusion with other moving object indicators, such as, radar based GMTI, to support track identification and tracking.
+Use a geospatialContourSeries instead of a target’s geospatial bounding box (Items 13 through 16) when accuracy and correlation information is available and needed. Such information aids fusion with other moving object indicators, such as, radar based GMTI, to support track identification and tracking.
 
 #### 10.2.2.20 VTarget Pack: Item 19 – centroidPixRow
 
-The centroidPixRow item specifies the row of the target centroid within the Motion Imagery
-
-frame in pixels. Numbering commences from 1, denoting the top row. The centroidPixRow may be used with VTarget Pack centroidPixCol - Item 20 to provide an alternate method to specify
+The centroidPixRow item specifies the row of the target centroid within the Motion Imagery frame in pixels. Numbering commences from 1, denoting the top row. The centroidPixRow may be used with VTarget Pack centroidPixCol - Item 20 to provide an alternate method to specify
 
 VTarget Pack targetCentroid – Item 1, the pixel location of the target centroid. If present, the centroidPixCol - Item 20 must also be present.
 
@@ -1698,11 +1422,7 @@ ST 0903.4-37 Where VTarget Pack centroidPixCol (Item 20) is present, VTarget Pac
 
 #### 10.2.2.21 VTarget Pack: Item 20 – centroidPixCol
 
-The centroidPixCol item specifies the column of the target centroid within the Motion Imagery
-
-frame in pixels. Numbering commences from 1, denoting the left column. May be used with VTarget Pack centroidPixRow - Item 19 to provide an alternate method to specify VTarget Pack
-
-targetCentroid – Item 1, the pixel location of the target centroid. If present, the centroidPixRow - Item 19 must also be present.
+The centroidPixCol item specifies the column of the target centroid within the Motion Imagery frame in pixels. Numbering commences from 1, denoting the left column. May be used with VTarget Pack centroidPixRow - Item 19 to provide an alternate method to specify VTarget Pack targetCentroid – Item 1, the pixel location of the target centroid. If present, the centroidPixRow - Item 19 must also be present.
 
 Valid Values: Integer values in the range 1 to 232 -1.
 
@@ -1723,23 +1443,15 @@ ST 0903.6 deprecates this item; refer to versions prior to ST 0903.6 for informa
 
 The algorithmId item refers to one of the algorithm ids in the VMTI LS algorithmSeries Item
 
-102, which lists all the algorithms a VMTI LS uses. Each algorithm in the series includes an identifier (algorithmId). The algorithmId value equals one of the Id values in the
-
-algorithmSeries.
+102, which lists all the algorithms a VMTI LS uses. Each algorithm in the series includes an identifier (algorithmId). The algorithmId value equals one of the Id values in the algorithmSeries.
 
 #### 10.2.2.24 VTarget Pack: Item 23 – detectionStatus
 
-The detectionStatus item allows assigning a target a status in detection. Section 7.2 describes the
-
-lifecycle states for a detected target.
+The detectionStatus item allows assigning a target a status in detection. Section 7.2 describes the lifecycle states for a detected target.
 
 #### 10.2.2.25 VTarget Pack: Item 101 – vMask
 
-The vMask item is a VMask LS which defines the outline of a detected target. Downstream
-
-clients can redraw the outline or “chip” the target from the Motion Imagery. Specifying the shape of the outline is by (1) three or more points representing the vertices of a polygon within a Motion Imagery frame, or (2) a bit mask identifying the pixels within the Motion Imagery frame subsumed by the target. There is no restriction in specifying both a polygon and a bit mask
-
-simultaneously.
+The vMask item is a VMask LS which defines the outline of a detected target. Downstream clients can redraw the outline or “chip” the target from the Motion Imagery. Specifying the shape of the outline is by (1) three or more points representing the vertices of a polygon within a Motion Imagery frame, or (2) a bit mask identifying the pixels within the Motion Imagery frame subsumed by the target. There is no restriction in specifying both a polygon and a bit mask simultaneously.
 
 #### 10.2.2.26 VTarget Pack: Item 102 (DEPRECATED)
 
@@ -1751,17 +1463,11 @@ ST 0903.6 deprecates this item; refer to versions prior to ST 0903.6 for informa
 
 #### 10.2.2.28 VTarget Pack: Item 104 – vTracker
 
-The vTracker item is a VTracker LS which contains spatial and temporal information ancillary to
-
-the VChip LS, VObject LS, and VFeature LS to assist in tracking the target. Such information allows Motion Imagery tracking algorithms to produce better tracks from the VMTI target
-
-information.
+The vTracker item is a VTracker LS which contains spatial and temporal information ancillary to the VChip LS, VObject LS, and VFeature LS to assist in tracking the target. Such information allows Motion Imagery tracking algorithms to produce better tracks from the VMTI target information.
 
 #### 10.2.2.29 VTarget Pack: Item 105 – vChip
 
-The vChip item is a VChip LS which enables embedding an image “chip” of the target into the VMTI metadata. The system creates the image chip from the same sensor and time as the detection. The VChip LS finds use in bandwidth constrained environments where the operator
-
-does not have access to the underlying Motion Imagery stream. Alternatively, the VChip LS includes using an Internationalized Resource Identifier (IRI), which can be in the form of a
+The vChip item is a VChip LS which enables embedding an image “chip” of the target into the VMTI metadata. The system creates the image chip from the same sensor and time as the detection. The VChip LS finds use in bandwidth constrained environments where the operator does not have access to the underlying Motion Imagery stream. Alternatively, the VChip LS includes using an Internationalized Resource Identifier (IRI), which can be in the form of a
 
 Uniform Resource Locator (URL), for linking to an externally stored image chip. An externally referred chip should have the same chip representation and data as within the stream.
 
@@ -1769,15 +1475,11 @@ Alternatively, use the vChipSeries where there are more than one VChip.
 
 #### 10.2.2.30 VTarget Pack: Item 106 – vChipSeries
 
-The vChipSeries item is a Series (see Figure 17) of one or more VChip LS associated with a specific target. The system creates the first image chip in the vChipSeries from the same sensor and time as the detection. The system adds supplemental images from alternative sensors but at
-
-the same time as the detection. When a system uses Item 106 vChipSeries, there is no need for
+The vChipSeries item is a Series (see Figure 17) of one or more VChip LS associated with a specific target. The system creates the first image chip in the vChipSeries from the same sensor and time as the detection. The system adds supplemental images from alternative sensors but at the same time as the detection. When a system uses Item 106 vChipSeries, there is no need for
 
 Item 105.
 
-Multiple image chips could be useful, for example, where an image chip from a source sensor and another image chip from a different sensor are of different resolutions or different modalities
-
-(e.g., IR).
+Multiple image chips could be useful, for example, where an image chip from a source sensor and another image chip from a different sensor are of different resolutions or different modalities (e.g., IR).
 
 ```
                  Value
@@ -1794,9 +1496,7 @@ ST 0903.6-143 The image chip within the first VChip LS in a vChipSeries shall be
 
 #### 10.2.2.31 VTarget Pack: Item 107 – vObjectSeries
 
-The vObjectSeries item is a Series (see Figure 18) of one or more VObject LS associated with a
-
-specific target.
+The vObjectSeries item is a Series (see Figure 18) of one or more VObject LS associated with a specific target.
 
 ```
                  Value
@@ -1809,9 +1509,7 @@ Figure 18: VObject Series Structure
 
 ## 10.3 VMask LS
 
-Table 11 summarizes the VMask LS. See Section Local Set Table Structure Section 9.2.4 for
-
-column designations.
+Table 11 summarizes the VMask LS. See Section Local Set Table Structure Section 9.2.4 for column designations.
 
 Table 11: VMask LS
 
@@ -1824,15 +1522,11 @@ VMask Local Set
 
 ### 10.3.1 VMask LS: Item 1 – pixelContour
 
-A pixelContour item is an Array type of three or more points representing the vertices of a polygon within a Motion Imagery frame listed in clockwise order. Close the polygon by connecting the last point to the first point. Each point is a pixel number with numbering
-
-commencing with 1, at the top left pixel, proceeding from left to right, top to bottom, then encoded using the Length-Value construct of a Variable Length Pack. Note: in the UML of the
+A pixelContour item is an Array type of three or more points representing the vertices of a polygon within a Motion Imagery frame listed in clockwise order. Close the polygon by connecting the last point to the first point. Each point is a pixel number with numbering commencing with 1, at the top left pixel, proceeding from left to right, top to bottom, then encoded using the Length-Value construct of a Variable Length Pack. Note: in the UML of the
 
 VMTI LS, the closed brackets [] indicates an array.
 
-The calculation of the pixel number is pixel number = Column + ((Row-1) x frame width)). The
-
-top left pixel of the frame equates to (Column, Row) = (1, 1) and pixel number = 1. For example, for frame width = 1920 and pixel location (1, 1) the pixel number = 1; for pixel location (2, 1) the pixel number = 2; for pixel location (1, 2) the pixel number = 1921.
+The calculation of the pixel number is pixel number = Column + ((Row-1) x frame width)). The top left pixel of the frame equates to (Column, Row) = (1, 1) and pixel number = 1. For example, for frame width = 1920 and pixel location (1, 1) the pixel number = 1; for pixel location (2, 1) the pixel number = 2; for pixel location (1, 2) the pixel number = 1921.
 
 | Example Value | Example Encoded LS Value |  |  |
 |---|---|---|---|
@@ -1841,15 +1535,11 @@ top left pixel of the frame equates to (Column, Row) = (1, 1) and pixel number =
 
 Requirement(s)
 
-ST 0903.4-40 The VMask LS pixelContour (Item 1) shall list the contour points in clockwise
-
-order. ST 0903.5-100 A pixelContour pixel number shall be no greater than the number of pixels in a VMTI-MI frame.
+ST 0903.4-40 The VMask LS pixelContour (Item 1) shall list the contour points in clockwise order. ST 0903.5-100 A pixelContour pixel number shall be no greater than the number of pixels in a VMTI-MI frame.
 
 ### 10.3.2 VMask LS: Item 2 – bitMaskSeries
 
-The bitMaskSeries item is a Series type defining a run length encoding of a bit mask describing the pixels which include the target within the Motion Imagery frame. As shown in Figure 19, the VMask LS Value consists of multiple pixel-runs. Each pixel-run specifies the starting pixel
-
-number (i.e., pixel) and the number of pixels in a run (i.e., Run BER).
+The bitMaskSeries item is a Series type defining a run length encoding of a bit mask describing the pixels which include the target within the Motion Imagery frame. As shown in Figure 19, the VMask LS Value consists of multiple pixel-runs. Each pixel-run specifies the starting pixel number (i.e., pixel) and the number of pixels in a run (i.e., Run BER).
 
 ```
                                          Value
@@ -1861,13 +1551,9 @@ LS Tag 2   Length    L    L   pixel   Run BER    L    L   pixel   Run BER   …
 
 Figure 19: bitMaskSeries structure for encoding pixel-runs
 
-Pixel numbering commences with 1, at the top left pixel, proceeding from left to right, top to bottom. Encode pixel numbers using the Length-Value (i.e., “L | pixel” in Figure 19) construct of a Variable Length Pack. Encode the length of each run using BER-Length encoding. The criterion to decide whether a pixel “covers” a portion of the target is arbitrary and left to the
+Pixel numbering commences with 1, at the top left pixel, proceeding from left to right, top to bottom. Encode pixel numbers using the Length-Value (i.e., “L | pixel” in Figure 19) construct of a Variable Length Pack. Encode the length of each run using BER-Length encoding. The criterion to decide whether a pixel “covers” a portion of the target is arbitrary and left to the implementer. The implementer is free to decide whether overlap with all, a majority, or a fraction of pixels constitutes “covering” the target.
 
-implementer. The implementer is free to decide whether overlap with all, a majority, or a fraction of pixels constitutes “covering” the target.
-
-The calculation of the pixel number is pixel number Column + ((Row-1) x frame width)). The
-
-top left pixel of the frame equates to (Column, Row) = (1, 1) with pixel number = 1, then encoded using the Length-Value construct of a Variable Length Pack.
+The calculation of the pixel number is pixel number Column + ((Row-1) x frame width)). The top left pixel of the frame equates to (Column, Row) = (1, 1) with pixel number = 1, then encoded using the Length-Value construct of a Variable Length Pack.
 
 For example, in Figure 20 the pairs of pixel numbers and run lengths (pixel, run) are:
 
@@ -1894,9 +1580,7 @@ ST 0903.5-101 A bitMaskSeries pixel-run starting pixel number plus run-length sh
 
 ## 10.4 VObject LS
 
-Table 12 summarizes the VObject LS. See Section Local Set Table Structure Section 9.2.4 for
-
-column designations.
+Table 12 summarizes the VObject LS. See Section Local Set Table Structure Section 9.2.4 for column designations.
 
 Table 12: VObject LS
 
@@ -1920,9 +1604,7 @@ ST 0903.6 deprecates this item; refer to versions prior to ST 0903.6 for informa
 
 ### 10.4.3 VObject: Item 3 – ontologyId
 
-The ontologyId is a reference to one of the ontologies in the VMTI LS ontologySeries. Each item
-
-in the ontologySeries defines either an object label or feature label, see Section 7.3. Each ontology in the ontologySeries includes an identifier (ontologyId) so the value of the VObject LS
+The ontologyId is a reference to one of the ontologies in the VMTI LS ontologySeries. Each item in the ontologySeries defines either an object label or feature label, see Section 7.3. Each ontology in the ontologySeries includes an identifier (ontologyId) so the value of the VObject LS
 
 ontologyId is equal to one of the ontologyId values in the ontologySeries. Using the ontologyId saves bandwidth by not duplicating the same information for different VObjects.
 
@@ -1940,9 +1622,7 @@ with the length defined by the tag’s length value. Increasing the length provi
 
 ### 10.4.5 VObject: Item 5 - vFeatureSeries
 
-The vFeatureSeries item is a Series (see Figure 21) of one or more VFeature LS associated with
-
-a specific VObject.
+The vFeatureSeries item is a Series (see Figure 21) of one or more VFeature LS associated with a specific VObject.
 
 ```
                  Value
@@ -1955,9 +1635,7 @@ Figure 21: VFeature Series Structure
 
 ## 10.5 VFeature LS
 
-Table 13 summarizes the VFeature LS. See Section Local Set Table Structure Section 9.2.4 for
-
-column designations.
+Table 13 summarizes the VFeature LS. See Section Local Set Table Structure Section 9.2.4 for column designations.
 
 Table 13: VFeature LS
 
@@ -1992,17 +1670,11 @@ ST 0903.6-132 The value of VFeature LS’s ontologyId shall be equal to one of t
 
 The confidence item is the measure of “trust” in the feature-classification of this vFeature from
 
-0.0% to 100.0%. For example, a feature-classifier analyzes an object and “classifies” a subset of the object’s pixels as an antenna. If the pixels closely match the classifier’s criteria for an antenna the confidence in the feature-classification is high (towards 100.0%); alternatively, if the classifier is less sure of its feature-classification the confidence is low (towards 0%). The
-
-confidence value is IMAPB(0.0, 100.0, length) with the length defined by the item’s length
-
-value. Increasing the length provides more accuracy. The minimum length is 1.
+0.0% to 100.0%. For example, a feature-classifier analyzes an object and “classifies” a subset of the object’s pixels as an antenna. If the pixels closely match the classifier’s criteria for an antenna the confidence in the feature-classification is high (towards 100.0%); alternatively, if the classifier is less sure of its feature-classification the confidence is low (towards 0%). The confidence value is IMAPB(0.0, 100.0, length) with the length defined by the item’s length value. Increasing the length provides more accuracy. The minimum length is 1.
 
 ## 10.6 VTracker LS
 
-Table 14 summarizes the VTracker LS. See Section Local Set Table Structure Section 9.2.4 for
-
-column designations.
+Table 14 summarizes the VTracker LS. See Section Local Set Table Structure Section 9.2.4 for column designations.
 
 Table 14: VTracker LS
 
@@ -2049,9 +1721,7 @@ Precision Time Stamp, see section 9.2.2.
 
 ### 10.6.4 VTracker LS: Item 4 – latestObsvTime
 
-The latestObsvTime item captures the time of the most recent or latest observation of the entity
-
-using the MISP Precision Time Stamp, see section 9.2.2.
+The latestObsvTime item captures the time of the most recent or latest observation of the entity using the MISP Precision Time Stamp, see section 9.2.2.
 
 ### 10.6.5 VTracker LS: Item 5 – trackBoundarySeries
 
@@ -2063,13 +1733,7 @@ ST 0903.6 deprecates this item; refer to versions prior to ST 0903.6 for informa
 
 ### 10.6.7 VTracker LS: Item 7 – confidenceLevel
 
-The confidenceLevel item, expressed as a percentage from 0 to 100, is an estimation of the certainty or correctness that the track described by the sequence of VMTI movement detections corresponds to the same object. A value = 0 indicates no confidence; a value = 100 indicates absolute certainty. Confidence is an estimation of the certainty or correctness that the track
-
-described by the sequence of VMTI movement detections corresponds to the same object. For
-
-example, detections derived from many unambiguous target reports, such as, for a single vehicle on a road in a desert environment might signal high confidence. Reports associated with several
-
-overlapping or nearby tracks in a partially obscured environment, such as, for dismounts (people) in an urban setting might signal low confidence.
+The confidenceLevel item, expressed as a percentage from 0 to 100, is an estimation of the certainty or correctness that the track described by the sequence of VMTI movement detections corresponds to the same object. A value = 0 indicates no confidence; a value = 100 indicates absolute certainty. Confidence is an estimation of the certainty or correctness that the track described by the sequence of VMTI movement detections corresponds to the same object. For example, detections derived from many unambiguous target reports, such as, for a single vehicle on a road in a desert environment might signal high confidence. Reports associated with several overlapping or nearby tracks in a partially obscured environment, such as, for dismounts (people) in an urban setting might signal low confidence.
 
 Valid values: The set of all integers from 0 to 100 inclusive.
 
@@ -2123,9 +1787,7 @@ ST 0903.6-133 The VTracker LS algorithmId (Item 12) value shall refer to the alg
 
 The purpose of the VChip LS is to provide a basic visual target representation.
 
-Table 15 summarizes the VChip LS. See Section Local Set Table Structure Section 9.2.4 for
-
-column designations.
+Table 15 summarizes the VChip LS. See Section Local Set Table Structure Section 9.2.4 for column designations.
 
 Table 15: VChip LS
 
@@ -2139,11 +1801,7 @@ VChip Local Set
 
 ### 10.7.1 VChip LS: Item 1 – imageType
 
-The imageType item is a UTF-8 string which corresponds to an IANA media image subtype. The only allowed subtypes are “jpeg” and “png” which are common formats for compressing a still
-
-image. JPEG is a lossy compression method, but quality is adjustable. PNG is lossless preserving “raw” pixel values providing RGB bit depths up to 48 bits per pixel (16 bits per color
-
-component).
+The imageType item is a UTF-8 string which corresponds to an IANA media image subtype. The only allowed subtypes are “jpeg” and “png” which are common formats for compressing a still image. JPEG is a lossy compression method, but quality is adjustable. PNG is lossless preserving “raw” pixel values providing RGB bit depths up to 48 bits per pixel (16 bits per color component).
 
 Item 1 - imageType is a required item in the VChip LS.
 
@@ -2166,9 +1824,7 @@ ST 0903.6-136 The VChip LS imageType (Item 1) shall be either “jpeg” or “p
 
 ### 10.7.2 VChip LS: Item 2 – imageIRI
 
-The imageIRI item is an Internationalized Resource Identifier (usually, a Uniform Resource Locator) that refers to an image of the type specified by VChip LS imageType - Item 1, stored on
-
-a network or a file system. In some situations, likely downstream from the collection source, using a referred image eliminates embedding the image chip into the stream.
+The imageIRI item is an Internationalized Resource Identifier (usually, a Uniform Resource Locator) that refers to an image of the type specified by VChip LS imageType - Item 1, stored on a network or a file system. In some situations, likely downstream from the collection source, using a referred image eliminates embedding the image chip into the stream.
 
 Valid Values: A string of UTF-8 characters that comply with the rules for building a valid IRI.
 
@@ -2176,19 +1832,13 @@ Valid Values: A string of UTF-8 characters that comply with the rules for buildi
 
 The embeddedImage item is an image chip of the type specified by VChip LS imageType - Item 1 embedded in the VMTI stream.
 
-Valid Values: Any image implemented in compliance with the IANA media image subtype
-
-specified in Item 1.
+Valid Values: Any image implemented in compliance with the IANA media image subtype specified in Item 1.
 
 ## 10.8 Algorithm LS
 
-The Algorithm LS documents attributes of the algorithm used for detection and tracking of
+The Algorithm LS documents attributes of the algorithm used for detection and tracking of targets. The VMTI LS algorithmSeries – Item 102 conveys one or more instances of the LS allowing for documenting different algorithms in use within one VMTI LS.
 
-targets. The VMTI LS algorithmSeries – Item 102 conveys one or more instances of the LS allowing for documenting different algorithms in use within one VMTI LS.
-
-Table 16 summarizes the Algorithm LS. See Section Local Set Table Structure Section 9.2.4 for
-
-column designations.
+Table 16 summarizes the Algorithm LS. See Section Local Set Table Structure Section 9.2.4 for column designations.
 
 Table 16: Algorithm LS
 
@@ -2204,13 +1854,7 @@ Algorithm Local Set
 
 ### 10.8.1 Algorithm LS: Item 1 – algorithmId
 
-When the VMTI LS contains a Series of Algorithm LS, each element in the Series requires a
-
-unique identifier (algorithmId). The algorithmId is an integer which identifies a single Algorithm LS in the Series and is unique among all other elements in the list. Systems may reuse
-
-algorithmIds from VMTI LS to VMTI LS (i.e., two sequential VMTI packets) so receivers should not assume an identifier value is static for an entire VMTI stream. The algorithmId does not need to start with a value of one (1) nor do the algorithmIds need to be in any specific order
-
-in an algorithmSeries.
+When the VMTI LS contains a Series of Algorithm LS, each element in the Series requires a unique identifier (algorithmId). The algorithmId is an integer which identifies a single Algorithm LS in the Series and is unique among all other elements in the list. Systems may reuse algorithmIds from VMTI LS to VMTI LS (i.e., two sequential VMTI packets) so receivers should not assume an identifier value is static for an entire VMTI stream. The algorithmId does not need to start with a value of one (1) nor do the algorithmIds need to be in any specific order in an algorithmSeries.
 
 Requirement(s)
 
@@ -2268,9 +1912,7 @@ Valid Values: Any alphanumeric value in UTF8.
 
 ### 10.8.5 Algorithm LS: Item 5 – nFrames
 
-The nFrames item is the number of frames the algorithm processes when detecting or tracking
-
-the object.
+The nFrames item is the number of frames the algorithm processes when detecting or tracking the object.
 
 | Example Value | Example Encoded LS Value |  |  |
 |---|---|---|---|
@@ -2283,13 +1925,9 @@ The Ontology LS describes the class or type of a target (aircraft, watercraft, c
 
 Ontology Language (OWL) [4] to define the ontology, see Section 7.3.
 
-The Ontology LS requires ontologyId – Item 1, ontologyIRI – Item 3, and entityIRI - Item 4 to
+The Ontology LS requires ontologyId – Item 1, ontologyIRI – Item 3, and entityIRI - Item 4 to be present.
 
-be present.
-
-Table 17 summarizes the Ontology LS. See Section Local Set Table Structure Section 9.2.4 for
-
-column designations.
+Table 17 summarizes the Ontology LS. See Section Local Set Table Structure Section 9.2.4 for column designations.
 
 Table 17: Ontology LS
 
@@ -2322,9 +1960,7 @@ The parentId enables relating one ontology reference to another. When detecting 
 
 However, this information is duplicative to the ontology hierarchy; therefore starting with ST0903.6 the MISP suggests not using this item.
 
-When an ontologySeries has two related Ontology LS in the Series, the parentId defines the link
-
-by the child defining its parentId equal to the parent ontology object’s ontologyId. For example, consider an ontologySeries having three elements: vehicle with ontologyId 10, car with ontologyId 17, and motorcycle with ontologyId 3. Since car and motorcycle are both “children” of vehicle, those two LS define their parentId as equal to 10.
+When an ontologySeries has two related Ontology LS in the Series, the parentId defines the link by the child defining its parentId equal to the parent ontology object’s ontologyId. For example, consider an ontologySeries having three elements: vehicle with ontologyId 10, car with ontologyId 17, and motorcycle with ontologyId 3. Since car and motorcycle are both “children” of vehicle, those two LS define their parentId as equal to 10.
 
 ### 10.9.3 Ontology LS: Item 3 – ontologyIRI
 
@@ -2368,9 +2004,7 @@ ST 0903.6-140 Where the Ontology LS includes a label (Item 6), the label shall e
 
 ## 10.10 Location, Velocity, Acceleration DLPs
 
-Location, Velocity, and Acceleration are DLP truncation structures. The Location, Velocity and Acceleration DLPs each contain three groups of information as discussed below. Truncation structures allow lower priority elements (in this case a group) to be “truncated” or not included in
-
-the DLP, thus saving bandwidth. Truncation begins with the trailing information within the pack.
+Location, Velocity, and Acceleration are DLP truncation structures. The Location, Velocity and Acceleration DLPs each contain three groups of information as discussed below. Truncation structures allow lower priority elements (in this case a group) to be “truncated” or not included in the DLP, thus saving bandwidth. Truncation begins with the trailing information within the pack.
 
 Requirement(s)
 
@@ -2389,31 +2023,19 @@ Tag   L   latitude longitude   hae        sigEast   sigNorth   sigUp     rhoEast
 
 Figure 22: Location DLP Structure
 
-The first, and highest priority group, includes latitude, longitude, and height above ellipsoid (hae). These values define the origin of a local tangential East-North-Up (ENU) coordinate
+The first, and highest priority group, includes latitude, longitude, and height above ellipsoid (hae). These values define the origin of a local tangential East-North-Up (ENU) coordinate system. The second group, Standard Deviations, and the third group, Correlation Coefficients, express uncertainty with respect to the ENU coordinate axes. Standard Deviations is a medium priority group providing standard deviations for the location in meters (with respect to the ENU
 
-system. The second group, Standard Deviations, and the third group, Correlation Coefficients, express uncertainty with respect to the ENU coordinate axes. Standard Deviations is a medium priority group providing standard deviations for the location in meters (with respect to the ENU
+coordinate axes). Correlation Coefficients is the lowest priority group providing correlation coefficients for the location (with respect to the ENU coordinate axes). The correlation coefficients provide a measure of systematic behavior, such as whether variation in the values of pairs of variables are random6 or “coupled”.
 
-coordinate axes). Correlation Coefficients is the lowest priority group providing correlation coefficients for the location (with respect to the ENU coordinate axes). The correlation coefficients provide a measure of systematic behavior, such as whether variation in the values of
-
-pairs of variables are random6 or “coupled”.
-
-Standard deviations and correlation coefficients express confidence in the geo-coordinates. For
-
-example, if standard deviations are small and correlation coefficients are near unity, then
+Standard deviations and correlation coefficients express confidence in the geo-coordinates. For example, if standard deviations are small and correlation coefficients are near unity, then
 
 6 Correlation is dimensionless with a fixed range of values from -1.0 to +1.0, inclusive. Covariance, while it is a similar measure of “relatedness,” is in units obtained by multiplying the units of two variables, and thus has values less well constrained.
 
-“confidence” in the accuracy of the coordinate values is high. Conversely, if standard deviations
+“confidence” in the accuracy of the coordinate values is high. Conversely, if standard deviations are large and correlation coefficients are near zero potentially large, random errors are likely.
 
-are large and correlation coefficients are near zero potentially large, random errors are likely.
+The Location DLP is a truncation pack where the standard deviations and correlation coefficients groups are optional; thus, when not included truncate the correlation coefficients group first followed by the standard deviations group.
 
-The Location DLP is a truncation pack where the standard deviations and correlation coefficients
-
-groups are optional; thus, when not included truncate the correlation coefficients group first followed by the standard deviations group.
-
-Table 18 summarizes the Location DLP. See Section Local Set Table Structure Section 9.2.4 for
-
-column designations.
+Table 18 summarizes the Location DLP. See Section Local Set Table Structure Section 9.2.4 for column designations.
 
 Table 18: Location DLP Truncation Pack
 
@@ -2446,19 +2068,11 @@ Tag   L   east     north       up         sigEast   sigNorth       sigUp   rhoEa
 
 Figure 23: Velocity DLP Structure
 
-The first, and highest priority group includes East, North, and Up velocity components; these provide the measurements of velocity along the coordinate axes of the East-North-Up coordinate system specified by the Location Truncation Pack for the location of the moving object. The
+The first, and highest priority group includes East, North, and Up velocity components; these provide the measurements of velocity along the coordinate axes of the East-North-Up coordinate system specified by the Location Truncation Pack for the location of the moving object. The second, and medium priority group, includes Standard Deviations for the first group measurements. The third, and lowest priority group includes Correlation Coefficients for values in the first group.
 
-second, and medium priority group, includes Standard Deviations for the first group measurements. The third, and lowest priority group includes Correlation Coefficients for values
+The Velocity DLP is a truncation pack where the standard deviations and correlation coefficients groups are optional; thus, when not included truncate the correlation coefficients group first followed by the standard deviations group.
 
-in the first group.
-
-The Velocity DLP is a truncation pack where the standard deviations and correlation coefficients
-
-groups are optional; thus, when not included truncate the correlation coefficients group first followed by the standard deviations group.
-
-Table 19 summarizes the Velocity DLP. See Section Local Set Table Structure Section 9.2.4 for
-
-column designations.
+Table 19 summarizes the Velocity DLP. See Section Local Set Table Structure Section 9.2.4 for column designations.
 
 Table 19: Velocity DLP Truncation Pack
 
@@ -2493,13 +2107,9 @@ Tag   L    east    north          up         sigEast     sigNorth    sigUp    rh
 
 Figure 24: Acceleration Structure
 
-The first, and highest priority, group includes East, North, and Up components; these measurements provide acceleration along the coordinate axes of the East-North-Up coordinate
+The first, and highest priority, group includes East, North, and Up components; these measurements provide acceleration along the coordinate axes of the East-North-Up coordinate system specified by the Location pack for the location of the moving object. The second, and medium priority, group includes Standard Deviations for the first group measurements. The third, and lowest priority group includes Correlation Coefficients for values in the first group.
 
-system specified by the Location pack for the location of the moving object. The second, and medium priority, group includes Standard Deviations for the first group measurements. The third, and lowest priority group includes Correlation Coefficients for values in the first group.
-
-The Acceleration DLP is a truncation pack where the standard deviations and correlation
-
-coefficients groups are optional; thus, when not included truncate the correlation coefficients group first followed by the standard deviations group.
+The Acceleration DLP is a truncation pack where the standard deviations and correlation coefficients groups are optional; thus, when not included truncate the correlation coefficients group first followed by the standard deviations group.
 
 Table 20 summarizes the Acceleration DLP. See Section Local Set Table Structure Section 9.2.4
 
@@ -2523,21 +2133,13 @@ Acceleration DLP Truncation Pack
 
 Requirement(s)
 
-ST 0903.4-85 The Acceleration Components triplet of the Acceleration pack shall always be
-
-present.
+ST 0903.4-85 The Acceleration Components triplet of the Acceleration pack shall always be present.
 
 ST 0903.4-92 The Acceleration pack shall be present only if there is an associated Location pack.
 
 ## 10.11 BoundarySeries DLP
 
-The BoundarySeries is a DLP comprised of a Series of Location Packs which define the vertices
-
-of the outer boundary, or contour, of a drape-surface. A drape-surface is the “top” surface of an
-
-area of interest or object. For example, using a metaphorical cloth to cover a target (e.g., a tank on a hill), defines the drape-surface. The contour of the drape-surface, e.g., the part of the cloth covering the truck touching the ground, is a closed non-planar polygon with multiple vertices. The non-planar polygon means the polygon’s vertices are 3D coordinates and the vertices do not
-
-need to be on the same mathematical plane, i.e., each vertex may have different HAE values to match the terrain or object’s contour.
+The BoundarySeries is a DLP comprised of a Series of Location Packs which define the vertices of the outer boundary, or contour, of a drape-surface. A drape-surface is the “top” surface of an area of interest or object. For example, using a metaphorical cloth to cover a target (e.g., a tank on a hill), defines the drape-surface. The contour of the drape-surface, e.g., the part of the cloth covering the truck touching the ground, is a closed non-planar polygon with multiple vertices. The non-planar polygon means the polygon’s vertices are 3D coordinates and the vertices do not need to be on the same mathematical plane, i.e., each vertex may have different HAE values to match the terrain or object’s contour.
 
 Figure 25 illustrates the Cross-Section (side view) and Top-View of a drape-surface (blue) over a tank which is on a hill with a ditch behind the tank. The cross-section view illustrates the drape-surface intersecting the ground at the red points. The top-view shows the complete contour (red) around the tank, with black points showing a list of points to describe the tank contour.
 
@@ -2547,15 +2149,9 @@ Cross-Section                                            Top-View
 
 Figure 25: Example Drape-Surface with Contour
 
-A “normalized” contour is an ellipsoid polygon (i.e., a polygon on the surface of the zero-HAE ellipsoid) formed by projecting a drape-surface’s contour points to the zero-HAE ellipsoid. A BoundarySeries requires the normalized contour to have only one interior area. A normalized
+A “normalized” contour is an ellipsoid polygon (i.e., a polygon on the surface of the zero-HAE ellipsoid) formed by projecting a drape-surface’s contour points to the zero-HAE ellipsoid. A BoundarySeries requires the normalized contour to have only one interior area. A normalized contour may have co-incident points or stranded points. Co-incident points are two (or more) adjacent contour points with the same latitude and longitude but different HAE; when projected to the ellipsoid those points become the same point in the normalized contour. Stranded points are one or more points lying outside the normalized contour’s interior area, and do not make their own interior area. If the contour meets the single-area requirement (i.e., one enclosed area) co-incident and stranded points present no issue.
 
-contour may have co-incident points or stranded points. Co-incident points are two (or more) adjacent contour points with the same latitude and longitude but different HAE; when projected to the ellipsoid those points become the same point in the normalized contour. Stranded points are one or more points lying outside the normalized contour’s interior area, and do not make
-
-their own interior area. If the contour meets the single-area requirement (i.e., one enclosed area) co-incident and stranded points present no issue.
-
-Figure 26 illustrates different normalized contours. Normalized contour (a) is a simple 8-point contour with a single interior area. Normalized contour (b) shows points 4 (red) and 5 as co-incident; since there is not an additional interior area, the contour is valid. Normalized contour (c) shows points 4 and 5 “stranded” or outside the interior area; since there is not an additional
-
-interior area, the contour is valid. Normalized contour (d) shows point 6 intersecting the segment between points 3 and 4 creating a second interior area. This is an invalid normalized contour;
+Figure 26 illustrates different normalized contours. Normalized contour (a) is a simple 8-point contour with a single interior area. Normalized contour (b) shows points 4 (red) and 5 as co-incident; since there is not an additional interior area, the contour is valid. Normalized contour (c) shows points 4 and 5 “stranded” or outside the interior area; since there is not an additional interior area, the contour is valid. Normalized contour (d) shows point 6 intersecting the segment between points 3 and 4 creating a second interior area. This is an invalid normalized contour;
 
 therefore, the original 3-D contour is invalid.
 
@@ -2573,9 +2169,7 @@ therefore, the original 3-D contour is invalid.
 
 Figure 26: Normalized Contour Examples
 
-The drape-surface description only provides a means to define the contour for this standard and it is not the intention to be “the” method for constructing a contour. The construction of a contour
-
-(or BoundarySeries) is implementation dependent; however, when normalizing the contour, it must only contain one area. The BoundarySeries only defines the outer edge of the drape-surface, therefore, features extending up or down within the drape-surface are not part of the
+The drape-surface description only provides a means to define the contour for this standard and it is not the intention to be “the” method for constructing a contour. The construction of a contour (or BoundarySeries) is implementation dependent; however, when normalizing the contour, it must only contain one area. The BoundarySeries only defines the outer edge of the drape-surface, therefore, features extending up or down within the drape-surface are not part of the
 
 BoundarySeries.
 
@@ -2596,15 +2190,9 @@ Figure 27 is an example of a seven-point boundary of a drape-surface on the roof
 
 Figure 27: Example of a Boundary
 
-There is no limit on the number of vertices in a BoundarySeries, although at least two are the
+There is no limit on the number of vertices in a BoundarySeries, although at least two are the minimum required. Specifying two vertices implies opposite corners of a simple, geospatial bounding box, aligned with the Latitude-Longitude grid, which is the simplest approximation of a drape-surface.
 
-minimum required. Specifying two vertices implies opposite corners of a simple, geospatial bounding box, aligned with the Latitude-Longitude grid, which is the simplest approximation of
-
-a drape-surface.
-
-The BoundarySeries structure includes the BER-encoded Length for each value. Each vertex is
-
-of type Location.
+The BoundarySeries structure includes the BER-encoded Length for each value. Each vertex is of type Location.
 
 Requirement(s)
 
@@ -2697,29 +2285,17 @@ ST 0903.4-94 Where a BoundarySeries contains only two vertices, the vertices sha
 
 # Appendix A Ontology Exemplar [Informative]
 
-The biological/biomedical field has developed the Open Biological and Biomedical Ontology
+The biological/biomedical field has developed the Open Biological and Biomedical Ontology (OBO) Foundry which is a list of ontologies. These ontologies enable use of common terms, labels of those terms, and other relationships between the terms. By doing so, ontologies enable easier data integration and prevent misinterpretation and associated errors. Ontologies are more than a “dictionary” or “thesaurus” and they have many benefits which are beyond the scope of this document. See [12] and [13] for more information.
 
-(OBO) Foundry which is a list of ontologies. These ontologies enable use of common terms, labels of those terms, and other relationships between the terms. By doing so, ontologies enable easier data integration and prevent misinterpretation and associated errors. Ontologies are more than a “dictionary” or “thesaurus” and they have many benefits which are beyond the scope of
+This standard uses ontology references to associate items within an ontology to target objects. There are two parts in an ontology reference: the ontology identifier, and the entity identifier. The ontology identifier is an Internationalized Resource Identifier (IRI) which names the ontology where the definition of the entity resides. The entity identifier, also an IRI, identifies the desired label within the ontology.
 
-this document. See [12] and [13] for more information.
+For example, the OBO Foundry includes an Environmental Ontology (envo), with an identifier of http://purl.obolibrary.org/obo/envo.owl. The envo ontology includes entities for vehicle, car, and motorcycle (see example in Section 7.3). The left side of Figure 28 shows a subset of the envo ontology (using visualization tool) which illustrates the relationship of the three items.
 
-This standard uses ontology references to associate items within an ontology to target objects. There are two parts in an ontology reference: the ontology identifier, and the entity identifier. The ontology identifier is an Internationalized Resource Identifier (IRI) which names the
-
-ontology where the definition of the entity resides. The entity identifier, also an IRI, identifies the desired label within the ontology.
-
-For example, the OBO Foundry includes an Environmental Ontology (envo), with an identifier
-
-of http://purl.obolibrary.org/obo/envo.owl. The envo ontology includes entities for vehicle, car, and motorcycle (see example in Section 7.3). The left side of Figure 28 shows a subset of the envo ontology (using visualization tool) which illustrates the relationship of the three items.
-
-Every car (red arrow) is a type of motor vehicle, which is a type of vehicle. Likewise, every motorcycle (green arrow) is a type of motor vehicle. The right side of Figure 28 shows the definition for the entity car, along with its identifier
-
-(http://purl.obolibrary.org/obo/ENVO_01000605).
+Every car (red arrow) is a type of motor vehicle, which is a type of vehicle. Likewise, every motorcycle (green arrow) is a type of motor vehicle. The right side of Figure 28 shows the definition for the entity car, along with its identifier (http://purl.obolibrary.org/obo/ENVO_01000605).
 
 Figure 28: Ontology Example
 
-The two parts to a classification label are the ontology IRI and the entity IRI. For the car
-
-example:
+The two parts to a classification label are the ontology IRI and the entity IRI. For the car example:
 
 ontology IRI = http://purl.obolibrary.org/obo/envo.owl entity IRI = http://purl.obolibrary.org/obo/ENVO_01000605
 
@@ -2735,45 +2311,29 @@ version IRI = http://purl.obolibrary.org/obo/envo/releases/2021-05-14/envo.owl
 
 ## B.1 Bandwidth
 
-Bandwidth management is important in VMTI (and tracking) systems since they can produce a large quantity of dynamic data at frame rate. In its simplest implementation the VMTI LS may send thousands of targets to downstream systems by providing a targetId and a targetCentroid within a Motion Imagery frame for each target. At the other end of the scale, the VMTI LS has
-
-scope to include multiple features about each target, image chips of the target, tracking information about the target, and numerous descriptive elements. The bandwidth overhead required to include all this information is very large – especially at 60 frames per second (FPS)
+Bandwidth management is important in VMTI (and tracking) systems since they can produce a large quantity of dynamic data at frame rate. In its simplest implementation the VMTI LS may send thousands of targets to downstream systems by providing a targetId and a targetCentroid within a Motion Imagery frame for each target. At the other end of the scale, the VMTI LS has scope to include multiple features about each target, image chips of the target, tracking information about the target, and numerous descriptive elements. The bandwidth overhead required to include all this information is very large – especially at 60 frames per second (FPS)
 
 or higher.
 
-To reduce bandwidth, data that changes infrequently does not need updating every frame but only often enough to ensure it is available in any clip extracted from the Motion Imagery; that is, deliver dynamic data at a rate appropriate to the granularity of the intelligence provided. For
+To reduce bandwidth, data that changes infrequently does not need updating every frame but only often enough to ensure it is available in any clip extracted from the Motion Imagery; that is, deliver dynamic data at a rate appropriate to the granularity of the intelligence provided. For example, for a target moving at 3 meters per second, a rate of 60 updates a second provides very little value over a rate of 20 updates per second. In that case, while the Motion Imagery frame rate might be 60 FPS, a VMTI update rate of 20 FPS suffices.
 
-example, for a target moving at 3 meters per second, a rate of 60 updates a second provides very little value over a rate of 20 updates per second. In that case, while the Motion Imagery frame rate might be 60 FPS, a VMTI update rate of 20 FPS suffices.
-
-The VMTI LS includes data that may not be available from onboard VMTI processors; thus, downstream processes will contribute “value add” elements to a basic VMTI stream. Calculations for required bandwidth need to consider the additional data of VMTI versus the
-
-available bandwidth at a given stage in the workflow.
+The VMTI LS includes data that may not be available from onboard VMTI processors; thus, downstream processes will contribute “value add” elements to a basic VMTI stream. Calculations for required bandwidth need to consider the additional data of VMTI versus the available bandwidth at a given stage in the workflow.
 
 Bandwidth implications and bandwidth management are important in the design of systems generating VMTI data. Reducing metadata to a minimal effective configuration is good engineering. The VMTI LS can leverage metadata available in other sets, such as MISB ST
 
 0601. Some metadata (e.g., vmtiSourceSensor, vmtiHorizontalFov and vmtiVerticalFov) in the VMTI LS are comparable to those in the MISB ST 0601 LS. They are necessary, however, when VMTI operates on different Motion Imagery from that described by and/or included with the
 
-ST 0601 data. Consider, for example, two bore-sighted sensors, where ST 0601 metadata describes Motion Imagery from one sensor, but ST 0903 metadata describes VMTI detections from the Motion Imagery of a different sensor. (Note that ST 0601 metadata allows only one VMTI LS instance, precluding the carriage within it of detections from multiple Motion Imagery
+ST 0601 data. Consider, for example, two bore-sighted sensors, where ST 0601 metadata describes Motion Imagery from one sensor, but ST 0903 metadata describes VMTI detections from the Motion Imagery of a different sensor. (Note that ST 0601 metadata allows only one VMTI LS instance, precluding the carriage within it of detections from multiple Motion Imagery essences.)
 
-essences.)
-
-Each VMTI process operating for a given sensor requires its own individual VMTI LS. That is, a VMTI LS should never contain a mixture of moving targets detected by different sensors. (The
-
-vChipSeries for a given detection may, however, contain image chips from multiple sensors.)
+Each VMTI process operating for a given sensor requires its own individual VMTI LS. That is, a VMTI LS should never contain a mixture of moving targets detected by different sensors. (The vChipSeries for a given detection may, however, contain image chips from multiple sensors.)
 
 ## B.2 Co-located Bore-sighted Sensors
 
-A system with multiple bore-sighted imagers within a single turret may send a Motion Imagery stream from one camera with a given field of view synchronously with VMTI hits from other
+A system with multiple bore-sighted imagers within a single turret may send a Motion Imagery stream from one camera with a given field of view synchronously with VMTI hits from other sensors with different fields of view. For example, a system containing a narrow field of view visible light sensor (EON), a wide field of view visible light sensor (EOW), and an infrared (IR) sensor may be transmitting a stream from the EON sensor and simultaneously include VMTI data from both the EOW sensor and the IR sensor. This scenario necessitates a separate VMTI stream consisting of distinct VMTI metadata for the IR and EOW cameras carried along with the
 
-sensors with different fields of view. For example, a system containing a narrow field of view visible light sensor (EON), a wide field of view visible light sensor (EOW), and an infrared (IR) sensor may be transmitting a stream from the EON sensor and simultaneously include VMTI data from both the EOW sensor and the IR sensor. This scenario necessitates a separate VMTI stream consisting of distinct VMTI metadata for the IR and EOW cameras carried along with the
+EON Motion Imagery. VMTI streams should be distinguishable by the vmtiSourceSensor and the vmtiHorizontalFov items.
 
-EON Motion Imagery. VMTI streams should be distinguishable by the vmtiSourceSensor and
-
-the vmtiHorizontalFov items.
-
-Sophisticated VMTI systems may use the same targetId to identify a common target detected by different sensors and retain the use of same targetId temporally (that is, from one detection to
-
-another). Also, downstream processes (e.g., trackers and fusion systems) may reassign the targetId to identify a common target.
+Sophisticated VMTI systems may use the same targetId to identify a common target detected by different sensors and retain the use of same targetId temporally (that is, from one detection to another). Also, downstream processes (e.g., trackers and fusion systems) may reassign the targetId to identify a common target.
 
 ## B.3 Independent Sensors
 
@@ -2783,31 +2343,19 @@ Each independent sensor system requires a separate MISB ST 0601 LS. The extra el
 
 ## B.4 Large Volume Motion Imagery
 
-Large Volume Motion Imagery (LVMI) systems present a problem not normally encountered with “traditional” airborne Motion Imagery sensors. LVMI systems cover large geographic extents and can detect thousands of simultaneous moving objects over an area of several square kilometers. A standalone stream of VMTI information (independent of Motion Imagery essence) could describe the detected moving objects and cue analysts as to which objects to monitor actively and which to leave to automated processes. This information can task “spotlights” which specify regions of interest to send accompanying Motion Imagery, which reduces data bandwidth. These spotlights in turn can carry VMTI data for the moving objects within the scope
+Large Volume Motion Imagery (LVMI) systems present a problem not normally encountered with “traditional” airborne Motion Imagery sensors. LVMI systems cover large geographic extents and can detect thousands of simultaneous moving objects over an area of several square kilometers. A standalone stream of VMTI information (independent of Motion Imagery essence) could describe the detected moving objects and cue analysts as to which objects to monitor actively and which to leave to automated processes. This information can task “spotlights” which specify regions of interest to send accompanying Motion Imagery, which reduces data bandwidth. These spotlights in turn can carry VMTI data for the moving objects within the scope of the spotlight imagery.
 
-of the spotlight imagery.
-
-VMTI data for spotlight streams is akin to the single sensor paradigm in their packaging and
-
-processing. However, VMTI data for cueing takes a different approach. In this case there may be no associated Motion Imagery present. Cueing based on VMTI data is therefore self-contained, with no dependencies on other data streams.
+VMTI data for spotlight streams is akin to the single sensor paradigm in their packaging and processing. However, VMTI data for cueing takes a different approach. In this case there may be no associated Motion Imagery present. Cueing based on VMTI data is therefore self-contained, with no dependencies on other data streams.
 
 # Appendix C Backward Compatibility
 
-MISB ST 0903.6 underwent considerable modifications to improve usability. This required tradeoffs between usability verses backward compatibility. Although the operational nature of the VMTI model is the same, the changes in the functionality of some elements in the model
-
-cause a disruption in backwards compatibility with prior versions. Backwards compatibility
-
-means a ST 0903.6 data reader/processor may not fully understand the data written by VMTI
+MISB ST 0903.6 underwent considerable modifications to improve usability. This required tradeoffs between usability verses backward compatibility. Although the operational nature of the VMTI model is the same, the changes in the functionality of some elements in the model cause a disruption in backwards compatibility with prior versions. Backwards compatibility means a ST 0903.6 data reader/processor may not fully understand the data written by VMTI
 
 systems prior to 0903.6 (e.g., ST0903.5).
 
-There are two main types of changes affecting backwards compatibility: Deprecation of LS items and the formalization of the target life cycle (see Section 6 and 7). Systems built to ST 0903.6 and later processing VMTI from pre 0903.6 systems will need to accommodate conversion to
+There are two main types of changes affecting backwards compatibility: Deprecation of LS items and the formalization of the target life cycle (see Section 6 and 7). Systems built to ST 0903.6 and later processing VMTI from pre 0903.6 systems will need to accommodate conversion to account for these changes.
 
-account for these changes.
-
-Table 21 summarizes the backwards compatibility issues between ST 0903.5 and ST 0903.6 by
-
-examining the usage of certain items in ST 0903.5. If a VMTI system producing ST 0903.5 does not use any of the items in the first column, there will not be a backwards compatibility issue.
+Table 21 summarizes the backwards compatibility issues between ST 0903.5 and ST 0903.6 by examining the usage of certain items in ST 0903.5. If a VMTI system producing ST 0903.5 does not use any of the items in the first column, there will not be a backwards compatibility issue.
 
 Table 21: ST 0903.5 and ST 0903.6 backwards compatibility issues
 
