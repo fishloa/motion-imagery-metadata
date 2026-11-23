@@ -5,9 +5,8 @@
 //! types. ST 0601 carries the set as tag 74, so it is reached through
 //! [`NestedSet::vmti`](crate::NestedSet::vmti) after [`decode`](crate::decode).
 //!
-//! Item numbers, names and worked example encodings:
-//! `private/specs-verified/misc/misb/st0903-vmti-ls.md` (MISB ST 0903.6
-//! Tables 9, 10, 16 and 17 and §10 item definitions).
+//! Item numbers, names and worked example encodings: MISB ST 0903.6 Tables 9,
+//! 10, 16 and 17 and the §10 item definitions.
 //!
 //! Items the decoder does not interpret stay raw and are reachable through
 //! [`St0903Vmti::raw`] and [`St0903Target::undecoded`]; nothing below decodes

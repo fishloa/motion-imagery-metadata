@@ -157,8 +157,7 @@ fn undecoded_nested_sets_still_name_their_standard() {
 
 #[test]
 fn st0102_security_set_decodes_every_typed_item() {
-    // Values from ST 0102.12 Table 2 and the §6.1 examples transcribed in
-    // private/specs-verified/misc/misb/st0102-security-ls.md.
+    // Values from ST 0102.12 Table 2 and the §6.1 examples.
     let mut body = Vec::new();
     body.extend(ber_item(1, &[0x01]));
     body.extend(ber_item(2, &[0x0D]));
@@ -208,7 +207,7 @@ fn st0102_security_set_decodes_every_typed_item() {
 #[test]
 fn st0903_vmti_set_decodes_every_typed_item() {
     // Values from ST 0903.6 §10 item examples and §10.8 Algorithm LS
-    // examples transcribed in private/specs-verified/misc/misb/st0903-vmti-ls.md.
+    // examples.
     let algorithm = [
         ber_item(1, &[0x09]),
         ber_item(2, b"k6_yolo_9000_tracker"),

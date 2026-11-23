@@ -192,7 +192,7 @@ pub enum St0601Value<'a> {
     Invalid,
 }
 
-// ST 0601 nested Local Set tags: `private/specs-verified/misc/misb/st0601-tag-table.md`.
+// Nested Local Set tags from the ST 0601.19 tag table.
 const TAG_SECURITY_LOCAL_SET: u32 = 48;
 const TAG_RVT_LOCAL_SET: u32 = 73;
 const TAG_VMTI_LOCAL_SET: u32 = 74;
@@ -203,8 +203,8 @@ const TAG_COMPOSITE_IMAGING_LOCAL_SET: u32 = 99;
 const TAG_SEGMENT_LOCAL_SET: u32 = 100;
 const TAG_AMEND_LOCAL_SET: u32 = 101;
 
-// Pack/list tags, plus the defined items `misb` 0.2 leaves as bytes. Every
-// one is documented with its reason in the crate's README.
+// Pack and list tags from the ST 0601.19 tag table, plus defined items
+// `misb` 0.2 leaves as bytes.
 const TAG_WEAPON_LOAD: u32 = 60;
 const TAG_WEAPON_FIRED: u32 = 61;
 const TAG_LASER_PRF_CODE: u32 = 62;

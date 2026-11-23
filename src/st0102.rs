@@ -6,10 +6,9 @@
 //! [`NestedSet::security`](crate::NestedSet::security) after
 //! [`decode`](crate::decode).
 //!
-//! Item numbers, names and value enumerations: `private/specs-verified/misc/misb/st0102-security-ls.md`
-//! (MISB ST 0102.12 Table 2 and §6.1). ST 0102.12 deletes the stream,
-//! transport-stream and item-designator keys (its §4 revision history), so
-//! they are not part of this view.
+//! Item numbers, names and value enumerations: MISB ST 0102.12 Table 2 and
+//! §6.1. ST 0102.12 deletes the stream, transport-stream and item-designator
+//! keys (its §4 revision history), so they are not part of this view.
 //!
 //! `no_std` + `alloc`.
 
