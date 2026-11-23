@@ -1,28 +1,22 @@
+MISB ST 1201.5 STANDARD
+
 24 June 2021
 
-1201.5
+# Floating Point to Integer Mapping
 
-Point
+## 1 Scope
 
-to Integer Mapping MISB ST
+This standard describes the method for mapping floating-point values to integer values and the reverse, mapping integer values back to their original floating-point value to within an acceptable precision. There are many ways of optimizing the transmission of floating-point values from one system to another; the purpose of this standard is to provide a single method for use by all MISB metadata standards. This standard supports all floating-point ranges and valid precisions. This standard provides a method for a forward and reverse linear mapping of a specified range of floating-point values to a specified integer range of values based on the number of bytes desired for the integer value. Additionally, it provides a set of special values to transmit non-numerical “signals” to a receiving system. This standard is dependent on context from an invoking standard (or another document), called a Parent Document.
 
-1 Scope
-
-This standard describes the method for mapping floating-point values to integer values and the
-
-reverse, mapping integer values back to their original floating-point value to within an acceptable precision. There are many ways of optimizing the transmission of floating-point values from one system to another; the purpose of this standard is to provide a single method for use by all MISB metadata standards. This standard supports all floating-point ranges and valid precisions. This standard provides a method for a forward and reverse linear mapping of a specified range of floating-point values to a specified integer range of values based on the number of bytes desired
-
-for the integer value. Additionally, it provides a set of special values to transmit non-numerical “signals” to a receiving system. This standard is dependent on context from an invoking standard
-
-( or another document), called a Parent Document.
-
-2 References Floating
+## 2 References
 
 [1] IEEE 754-2008 Standard for Floating-Point Arithmetic [and Floating-Point formats], 2008.
 
 [2] MISB ST 0601.17 UAS Datalink Local Set, 29 Oct 2020.
 
-| 3 | Acronyms and Definitions |
+## 3 Acronyms and Definitions
+
+|  |  |
 |---|---|
 | IEEE | Institute of Electrical and Electronics Engineers |
 | IMAPA | [Floating Point to] Integer Mapping using Starting Point A |
@@ -31,724 +25,391 @@ for the integer value. Additionally, it provides a set of special values to tran
 | MISB | Motion Imagery Standards Board |
 | msb | Most Significant Bit |
 | ST | Standard |
-| ceiling | any non-integer value up toward +∞. The ceiling function notation is |
-|  | Rounding |
-| ⌈𝒙⌉ | ⌈𝑥⌉ and the definition of the ceiling function is : ⌈𝑥⌉ = min{𝑛 ∈ ℤ\|𝑛 ≥ 𝑥 } |
-|  | Examples |
+| ceiling<br>⌈𝒙⌉ | Rounding any non-integer value up toward +∞. The ceiling function notation is ⌈𝑥⌉ and the definition of the ceiling function is: ⌈𝑥⌉ = min{𝑛 ∈ ℤ\|𝑛 ≥ 𝑥}. Examples: ⌈−1.1⌉ = −1; ⌈1.1⌉ = 2. Note: Microsoft Excel (pre-2010) does not perform this operation correctly. |
+| floor<br>⌊𝒙⌋ | Rounding any non-integer value down towards -∞. The floor function notation is ⌊𝑥⌋ and the definition of the floor function is: ⌊𝑥⌋ = max{𝑚 ∈ ℤ\|𝑚 ≤ 𝑥}. Examples: ⌊−1.1⌋ = −2; ⌊1.1⌋ = 1. Note: Microsoft Excel (pre-2010) does not perform this operation correctly. |
+| integer | An integer is a whole number without a fractional value or a real value with a fractional value set to zero. Integers are represented using the standard integer set notation, ℤ. |
+| truncate | A rounding function which removes the fractional part of a real number. The truncate function notation is truncate(x), where 𝑥 ∈ ℝ. Example: truncate (100.2) = 100. |
+| real | In this standard the definition of a real is simplified to be, “a whole number and a fractional value”. The fractional value may be zero which means the value is also an integer. Reals are represented using the standard reals set notation, ℝ |
+| round | A rounding function which, for this standard, means ⌊𝑥 + 0.5⌋ if x≥0 and ⌈𝑥 − 0.5⌉ if x<0. Note the floor and ceiling notation in the definition. Examples: 𝑟𝑜𝑢𝑛𝑑(−1.1) = ⌈−1.1 − 0.5⌉ = −1; 𝑟𝑜𝑢𝑛𝑑(−1.6) = ⌈−1.6 − 0.5⌉ = −2; 𝑟𝑜𝑢𝑛𝑑(1.1) = ⌊1.1 + 0.5⌋ = 1; 𝑟𝑜𝑢𝑛𝑑(1.6) = ⌊1.6 + 0.5⌋ = 2. |
+| rounding | Changing the fractional part of a real value to zero by some technique (e.g., round, ceiling, floor), i.e., forcing the fractional part of a real number to be zero. |
+| precision | (From [1]) The maximum number, p, of significant digits in a numerical format, or the number of digits a result is rounded to. Note: This is not the same definition that refers to repeatability of measurements as used in other MISB documents and references. |
 
-: ⌈−1.1⌉ = −1; ⌈1.1⌉ = 2. Note : Microsoft Excel (pre-2010) does not perform this operation correctly. floor
+## 4 Revision History
 
-| ⌊𝒙⌋ | any non-integer value down towards -∞. The floor function | notation is ⌊𝑥⌋ |
+| Revision | Date | Summary of Changes |
 |---|---|---|
-|  |  | and |
-| Rounding |  |  |
-| the | definition of the floor function is : ⌊𝑥⌋ = max{𝑚 ℤ\|𝑚 ≤ 𝑥. | STANDARD |
-|  | ∈ |  |
-| 24 June 2021 | Motion Imagery Standards Board | 1 |
+| ST 1201.5 | 06/24/2021 | • Added special values when mapping value exceeds the minimum or maximum bound<br>• Added Req -18<br>• Added definition of reverse IMAPA and IMAPB (i.e., RIMAPA, RIMAPB)<br>• Added example test values |
+|  | 11/06/2021 | • Editorial clarifications on the implementation and use of IMAP_BELOW_MINIMUM and IMAP_BELOW_MAXIMUM<br>• Adjusted examples to reflect editorial changes |
+|  | 05/15/2022 | • Adjusted the “Reserved” section of the Special Value Bit Patterns Table to contain all Reserved bit patterns |
 
-Examples : ⌊−1.1⌋ = −2; ⌊1.1⌋ = 1. Note : Microsoft Excel (pre-2010) does not
+## 5 Introduction
 
-perform this operation correctly. integer An integer is a whole number without a fractional value or a real value with a
-
-fractional value set to zero. Integers are represented using the standard integer
-
-set notation, ℤ.
-
-| truncate | A rounding function which removes the fractional | part of a real number. The |
-|---|---|---|
-|  | truncate function notation is truncate(x) where 𝑥 |. |
-|  |, ∈ |  |
-|  | Example : truncate (100.2) 100. |  |
-|  | = |  |
-
-real In this standard the definition of real is simplified to be, “a whole number and a a fractional value”. The fractional value may be zero which means the value is
-
-also an integer. Reals are represented using the standard reals set notation, ℝ round rounding function which, for this standard, means ⌊𝑥 + 0.5⌋ if x≥0 and A ⌈𝑥 − 0.5⌉ if x<0. Note the floor and ceiling notation in the definition. Examples :
-
-𝑟𝑜𝑢𝑛𝑑(−1.1) = ⌈−1.1 − 0.5⌉ −1 𝑟𝑜𝑢𝑛𝑑(−1.6) = ⌈−1.6 − 0.5⌉ = −2; 𝑟𝑜𝑢𝑛𝑑(1.1) =; = ⌊1.1 + 0.5⌋ = 1 𝑟𝑜𝑢𝑛𝑑(1.6) = ⌊1.6 + 0.5⌋ = 2. rounding Changing the fractional part of a real value to zero by some technique (e.g., round, ceiling, floor
-
-i.e., forcing the fractional part of a real number to be zero. precision ( From [1]) The maximum number, p, of significant digits in numerical format, or the number of digits
-
-a a result is rounded to. Note : This is not the same definition that refers to repeatability of measurements as used in other MISB documents and references. 4 Revision History
-
-Revision Date Summary
-
-of
-
-| Changes | ST | 1201.5 06/24/2021 |
-|---|---|---|
-|  |  | • |
-| Added special | values | when mapping value exceeds the minimum or maximum |
-|  |  | bound |
-
-• Added Req -18 • Added definition of reverse
-
-IMAPA and IMAPB (i.e., RIMAPA, RIMAPB) • Added example test values 11/06/2021 • Editorial
-
-clarifications on the implementation and use of IMAP_BELOW_MINIMUM and
-
-IMAP_BELOW_MAXIMUM • Adjusted examples to
-
-reflect editorial changes 05/15/2022 • Adjusted the “Reserved” section of the Special Value Bit Patterns Table to contain all Reserved bit patterns 5 Introduction Systems
-
-transmit and
-
-receive
-
-measured and computed floating-point values between systems. Oftentimes, the values do not fully utilize the floating-point range or precision afforded, and thus provide an opportunity
-
-to reduce the number of bytes representing the data. Additionally, systems need to communicate
-
-non-numeric special values or “signals”; for example, a sensor value indicating “beyond measurement range” or in cases where a divide by zero occurs (i.e.,
-
-24 June 2021 Motion Imagery Standards Board 2
-
-+infinity). This standard applies to IEEE 754 [1] floating-point values represented in 16, 32, 64, and 128-bit precision, and includes IEEE special values for infinity, and NaN’s (Not-a-Number).
+Systems transmit and receive measured and computed floating-point values between systems. Oftentimes, the values do not fully utilize the floating-point range or precision afforded, and thus provide an opportunity to reduce the number of bytes representing the data. Additionally, systems need to communicate non-numeric special values or “signals”; for example, a sensor value indicating “beyond measurement range” or in cases where a divide by zero occurs (i.e., +infinity). This standard applies to IEEE 754 [1] floating-point values represented in 16, 32, 64, and 128-bit precision, and includes IEEE special values for infinity, and NaN’s (Not-a-Number).
 
 For convenience, Section 7 succinctly states the algorithm for developers to implement and Section 8 informatively shows the derivation of the algorithm and format.
 
-6 Algorithm Principles
+## 6 Algorithm Principles
 
-The following principles underlie the IMAP algorithm :
+The following principles underlie the IMAP algorithm:
 
-• The binary representation of a floating-point value is an IEEE 754-2008 binary
+- The binary representation of a floating-point value is an IEEE 754-2008 binary interchange format floating-point value.
+- The algorithm performs the mapping based on a [user] specified floating-point range from a min value to a max value – inclusive (including the end points).
+- The algorithm is a linear mapping from a floating-point value to a non-negative integer value of [user] defined length in bytes.
+- The binary representation of a non-negative integer value is in the format of a standard unsigned integer, with the length, in bytes, defined by the [user’s] implementing Parent Document.
+- The algorithm provides an inverse mapping from a non-negative integer value to the original floating-point value within a [user] specified precision. (Note: the mapping algorithm can supply better precision than what the user specifies. The defined length and precision are related – given one the other can be computed but both cannot be specified by the user).
+- If the [users] floating-point range includes 0.0, then the algorithm maps 0.0 exactly to a specific integer value, called a “zero offset.”
+- All negative floating-point values map to an integer that is less that the zero offset.
+- All positive floating-point values map to values greater than or equal to the zero offset.
+- The resulting format provides a set of special values which map to the IEEE 754-2008 special values, including: ± infinity, ±QNan and ±SNan (note: negative zero is not included in this requirement).
+- The resulting format provides a bit space for custom signals to be sent by the user as defined by the [users] implementing Parent Document (e.g., MISB ST 0601).
+- The algorithm is designed for fewest operations as possible (during the actual mapping) for computational efficiency.
 
-interchange format floating-point value.
+## 7 Mapping Algorithm and Integer Format
 
-• The algorithm performs the mapping based on a [user] specified floating-point range from a min value to a max value – inclusive ( including the end points).
+This section describes the algorithm for mapping the floating-point values to integer values, and the reverse mapping of integers back to floating-point values. Additionally, this section defines the notation to use in any MISB Parent Document when “invoking” this standard. Section 8 is an informative section which describes the development of this algorithm in detail. The algorithm is based on two steps as shown in Figure 1:
 
-• The algorithm is a linear mapping from a floating-point value to a non-negative integer value of [user] defined length in bytes.
+Figure 1: Functional view of the two-step conversion process
 
-• The binary representation of a non-negative integer value is in the format of a standard
+Step 1: The first step computes one-time use constants, and the second step is the forward or reverse mapping. There are two “starting points” for the first step. With known precision, minimum, and maximum values Starting Point A computes the mapped value length for use in Starting Point B. With known length, minimum, and maximum values Starting Point B computes the Scaling Factor Constants for the forward and reverse mapping step (Step 2). Starting Point A equates to IMAPA and Starting Point B equates to IMAPB as discussed in Section 7.2.3.1.
 
-unsigned integer, with the length, in bytes, defined by the [user’s] implementing Parent
+Step 2: The second step uses the constants computed from Step 1 to perform floating-point-to-integer and/or integer-to-floating-point mappings – provided the floating-point minimum, maximum, and length do not change. Figure 1 illustrates the interaction of the two steps.
 
-Document. • The algorithm provides an inverse mapping from a non-negative integer value to the
+Steps 1 and 2, described in the sections below, use the standard order of operations (i.e., operations in parenthesis first, exponents/roots second, multiplication/division third, addition/subtraction fourth).
 
-original floating-point value within a [user] specified precision. (Note : the mapping algorithm can supply better precision than what the user specifies. The defined length and precision are related – given one the other can be computed but both cannot be specified
+### 7.1 Step 1: Scaling Factors & Offsets
 
-by the user).
+Step 1 has two starting points based on whether the floating-point precision is known or the length (in bytes) of the resulting mapped integer is known.
 
-• If the [users] floating-point range includes 0.0, then the algorithm maps 0.0 exactly to a specific integer value, called a “zero offset.”
+#### 7.1.1 Starting Point A: Specifying Precision
 
-• All negative floating-point values map to an integer that is less that the zero offset.
+**Input**
 
-• All positive floating-point values map to values greater than or equal to the zero offset.
+- a = Floating-Point Minimum, range is from smallest float value to largest float value
+- b = Floating-Point Maximum, range is from smallest float value to largest float value
+- g = Floating-Point Precision, range is from zero to largest float value
+- Note: a<b and g<b-a
 
-• The resulting format provides a set of special values which map to the IEEE 754-2008
+**Algorithm**
 
-special values, including : ± infinity, ±QNan and ±SNan (note : negative zero is not included in this requirement).
+**Compute Length L (Bytes)**
 
-• The resulting format provides a bit space for custom signals to be sent by the user as
+1. Lbits = ceiling(log2(b-a))-floor(log2(g)) + 1 (note: +1 is for special values, see below)
+2. L = ceiling( Lbits/8)
+3. Follow steps in Starting Point B
 
-defined by the [users] implementing Parent Document (e.g., MISB ST 0601).
+#### 7.1.2 Starting Point B: Specifying Length
 
-• The algorithm is designed for fewest operations as possible ( during the actual mapping)
+**Input**
 
-for computational efficiency.
+- a = Floating-Point Minimum, range is from smallest float value to largest float value
+- b = Floating-Point Maximum, range is from smallest float value to largest float value
+- L = Length of resulting mapped integer (note: this includes an extra bit for the special values, see below)
+- Note: a<b
 
-7 Mapping Algorithm and Integer Format
+**Algorithm**
 
-This section describes the algorithm for mapping the floating-point values to integer values, and
-
-the reverse mapping of integers back to floating-point values. Additionally, this section defines the notation to use in any MISB Parent Document when “invoking” this standard. Section 8 is an informative section which describes the development of this algorithm in detail. The algorithm is
-
-based on two steps as shown in Figure 1 :
-
-24 June 2021 Motion Imagery Standards Board 3
-
-Floating Point Number Data Forward
-
-| Floating Point | Minimum | Provider |
-|---|---|---|
-|  |  | Scaling Factor - Forward Mapping |
-| Floating Point |  |  |
-| Maximum | Compute | Offsets Mapped |
-|  | Constants | Integer Step 2 |
-| Floating Point | Compute Length (Bytes) | Scaling Factor - Reverse |
-| Precision | Length | Reverse Data |
-|  |  | Mapping |
-|  | Starting Point A Starting Point | B |
-
-Reciever Floating Point Number Step 1
-
-Figure 1 : Functional view of the two-step conversion process
-
-Step 1 : The first step computes one-time use constants, and the second step is the forward or
-
-reverse mapping. There are two “starting points” for the first step. With known precision, minimum, and maximum values Starting Point A computes the mapped value length for use in
-
-Starting Point B. With known length, minimum, and maximum values Starting Point B computes the Scaling Factor Constants for the forward and reverse mapping step ( Step 2). Starting Point A
-
-equates to IMAPA and Starting Point B equates to IMAPB as discussed in Section 7.2.3.1.
-
-Step 2 : The second step uses the constants computed from Step 1 to perform floating-point-to￾integer and/or integer-to-floating-point mappings – provided the floating-point minimum, maximum, and length do not change. Figure 1 illustrates the interaction of the two steps.
-
-Steps 1 and 2, described in the sections below, use the standard order of operations (i.e.,
-
-operations in parenthesis first, exponents/roots second, multiplication/division third, addition/subtraction fourth).
-
-7.1 Step 1 : Scaling Factors & Offsets
-
-Step 1 has two starting points based on whether the floating-point precision is known or the
-
-length ( in bytes) of the resulting mapped integer is known.
-
-7.1.1 Starting Point A : Specifying Precision
-
-Input
-
-• a = Floating-Point Minimum, range is from smallest float value to largest float value • b = Floating-Point Maximum, range is from smallest float value to largest float value
-
-• g = Floating-Point Precision, range is from zero to largest float value • Note : a<b and g<b-a
-
-Algorithm Compute Length L (Bytes)
-
-1. Lbits = ceiling(log2(b-a))-floor(log2(g)) + 1 (note : +1 is for special values, see below) 2. L = ceiling( Lbits/8) 3. Follow steps in Starting Point B
-
-24 June 2021 Motion Imagery Standards Board 4
-
-7.1.2 Starting Point B : Specifying Length
-
-Input
-
-• a = Floating-Point Minimum, range is from smallest float value to largest float value
-
-| • | b = Floating-Point Maximum, range is from smallest float value to largest float value |
-|---|---|
-| • | L = Length of resulting mapped integer (note : this includes an extra bit for the special values, |
-|  | see below) |
-| • | Note : a<b |
-
-Algorithm Compute constants for forward and reverse mapping
+**Compute constants for forward and reverse mapping**
 
 1. bPow = ceiling(log2(b-a))
-
 2. dPow = 8*L-1
-
 3. sF = 2^( dPow -bPow)
-
 4. sR = 2^(bPow- dPow)
-
 5. Zoffset = 0.0
+6. if (a<0 and b>0) then Zoffset = sF*a-floor(sF*a)
 
-6. if ( a<0 and b>0) then Zoffset = sF*a-floor(sF*a)
+### 7.2 Step 2: Forward and Reverse Mapping
 
-24 June 2021 Motion Imagery Standards Board 5
+Step 1 computes the scaling factors for the forward and reverse mapping in Step 2. These operations are computationally optimal, so the mapping requires only one multiply and two adds. Because the multiplication uses power of two values, an option is to implement the multiplication using floating point binary shifts (i.e., in hardware constrained environments).
 
-7.2 Step 2 : Forward and Reverse Mapping
+#### 7.2.1 Forward Mapping
 
-Step 1 computes the scaling factors for the forward and reverse mapping in Step 2. These
+**Input**
 
-operations are computationally optimal, so the mapping requires only one multiply and two adds. Because the multiplication uses power of two values, an option is to implement the
+- sF = Forward scaling factor (computed in Step 1)
+- a = Floating-Point Minimum
+- b = Floating-Point Maximum
+- Zoffset = Zero-point offset (computed in Step 1)
+- x = floating-point value to map to integer y
 
-multiplication using floating point binary shifts (i.e., in hardware constrained environments).
+**Algorithm**
 
-7.2.1 Forward Mapping
+**Compute mapped integer value y**
 
-Input
+1. If x is a special value, then:
+   - y = Table Lookup to map to specified bit pattern (see Section 7.2.3)
+2. If x<a then:
+   - y = Special bit pattern IMAP_BELOW_MINIMUM (see Section 7.2.3.1)
+3. If x>b then:
+   - y = Special bit pattern IMAP_ABOVE_MAXIMUM (see Section 7.2.3.1)
+4. Else x is a normal floating-point number then:
+   - a. y=truncate(sF*(x-a)+Zoffset)
+     - i. Note: Since sF is a power of 2, an option is to use a floating-point shift instead of a multiplication
+     - ii. Note: Convert y into L number of bytes values (i.e., the lower L number of bytes is the “value” to send)
 
-• sF = Forward scaling factor ( computed in Step 1)
+**Developer Notes**
 
-• a = Floating-Point Minimum
+1) IEEE 754 floating-point numbers do not explicitly represent the most significant 1-bit in the mantissa, so if performing a manual shift (i.e., the CPU does not support a floating-point shift), prepend a leading bit to the mantissa before shifting and converting to an integer. As a simple example, the IEEE 754 mantissa for 6 is 1000..., it first becomes 11000..., then ...00000110.
+2) If special values are not in use for a value, an optimization of the forward mapping is to skip the “special values check” and omit the table look-up. Preserve the extra bit (special value bit) in the data format but remove the conditional check (Step 1 above).
 
-• b = Floating-Point Maximum
+#### 7.2.2 Reverse Mapping
 
-• Zoffset = Zero-point offset ( computed in Step 1)
+**Input**
 
-• x = floating-point value to map to integer y
+- sR = Reverse scaling factor (computed in Step 1)
+- a = Floating-Point Minimum
+- Zoffset = Zero-point offset (computed in Step 1)
+- y = integer value to map to floating-point value x
 
-Algorithm Compute mapped integer value y
+**Algorithm**
 
-1. If x is a special value, then :
+**Compute mapped floating-point value x**
 
-y = Table Lookup to map to specified bit pattern ( see Section 7.2.3)
-
-2. If x<a then :
-
-y = Special bit pattern IMAP_BELOW_MINIMUM ( see Section 7.2.3.1)
-
-3. If x>b then :
-
-y = Special bit pattern IMAP_ABOVE_MAXIMUM ( see Section 7.2.3.1)
-
-4. Else x is a normal floating-point number then :
-
-a. y=truncate(sF*(x-a)+Zoffset)
-
-i. Note : Since sF is a power of 2, an option is to use a floating-point shift instead
-
-of a multiplication
-
-ii. Note : Convert y into L number of bytes values (i.e., the lower L number of
-
-bytes is the “value” to send)
-
-Developer Notes
-
-1) IEEE 754 floating-point numbers do not explicitly represent the most significant 1-bit in the
-
-mantissa, so if performing a manual shift (i.e., the CPU does not support a floating-point shift), prepend a leading bit to the mantissa before shifting and converting to an integer. As a simple example, the IEEE 754 mantissa for 6 is 1000..., it first becomes 11000..., then...00000110. 2) If special values are not in use for a value, an optimization of the forward mapping is to skip the “special values check” and omit the table look-up. Preserve the extra bit ( special value bit) in the data format but remove the conditional check ( Step 1 above).
-
-24 June 2021 Motion Imagery Standards Board 6
-
-7.2.2 Reverse Mapping
-
-Input
-
-• sR = Reverse scaling factor ( computed in Step 1)
-
-• a = Floating-Point Minimum
-
-• Zoffset = Zero-point offset ( computed in Step 1)
-
-• y = integer value to map to floating-point value x
-
-Algorithm Compute mapped floating-point value x
-
-Define : Bit(q,y) = the qth bit of y. msb = Most Significant Bit
+Define: Bit(q,y) = the q<sup>th</sup> bit of y. msb = Most Significant Bit
 
 1. special_value = Bit(msb,y) & Bit(msb-1,y)
-
 2. If special_value equals 1 then
-
-a. x=table lookup to map to specified floating-point value ( Section see 7.2.3 Table 2
-
-below)
-
+   - a. x=table lookup to map to specified floating-point value (Section see 7.2.3 Table 2 below)
 3. Else y is a normal value then
+   - a. x=sR*(y-Zoffset) + a
+     - i. Note: Since sR is a power of 2, an option is to use a floating-point shift instead of a multiplication
 
-a. x=sR*(y-Zoffset) + a
+**Developer Notes**
 
-i. Note : Since sR is a power of 2, an option is to use a floating-point shift instead
+1) IEEE 754 floating-point numbers do not explicitly represent the most significant 1-bit in the mantissa, so if performing a manual shift (i.e., the CPU does not support a floating-point shift), prepend a leading bit to the mantissa before shifting and converting to an integer. As a simple example, the mantissa for 6 is 1000..., it first becomes 11000..., then ...00000110.
+2) Before applying this algorithm, verify the length is the correct length for the pre-computed sR value, see Section 7.4 for further information.
 
-of a multiplication
+#### 7.2.3 Special Value Mappings
 
-Developer Notes
+In addition to normal numeric values this standard defines a list of special values to indicate unusual circumstances, such as a gimbal lock, division by zero, etc. This standard defines existing standardized values (based on IEEE-754) and a set of MISB definable values.
 
-1) IEEE 754 floating-point numbers do not explicitly represent the most significant 1-bit in the
+The first two bits indicate either a normal or special value as shown in Table 1. The msb is zero for all normal mapped values except for the maximum floating-point value, b, but only if (b-a), as specified by the user, is a power of 2.
 
-mantissa, so if performing a manual shift (i.e., the CPU does not support a floating-point shift), prepend a leading bit to the mantissa before shifting and converting to an integer. As a
+Table 1: Bit Patterns
 
-simple example, the mantissa for 6 is 1000..., it first becomes 11000..., then...00000110. 2) Before applying this algorithm, verify the length is the correct length for the pre-computed sR value, see Section 7.4 for further information.
-
-7.2.3 Special Value Mappings
-
-In addition to normal numeric values this standard defines a list of special values to indicate
-
-unusual circumstances, such as a gimbal lock, division by zero, etc. This standard defines existing standardized values ( based on IEEE-754) and a set of MISB definable values.
-
-The first two bits indicate either a normal or special value as shown in Table 1. The msb is zero
-
-for all normal mapped values except for the maximum floating-point value, b, but only if (b-a),
-
-as specified by the user, is a power of 2.
-
-24 June 2021 Motion Imagery Standards Board 7
-
-Table 1 : Bit Patterns
-
-Bits
-
-| b n | bn-1 bn-2 | – b0 | Description |
+| bn (msb) | bn-1 | bn-2 – b0 | Description |
 |---|---|---|---|
-| (msb) |  |  |  |
-| 0 | x | x Normal | mapped value ( x=1 or 0) |
+| 0 | x | x | Normal mapped value (x=1 or 0) |
+| 1 | 0 | 0 | Normal mapped value. This is the max value of the normal mapping values; this is the only normal value with msb=1. |
+| 1 | 0 | x | (At least one x bit = 1) – Reserved section of bit space |
+| 1 | 1 | x | Special value indicator (x=1 or 0) – see Table 2 |
 
-Normal mapped value. This is the max value of the normal mapping 1 0 0 values; this is the only normal value with msb=1.
+If both the first and second msb are set to one, then the third, fourth and fifth msbs indicate which special value it is, as shown in Table 2. Since the mapped integer has fewer bytes than the original floating-point number not all the source NaN Identifiers can be defined. The default NaN Identifier is a value with all zeros.
 
-1 0 x ( At least one x bit = 1) – Reserved section of bit space
+Table 2: Special Value Bit Patterns
 
-1 1 x Special value indicator ( x=1 or 0) – see Table 2
+| Name | bn (msb) | bn-1 (Special) | bn-2 (Sign) | bn-3 (NaN) | bn-4 | Other bits bn-5 – b0 | Description - IEEE-754 values (or user defined) |
+|---|---|---|---|---|---|---|---|
+| +Infinity | 1 | 1 | 0 | 0 | 1 | Zero Filled | Positive Infinity (+∞) |
+| -Infinity | 1 | 1 | 1 | 0 | 1 | Zero Filled | Negative Infinity (-∞) |
+| +QNaN | 1 | 1 | 0 | 1 | 0 | NaN Id* | Positive Quiet NaN (Not a Number) |
+| -QNaN | 1 | 1 | 1 | 1 | 0 | NaN Id* | Negative Quiet NaN |
+| +SNaN | 1 | 1 | 0 | 1 | 1 | NaN Id* | Positive Signal NaN – “Other bits” are the signal value |
+| -SNaN | 1 | 1 | 1 | 1 | 1 | NaN Id* | Negative Signal NaN – “Other bits” are the signal value |
+| MISB Defined | 1 | 1 | 1 | 0 | 0 | MISB Defined | MISB Defined Special Values. See Section 7.2.3.1 |
+| User Defined | 1 | 1 | 0 | 0 | 0 | User Defined | “Other bits” enumerate user defined signals |
+| Reserved | 1 | 0 | X | X | X | X | Reserved (At least one “X” is set to 1) |
 
-If both the first and second msb are set to one, then the third, fourth and fifth msbs indicate
+\*This standard defines only one NaN Identifier, i.e., fill bits bn-5 – b0 with zeros. The MISB will define NaN Identifier’s as necessary; please contact the MISB to define new values. The values need to be acceptable universally and not special values for a specific processor, application or program.
 
-which special value it is, as shown in Table 2. Since the mapped integer has fewer bytes than the original floating-point number not all the source NaN Identifiers can be defined. The default
+This standard does not define a special value for the IEEE 754 negative zero value; use positive zero to represent negative zero values.
 
-NaN Identifier is a value with all zeros.
+| Requirement |  |
+|---|---|
+| ST 1201.1-12 | All negative zero values shall be mapped to a positive zero and sent as a normal (non-special) value. |
 
-Table 2 : Special Value Bit Patterns
+In addition to the IEEE bit values a set of MISB-defined bit patterns are available for use within a Parent Document. For example, in MISB ST 0601 [2] the sensor depression angle value could include a bit pattern to indicate gimbal lock; this bit pattern would then only be valid for that value in ST 0601.
 
-| Name | Most | Significant | Bits | Other | Description - IEEE-754 | values |
-|---|---|---|---|---|---|---|
-|  |  |  |  | bits | ( or user defined |) |
-|  | bn bn-1 | bn-2 | bn-3 | bn-4 bn-5 – b0 |  |  |
-|  | (msb) (Special) | (Sign) | (NaN) |  |  |  |
-|  |  |  |  | Zero |  |  |
-| +Infinity | 1 1 | 0 | 0 | 1 | Positive Infinity (+∞) |  |
-|  |  |  |  | Filled |  |  |
-|  |  |  |  | Zero |  |  |
-| -Infinity | 1 1 | 1 | 0 | 1 | Negative Infinity (-∞) |  |
-|  |  |  |  | Filled |  |  |
-| +QNaN | 1 1 | 0 | 1 | 0 NaN Id* | Positive Quiet NaN ( Not a | Number) |
-| -QNaN | 1 1 | 1 | 1 | 0 NaN Id* | Negative Quiet NaN |  |
+Developers note: Future versions of this standard may use one or more of the Reserved special values in Table 2. For forward-compatibility (i.e., reverse map a value which was forward mapped with newer standard implementation), implementations need to handle these “unknown” special cases (e.g., raise exception, set flags, etc.) preventing a software failure.
 
-Positive Signal NaN – “Other bits” are the +SNaN 1 1 0 1 1 NaN Id* signal value
+##### 7.2.3.1 MISB Defined Special Values
 
-Negative Signal NaN – “Other bits” are the
+The MISB defines special values for signaling information when IMAP encodes values, e.g., an IMAP overflow. Currently, the defined and RESERVED values need only one byte. Future expansions (i.e., RESERVED-GROWTH) will add bytes as needed. Table 3 lists the MISB Defined Special Values.
 
-| -SNaN | 1 | 1 | 1 | 1 | 1 | NaN Id* |
-|---|---|---|---|---|---|---|
-|  |  |  |  |  |  | signal value |
-| MISB |  |  |  |  |  | MISB MISB Defined Special Values. |
-|  | 1 | 1 | 1 | 0 | 0 |  |
-| Defined |  |  |  |  |  | Defined See Section 7.2.3.1 |
-| User |  |  |  |  |  | User |
-|  | 1 | 1 | 0 | 0 | 0 | “Other bits” enumerate user defined signals |
-| Defined |  |  |  |  |  | Defined |
-| Reserved | 1 | 0 | X | X | X | X Reserved ( At least one “X” is set to 1) |
+Table 3: MISB Defined Special Values
 
-*This standard defines only one NaN Identifier, i.e., fill bits bn-5 – b0 with zeros. The MISB will define NaN Identifier’s as necessary; please contact the MISB to define new values. The values need to be acceptable universally and not special values for a specific processor, application or
+| Name | bn (msb) | bn-1 (Special) | bn-2 (Sign) | bn-3 (NaN) | bn-4 | bn-5 | bn-6 | bn-7 | Other Bits bn-8 – b0 |
+|---|---|---|---|---|---|---|---|---|---|
+| IMAP_BELOW_MINIMUM | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | Zero Filled |
+| IMAP_ABOVE_MAXIMUM | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 1 | Zero Filled |
+| RESERVED | 1 | 1 | 1 | 0 | 0 | 0 | 1 | 0 | Zero Filled |
+| RESERVED | 1 | 1 | 1 | 0 | 0 | 0 | 1 | 1 | Zero Filled |
+| RESERVED | 1 | 1 | 1 | 0 | 0 | 1 | 0 | 0 | Zero Filled |
+| RESERVED | 1 | 1 | 1 | 0 | 0 | 1 | 0 | 1 | Zero Filled |
+| RESERVED | 1 | 1 | 1 | 0 | 0 | 1 | 1 | 0 | Zero Filled |
+| RESERVED - GROWTH | 1 | 1 | 1 | 0 | 0 | 1 | 1 | 1 | RESERVED |
 
-program.
+The IMAP_BELOW_MINIMUM special value signals an IMAP encoding utilized a value less than the minimum value of the IMAP range (see Section 7.2.1 for how this applies in the encoding algorithm). For example, using IMAPB<sup>1</sup>(-50.0, 5000.0, 3) to encode the value -100.0 produces the IMAP_BELOW_MINIMUM value.
 
-24 June 2021 Motion Imagery Standards Board 8
+<sup>1</sup> See Section 7.3 for description of IMAPB notation.
 
-This standard does not define a special value for the IEEE 754 negative zero value; use positive
+The IMAP_ABOVE_MAXIMUM special value signals an IMAP encoding utilizing a value greater than the maximum value of the IMAP range (see Section 7.2.1 for how this applies in the encoding algorithm). For example, using IMAPB(-50.0, 5000.0,3) to encode the value 6000.0 produces the IMAP_ABOVE_MAXIMUM value.
 
-zero to represent negative zero values.
+Invoking standards define if and how to use the IMAP_BELOW_MINIMUM or IMAP_ABOVE_MAXIMUM on a case-by-case basis (e.g., Local Set item by item). When this information is not provided, the invoking standard uses the default behavior as follows:
 
-Requirement ST 1201.1-12 All negative zero values shall be mapped to a positive zero and sent as a normal (non-special) value.
+- The default behavior after reverse mapping a value with the result IMAP_BELOW_MINIMUM is to set the resulting value to the minimum range of the IMAP encoding.
+- The default behavior after reverse mapping a value with the result IMAP_ABOVE_MAXIMUM is to set the value to the maximum range of the IMAP encoding.
 
-In addition to the IEEE bit values a set of MISB-defined bit patterns are available for use within
+The RESERVED rows in Table 3 are for future MISB special values. The RESERVED-GROWTH row in Table 3, with bits bn-5, bn-6, and bn-7 all equal to one (1), provides a set of future special values using the “Other Bits”.
 
-a Parent Document. For example, in MISB ST 0601 [2] the sensor depression angle value could include a bit pattern to indicate gimbal lock; this bit pattern would then only be valid for that
+Developers note: Future versions of this standard may use one or more of the Reserved special values in Table 3. For forward-compatibility (i.e., reverse map a value which was forward mapped with a newer standard implementation), implementations need to handle these “unknown” special cases (e.g., raise exception, set flags, etc.) preventing a software failure.
 
-value in ST 0601.
+### 7.3 MISP and MISB Document Notation
 
-Developers note : Future versions of this standard may use one or more of the Reserved special
+When using or “invoking” this standard in a MISB Parent Document it is important to be clear as to the starting point, and the values used as “inputs.” The notation to use in a Parent Document to signal the use of forward mapping a value is either IMAPA or IMAPB. The notation to use when reverse mapping of a previously encoded IMAP value is RIMAPB. RIMAPA is unnecessary since the byte array to reverse map has a defined length (i.e., not computed from a precision).
 
-values in Table 2. For forward-compatibility (i.e., reverse map a value which was forward mapped with newer standard implementation), implementations need to handle these “unknown”
+| Requirement(s) |  |
+|---|---|
+| ST 1201.1-13 | When the float precision is fixed within the implementing standard, the notation for Starting Point A shall be IMAPA (\<min float\>, \<max float\>, \<float precision\>). |
+| ST 1201.2-16 | When the float precision is computed or defined at runtime, the notation for Starting Point A shall be IMAPA (\<min float\>, \<max float\>). |
+| ST 1201.1-14 | When the length is fixed within the implementing standard, the notation for Starting Point B shall be IMAPB (\<min float\>, \<max float\>, \<length bytes\>). |
+| ST 1201.2-17 | When the length is computed or defined at runtime, the notation for Starting Point B shall be IMAPB (\<min float\>, \<max float\>). |
+| ST 1201.1-15 | When adding user defined bit patterns, they shall be listed immediately after the IMAPA or IMAPB notation. |
+| ST 1201.5-18 | When reverse mapping an IMAP value, the notation shall be RIMAPB (\<min float\>, \<max float\>). |
 
-special cases (e.g., raise exception, set flags, etc.) preventing a software failure.
+Example: Starting Point A:
 
-7.2.3.1 MISB Defined Special Values
+- IMAPA(-200.0, 3000.0, 0.5)
+  - Interpretation: map a value in the range from -200.0 to 3000.0 using, at the minimum, increments of 0.5.
 
-The MISB defines special values for signaling information when IMAP encodes values, e.g., an IMAP overflow. Currently, the defined and RESERVED values need only one byte. Future expansions (i.e., RESERVED-GROWTH) will add bytes as needed. Table 3 lists the MISB
+Example: Starting Point A (with computed precision):
 
-Defined Special Values.
+- IMAPA(-200.0, 3000.0)
+  - Interpretation: map a value in the range from -200.0 to 3000.0 using a precision computed at runtime.
 
-Table 3 : MISB Defined Special Values
+Example: Starting Point B:
 
-| Name | Most | Significant | Bits | MISB Special | Other Bits |
-|---|---|---|---|---|---|
-|  | ( From | Table | 2) | Value Bits |  |
-|  | bn bn-1 | bn-2 | bn-3 | bn-4 bn-5 bn-6 | bn-7 bn-8 – b0 |
-|  | (msb) (Special) | (Sign) | (NaN) |  |  |
-| IMAP_BELOW_MINIMUM | 1 1 | 1 | 0 | 0 0 0 | 0 Zero Filled |
-| IMAP_ABOVE_MAXIMUM | 1 1 | 1 | 0 | 0 0 0 | 1 Zero Filled |
-| RESERVED | 1 1 | 1 | 0 | 0 0 1 | 0 Zero Filled |
-| RESERVED | 1 1 | 1 | 0 | 0 0 1 | 1 Zero Filled |
-| RESERVED | 1 1 | 1 | 0 | 0 1 0 | 0 Zero Filled |
-| RESERVED | 1 1 | 1 | 0 | 0 1 0 | 1 Zero Filled |
-| RESERVED | 1 1 | 1 | 0 | 0 1 1 | 0 Zero Filled |
-| RESERVED - GROWTH | 1 1 | 1 | 0 | 0 1 1 | 1 RESERVED |
+- IMAPB(-200.0, 3000.0, 3)
+  - Interpretation: map a value in the range from -200.0 to 3000.0 using 3 bytes (see Section 7.4 for comments on length).
 
-The IMAP_BELOW_MINIMUM special value signals an IMAP encoding utilized a value less than the minimum value of the IMAP range ( see Section 7.2.1 for how this applies in the 1 encoding algorithm). For example, using IMAPB (-50.0, 5000.0, 3) to encode the value -100.0
+Example: Starting Point B (with computed length):
 
-produces the IMAP_BELOW_MINIMUM value.
+- IMAPB(-200.0, 3000.0)
+  - Interpretation: map a value in the range from -200.0 to 3000.0 using a length computed at runtime (see Section 7.4 for comments on length).
 
-1 See Section 7.3 for description of IMAPB notation.
+Example: Reverse Mapping:
 
-24 June 2021 Motion Imagery Standards Board 9
+- RIMAPB(-200.0, 3000.0)
+  - Interpretation: reverse map a byte array value in the range from -200.0 to 3000.0 using a length determined from the byte array size.
 
-The IMAP_ABOVE_MAXIMUM special value signals an IMAP encoding utilizing a value greater than the maximum value of the IMAP range ( see Section 7.2.1 for how this applies in the
+### 7.4 Length Processing
 
-encoding algorithm). For example, using IMAPB(-50.0, 5000.0,3) to encode the value 6000.0 produces the IMAP_ABOVE_MAXIMUM value.
+Lengths computed or provided when defining the mapping (IMAPA, IMAPB) are the recommended number of bytes to use. Depending on the form used to transmit KLV data (Universal Sets, Local Sets, Individual Items), it is possible to use a different [KLV] length (L) instead of the recommended or computed [IMAP] length. When using a different length, it is important to compute the constants needed to do the forward and reverse mapping based on the KLV supplied length.
 
-Invoking standards define if and how to use the IMAP_BELOW_MINIMUM or
+## 8 Algorithm Development – Informative
 
-IMAP_ABOVE_MAXIMUM on a case-by-case basis (e.g., Local Set item by item). When this information is not provided, the invoking standard uses the default behavior as follows :
-
-• The default behavior after reverse mapping a value with the result
-
-IMAP_BELOW_MINIMUM is to set the resulting value to the minimum range of the
-
-IMAP encoding. • The default behavior after reverse mapping a value with the result IMAP_ABOVE_MAXIMUM is to set the value to the maximum range of the IMAP
-
-encoding.
-
-The RESERVED rows in Table 3 are for future MISB special values. The RESERVED￾GROWTH row in Table 3, with bits bn-5, bn-6, and bn-7 all equal to one (1), provides a set of future special values using the “Other Bits”.
-
-Developers note : Future versions of this standard may use one or more of the Reserved special
-
-values in Table 3. For forward-compatibility (i.e., reverse map a value which was forward mapped with a newer standard implementation), implementations need to handle these
-
-“unknown” special cases (e.g., raise exception, set flags, etc.) preventing a software failure.
-
-7.3 MISP and MISB Document Notation
-
-When using or “invoking” this standard in a MISB Parent Document it is important to be clear as
-
-to the starting point, and the values used as “inputs.” The notation to use in a Parent Document to signal the use of forward mapping a value is either IMAPA or IMAPB. The notation to use when reverse mapping of a previously encoded IMAP value is RIMAPB. RIMAPA is
-
-unnecessary since the byte array to reverse map has a defined length (i.e., not computed from a
-
-precision).
-
-Requirement(s) ST 1201.1-13 When the float precision is fixed within the implementing standard, the notation for Starting Point A shall be IMAPA ( <min float>, <max float>, <float precision>). ST 1201.2-16 When the float precision is computed or defined at runtime, the notation for Starting Point A shall be IMAPA ( <min float>, <max float>). ST 1201.1-14 When the length is fixed within the implementing standard, the notation for Starting Point B shall be IMAPB ( <min float>, <max float>, <length bytes>). ST 1201.2-17 When the length is computed or defined at runtime, the notation for Starting Point B shall be IMAPB ( <min float>, <max float>). ST 1201.1-15 When adding user defined bit patterns, they shall be listed immediately after the IMAPA or IMAPB notation. ST 1201.5-18 When reverse mapping an IMAP value, the notation shall be RIMAPB ( <min float>, <max float>).
-
-Example : Starting Point A :
-
-24 June 2021 Motion Imagery Standards Board 10
-
-o IMAPA(-200.0, 3000.0, 0.5) o Interpretation : map a value in the range from -200.0 to 3000.0 using, at the
-
-minimum, increments of 0.5.
-
-Example : Starting Point A ( with computed precision) :
-
-o IMAPA(-200.0, 3000.0) o Interpretation : map a value in the range from -200.0 to 3000.0 using a precision
-
-computed at runtime.
-
-Example : Starting Point B :
-
-o IMAPB(-200.0, 3000.0, 3) o Interpretation : map a value in the range from -200.0 to 3000.0 using 3 bytes ( see
-
-Section 7.4 for comments on length).
-
-Example : Starting Point B ( with computed length) :
-
-o IMAPB(-200.0, 3000.0) o Interpretation : map a value in the range from -200.0 to 3000.0 using a length
-
-computed at runtime ( see Section 7.4 for comments on length).
-
-Example : Reverse Mapping :
-
-o RIMAPB(-200.0, 3000.0) o Interpretation : reverse map a byte array value in the range from -200.0 to 3000.0 using a length determined from the byte array size.
-
-7.4 Length Processing
-
-Lengths computed or provided when defining the mapping (IMAPA, IMAPB) are the recommended number of bytes to use. Depending on the form used to transmit KLV data
-
-( Universal Sets, Local Sets, Individual Items), it is possible to use a different [KLV] length (L) instead of the recommended or computed [IMAP] length. When using a different length, it is important to compute the constants needed to do the forward and reverse mapping based on the
-
-KLV supplied length.
-
-8 Algorithm Development – Informative
-
-The development of the algorithm for this standard is discussed in the following sections :
+The development of the algorithm for this standard is discussed in the following sections:
 
 1) Goal
-
 2) Mapping and Inverse Mapping
-
 3) Error Analysis
-
 4) Simplification
-
 5) Zero Matching
-
 6) Computing d
-
 7) Power of 2 adjustments for b
-
 8) Computing L from Precision
-
-24 June 2021 Motion Imagery Standards Board 11
-
 9) Summary
 
-8.1 Goal
+### 8.1 Goal
 
-The goal is to map a floating-point range (FR) to an integer range (IR) with a chosen maximum precision (g) using the smallest integer range (IR) and the least amount of computation. In addition, when a FR range includes zero the algorithm must map zero to a specific integer value ( zero offset), and all negative floating-point values must map to values less than the zero offset. Refer to Section 6 for the requirements for this algorithm.
+The goal is to map a floating-point range (FR) to an integer range (IR) with a chosen maximum precision (g) using the smallest integer range (IR) and the least amount of computation. In addition, when a FR range includes zero the algorithm must map zero to a specific integer value (zero offset), and all negative floating-point values must map to values less than the zero offset. Refer to Section 6 for the requirements for this algorithm.
 
-Examples :
+Examples:
 
 1) Map floating-point range 0.1 to 3.1 to 2 bytes
-
 2) Map -1.0 to +1.0 to 2 bytes
-
 3) Map -0.5 to -0.3 to 1 byte
-
 4) Map -3.14159265 to 3.14159265 to 4 bytes
-
 5) Map floating-point range 0.1 to 3.1 with precision of 0.01 or better
-
 6) Map -1.0 to +1.0 to 2 bytes with precision of 0.001 or better
-
 7) Map -0.5 to -0.3 to 1 byte with precision of 0.01 or better
-
 8) Map -3.14159265 to 3.14159265 with precision of 0.00314159265 or better
 
-8.2 Mapping and Inverse Mapping Definition
+### 8.2 Mapping and Inverse Mapping Definition
 
-Given a 𝐹𝑅 = { ∈ ℝ|𝑥 ∈ [𝑎, 𝑏] } and 𝐼𝑅 = { 𝑦 ∈ ℤ|𝑦 ∈ [𝑐 𝑑] } Let A(x) be
+Given a $F_R = \{x \in \mathbb{R} \mid x \in [a, b]\}$ and $I_R = \{y \in \mathbb{Z} \mid y \in [c, d]\}$
 
-a linear mapping from FR to IR and A-1 (y be a mapping from IR to FR. Figure 2 illustrates the linear mapping, where A(x) blue dotted line maps from FR (x-axis) to IR (y-axis via
+Let A(x) be a linear mapping from FR to IR and A<sup>-1</sup>(y) be a mapping from IR to FR. Figure 2 illustrates the linear mapping, where A(x) (blue dotted line) maps from FR (x-axis) to IR (y-axis) via the red line; A<sup>-1</sup>(y) (green dotted line) maps from the IR (y-axis) to FR (x-axis) via the red line.
 
-| () |) |
-|---|---|
-| the red line; A-1 (y) ( green dotted line maps from the IR (y-axis) to FR (x-axis |) via the red line. |
-|) |  |
-| Figure |  |
-| -1 |  |
-| d |  |
-| X Y |  |
-| A(x (x)) |  |
+Figure 2: A(x) maps FR to IR; A<sup>-1</sup>(x) maps IR to FR
 
-c a b
+Using the two-point method for defining the mapping:
 
-A
+(Eq 1)
+$$y - y_1 = \frac{y_2 - y_1}{x_2 - x_1}(x - x_1) = y - c = \frac{d-c}{b-a}(x - a)$$
 
-IR A(x) maps FR to IR; A-1 (x maps to FR Using the)
+After rearranging, since y is an integer, truncate or round the right-hand side of the equation before computing y:
 
-two-point
+(Eq 2)
+$$y = I\left(\frac{d-c}{b-a}(x - a) + c\right)$$
 
-| method for defining | the mapping |] |] |
-|---|---|---|---|
-|  | : |] |] |
-| 24 June 2021 | Motion | Imagery | Standards Board 12 |
+Function $I(\ )$ is either the truncation or rounding function (discussed in Section 8.3). (Eq 2) equation defines A(x), the forward mapping of any real value (floating point) range to an integer range.
 
-| 𝑥2− | ( 𝑥 − |
-|---|---|
-| ( Eq 1) 𝑦 − 𝑦1 = 𝑦2−𝑦1 𝑥1) | = 𝑦 𝑐 = 𝑑−𝑐 𝑏−𝑎 |
-| 𝑥1 𝑥 − | − After |
+(Eq 3) defines the inverse of (Eq 2) A<sup>-1</sup>(y):
 
-rearranging, since y is an integer, truncate or round the right-hand side of the equation before computing
+(Eq 3)
+$$x = (y - c)\frac{b-a}{d-c} + a$$
 
-y : ( Eq 2) 𝑦 = 𝐼 (
+The above equations are for all a, b, c, and d values; however, the following sections describe additional simplification and improvements.
 
-+ 𝑐) 𝑑−𝑐 𝑏−𝑎 ( − 𝑎 Function 𝐼() is either
+### 8.3 Error Analysis
 
-the
+The mapping function is not a one-to-one function, which means the mapping and subsequent inverse mapping introduce errors. For each value y, in I<sub>R</sub>, a unique range of x values in F<sub>R</sub> maps to a single y value; define this range of x values as x<sub>original</sub>. When the integer value y is inverse mapped back to an x value it will only match one of the values of x<sub>original</sub>. Therefore, the forward mapping of an x value to an integer, followed by the reverse mapping back to a floating-point x value induces an error (except in special cases). The tolerance of this error is dependent on the application, so the implementer of this standard must ensure the use of large enough c and d values to create acceptable minimum error – more on this topic in other sections below. Figure 3 shows a subset of values, x<sub>original</sub> (in red), mapping to a single integer value y. This also shows the single integer value, y, maps back to only one value, x<sub>final</sub> (green), in the floating-point range
 
-| truncation or | rounding function ( discussed in Section 8.3. ( Eq 2) equation defines A(x) the |
-|---|---|
-|  |), |
-| forward mapping | of any real value ( floating point) range to an integer range. Eq 3) defines |
-|  | ( |
-|  | the |
-| inverse |  |
-|  | 𝑐 |
-| of ( Eq 2) A | -1 (y) : ( Eq) 𝑥 = 𝑦 𝑏−𝑎 |
-|  | 3 − |
-|  | 𝑑−𝑐 |
-| + 𝑎 | The above equations are all |
+Figure 3: Many-to-one forward mapping and one-to-one reverse mapping
 
-for
+Example 1:
 
-b, c, and d values however, the following sections describe additional simplification and improvements. 8.3 Error Analysis The mapping
+Let a=0.0, b=5.0 and c=0, d=5; then $y = I\left(\frac{5-0}{5.0-0.0}(x - 0.0) + 0\right) = I\left(\frac{5}{5}x\right) = I(x)$
 
-function is not a one-to-one function, which means the mapping and subsequent inverse mapping introduce errors For each value, in IR, unique range of x values in FR maps to single value; define this
+For this example, use I(x) = truncate(x); therefore, all values of the x<sub>original</sub> range map to a single y value. The inverse mapping, maps y to a single x value, x<sub>final</sub>. For example, all values in x<sub>original</sub> = {x ∈ [1.0, 2.0)} map to y=1, and the inverse mapping value of y=1 map to x<sub>final</sub> = 1.0 for all values in the x<sub>original</sub> range.
 
-| y | a | a y |
-|---|---|---|
-| of x values as | xoriginal. When the integer | range value y is inverse mapped back to an value it will |
-|  |  | x |
+The error is the absolute difference between the starting value and the result of forward and inverse mapping. For example, an x value of 1.4 maps to y=1, then inverse maps back to x=1.0, producing an error of |1.4 − 1.0| = 0.4.
 
-only match one of the values of xoriginal. Therefore, the forward mapping of an x value to an integer, followed by the reverse mapping back to a floating-point value induces an error ( except x in special cases. The tolerance of this error is dependent on the application so the implementer), of this standard must ensure the use of large enough c and d values to create acceptable minimum error – more on this topic in other sections below. Figure 3 shows a subset of values, xoriginal ( in red), mapping to a single integer value y. This also shows the single integer value, y, maps back to only one value, xfinal (green) in the floating-point range Figure : Many-to-one forward, 3
+To compute the amount of error: $E(x) = |x - A^{-1}(A(x))|$. Graphing the error for Example 1 produces the saw-tooth graph shown in Figure 4.
 
-mapping xfinal
+Figure 4: Error in forward mapping of Example 1
 
-xoriginal
+The maximum error in Example 1 is slightly less than 1.0; thus, implementors may use this mapping function if this level of error is acceptable. If less error is desired, it is a simple matter to use a larger integer range; for example, doubling the range cuts the error in half.
 
-and one-to-one reverse mapping Example 1 : Let a=0.0, b=5.0 and
+There are multiple ways of converting a floating-point number to an integer, including “normal” rounding, truncating, round away from zero, round to zero, etc. Normal rounding rounds down when the fractional value is less than 0.5 and rounds up when the fractional value is 0.5 or greater. Considering error, the best conversion technique is normal rounding shown in Figure 5.
 
-c=0, d=5 then
+Figure 5: Rounding versus Truncation error
 
-| 5 5 | A(x |
-|---|---|
-| 𝑦 = 𝐼 ( 5−0 5.0−0.0 𝑥 − 0.0) 0 𝐼 () | a] c (y y |
-| ( + = |]] b] d A-1 |
-| 𝑥) = 𝐼(𝑥 |  |
-| 24 June 2021 Motion Imagery Standards | Board 13 |
+However, to support the zero matching requirements a truncation must be used instead (see Section 8.5), so (Eq 2) is changed to include truncation. Since x ranges from [a, b], all values of (x-a) will be greater than or equal to zero so truncate and floor perform the same function. (Eq 2) uses the floor notation ⌊ ⌋ throughout the remainder of this section:
 
-For this example, use I(x) = truncate(x); therefore, all values of the xoriginal range map to
+(Eq 4)
+$$y = \left\lfloor\frac{d-c}{b-a}(x - a) + c\right\rfloor$$
 
-a single y value. The inverse mapping, maps y to a single x value, xfinal. For example, all values in xoriginal = { x ∈ [1.0, 2.0) } map to y=1, and the inverse mapping value of y=1 map to xfinal = 1.0 for all values in the xoriginal range.
+### 8.4 Simplifications
 
-The error is the absolute difference between the starting value and the result of forward
+There are two simplifications to (Eq 4) to reduce overall (floating point) errors and enable some optimizations: shifting the integer range and shifting the floating-point range.
 
-and inverse mapping. For example, an x value of 1.4 maps to y=1, then inverse maps back to x=1.0, producing an error of |1.4 − 1.0| = 0.4.
+The integer range (IR) values, c and d, are arbitrary for this algorithm, so in this standard the minimum integer value is forced to always equal zero. When c is zero, d is the maximum value desired by the implementer for the desired precision. An additional benefit with the minimum value equal to zero is the resulting value is never negative, therefore it is an unsigned integer requiring no sign bit (nor 2’s complement formatting). Setting c=0 results in the following change to (Eq 4):
 
-To compute the amount of error : 𝐸(𝑥) = |𝑥 − −1 (𝐴(𝑥)) |. Graphing the error for Example 1 𝐴 produces the saw-tooth graph shown in Figure 4. Figure
+(Eq 5)
+$$y = \left\lfloor\frac{d}{b-a}(x - a)\right\rfloor$$
 
-Error 2 0 1 0.9 1 0.8 0.7
+Using substitution, letting x’=x-a, shifts the floating-point range, FR. Shifting the range FR by a constant (a) produces a new range called $F_R'$. $F_R' = \{x' \in \mathbb{R} \mid x' \in [0, b']\}$ where a’=a-a=0 and b’ = b-a. With this change the minimum value of $F_R'$ is zero, so (Eq 5) and (Eq 3) are respectively simplified to:
 
-| 0.6 | 0 0.2 |
-|---|---|
-| 0.5 |  |
-| 0.4 |  |
-| 0.3 |  |
-| 0.2 |  |
-| 3 | 4 5 Error |
-| 4 : Error in | forward mapping of Example 1 The |
-|  | maximum |
+(Eq 6)
+$$y = \left\lfloor\frac{d}{b'}x'\right\rfloor = \left\lfloor\frac{d}{b'}(x - a)\right\rfloor$$
 
-error in Example 1 is slightly less than 1.0; thus, implementors may use this mapping function if this level of error is acceptable. If less error is desired, it is a simple matter to use a larger integer range; for example, doubling the range cuts the error in half. There
+(Eq 7)
+$$x = \frac{b'}{d}y + a$$
 
-are multiple ways of converting a floating-point number to an integer, including “normal” rounding, truncating, round away from zero, round to zero, etc. Normal rounding rounds down when the fractional value is less than 0.5 and rounds up when the fractional value is 0.5 or greater. Considering error the best conversion technique is normal rounding shown in Figure 5. Figure
+### 8.5 Zero Matching
 
-2
+When the floating-point range $F_R'$ includes zero it is desirable to have the zero value directly map to an integer in IR. This zero-integer value is the “Zero Point” or Izero. Furthermore, all negative values in FR map to integers less than Izero and all positive values map to integers equal to or greater than Izero.
 
-0 1
+Example 2:
 
-1
+With FR = -0.9 to 1.1 and d=11, Table 4 lists example x values in column 1. Column 2 is the x value adjusted to the new $F_R'$ range, x’. Column 3 is the mapping before converting to an integer. Columns 4 through 7 show different integer conversions of the mapping. Note: g=2.0/11 = 0.1818.
 
-| 0.8 | - Trucation Error |
-|---|---|
-|  | - Rounding |
-| 0.6 |  |
-| 0.4 |  |
-| 3 4 5 | Error |
-
-5 : Rounding versus Truncation error However, to support the zero matching requirements a truncation must be used instead ( see Section 8.5), so ( 2 is changed to include truncation. Since x ranges from [a, b, all values of Eq] 0 0.1
-
-24 June 2021 Motion Imagery Standards Board 14
-
-(x-a) will be greater than or equal to zero so truncate and floor perform the same function. ( Eq 2) uses the floor notation ⌊ ⌋ throughout the remainder of this section :
-
-𝑑−𝑐 𝑏−𝑎 ( Eq 4) 𝑦 = ⌊ 𝑎) + 𝑐⌋ 8.4 ( 𝑥 − Simplifications
-
-There
-
-are two simplifications to ( Eq) to reduce overall ( floating point) errors and enable some 4 optimizations : shifting the integer range and shifting the floating-point range. The integer
-
-| range (IR) values, c and are arbitrary for this algorithm, so in this standard the | minimum |
-|---|---|
-| d |  |
-| integer value is forced to always equal zero. When c is zero, d is the maximum value | desired |
-| by the implementer for the desired precision. An additional benefit with the minimum | value |
-
-equal to zero is the resulting value is never negative, therefore it is an unsigned integer requiring no sign bit ( nor 2’s complement formatting). Setting c=0 results in the following change
-
-| ( | to Eq) : ( Eq 5 |
-|---|---|
-|  | 4) 𝑦 |
-|  | 𝑥 − |
-| = ⌊ | 𝑑 𝑏−𝑎 Using |
-|  | 𝑎)⌋ |
-|  | substitution |, letting x’=x-a, shifts the floating-point range, FR. Shifting the range FR by a constant (a)
-
-| new range called 𝐹𝑅 | produces ′. 𝐹𝑅 = ′ ℝ\|𝑥 ∈ [0, ′] } where a’=a-a=0 and b’ | = b-a. With | this change |
-|---|---|---|---|
-| a | ′ { ∈ ′ 𝑏 |  |  |
-| the minimum value of 𝐹𝑅 | ′ is zero, so ( Eq and ( Eq 3) are respectively | simplified to : | ( Eq |
-|  | 5) |  |  |
-
-𝑦 = ⌊ 𝑑 𝑏 ′
-
-𝑏 = 𝑥 ′ ⌋ = ⌊ 𝑑 a)⌋ Eq) 𝑥 𝑦 + 𝑎 ′ 𝑥 − 𝑏 𝑑 ′ 8.5 Zero Matching When
-
-the
-
-floating-point
-
-range 𝐹𝑅 ′
-
-includes zero it is desirable have the zero value directly map to an integer in IR. This zero-integer to value is the “Zero Point” or Izero. Furthermore, all negative values in FR map to integers less than Izero and all positive values map to integers equal to or greater than Izero. Example 2 : With FR = -0.9 to 1.1 and d=11, Table
-
-4 lists example values in column 1 Column 2 is the x value adjusted the new 𝐹𝑅 ′ x. to range, x’. Column 3 is the mapping before converting to an integer. Columns 4 through 7 show different integer conversions of the mapping. Note : g=2.0/11 = 0.1818.
-
-24 June 2021 Motion Imagery Standards Board 15
-
-Table 4 : Various mappings for Example 2
+Table 4: Various mappings for Example 2
 
 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
 |---|---|---|---|---|---|---|
-| X | x' | ( d/b')x' | ceiling | floor | truncate | round |
+| X | x' | (d/b')x' | ceiling | floor | truncate | round |
 | -0.9 | 0 | 0 | 0 | 0 | 0 | 0 |
 | -0.71818 | 0.181818 | 1 | 1 | 1 | 1 | 1 |
 | -0.53636 | 0.363636 | 2 | 2 | 2 | 2 | 2 |
@@ -765,321 +426,240 @@ Table 4 : Various mappings for Example 2
 | 0.918182 | 1.818182 | 10 | 10 | 10 | 10 | 10 |
 | 1.1 | 2 | 11 | 11 | 11 | 11 | 11 |
 
-To illustrate what happens when not using a Zero Point, the red row in Table 4 shows the original zero (0) value ( in column 1) and the value equal to 0.9 ( in column 2) after shifting the
+To illustrate what happens when not using a Zero Point, the red row in Table 4 shows the original zero (0) value (in column 1) and the value equal to 0.9 (in column 2) after shifting the floating-point range. The 0.9 value maps to 4.95 (column 3) before conversion to an integer. Based on the integer conversion technique (columns 4-7), the original zero value maps to a value of 4 or 5, which is the same value as a preceding negative value (in yellow) of -0.08182. When mapping the integer value back to a floating-point value the original value of zero (in column 1) becomes -0.08182; a zero value becomes negative after the mapping. This behavior is undesirable; instead, the zero in FR should map to an integer that maps back exactly to zero in FR.
 
-floating-point range. The 0.9 value maps to 4.95 ( column 3) before conversion to an integer. Based on the integer conversion technique ( columns 4-7), the original zero value maps to a value of 4 or 5, which is the same value as a preceding negative value ( in yellow) of -0.08182. When mapping the integer value back to a floating-point value the original value of zero ( in column 1)
+To achieve this, the zero in FR must map exactly to a whole integer (i.e., before converting to an integer) – this integer value is the Zero Point, Izero. With the Zero Point, all negative values in FR map to integers less than Izero. This means all negative values forward and reverse map back to negative values; the zero value forward and reverse maps back to zero; and all positive values forward and reverse map back to positive values or zero (if they are close to zero).
 
-becomes -0.08182; a zero value becomes negative after the mapping. This behavior is
+To implement the Zero Point the whole mapping equation is shifted, so the zero in FR becomes an integer value (Izero); an offset is added before the integer conversion. Furthermore, truncation (or floor) ensures all negative values are below Izero; conversely, ceiling and rounding will force negative values to be identical to Izero. The Zero Point shift is different than changing the bounds (a,b or c,d) of the equations; the slope of the linear mapping is not affected by this change.
 
-undesirable; instead, the zero in FR should map to an integer that maps back exactly to zero in FR.
+The adjustment to the mapping equations (Eq 5) and (Eq 6) are:
 
-To achieve this, the zero in FR must map exactly to a whole integer (i.e., before converting to an integer) – this integer value is the Zero Point, Izero. With the Zero Point, all negative values in FR map to integers less than Izero. This means all negative values forward and reverse map back to negative values; the zero value forward and reverse maps back to zero; and all positive values
+(Eq 8)
+$$Z_{\text{offset}} = \frac{d}{b'}a - \left\lfloor\frac{d}{b'}a\right\rfloor, \quad \text{Note: } 0.0 \le Z_{\text{offset}} < 1.0$$
 
-forward and reverse map back to positive values or zero ( if they are close to zero).
+(Eq 9)
+$$y = \left\lfloor\frac{d}{b'}(x - a) + Z_{\text{offset}}\right\rfloor$$
 
-To implement the Zero Point the whole mapping equation is shifted, so the zero in FR becomes
-
-an integer value (Izero); an offset is added before the integer conversion. Furthermore, truncation ( or floor) ensures all negative values are below Izero; conversely, ceiling and rounding will force negative values to be identical to Izero. The Zero Point shift is different than changing the bounds
-
-( a,b or c,d) of the equations; the slope of the linear mapping is not affected by this change.
-
-The adjustment to the mapping equations ( Eq 5) and ( Eq 6) are :
-
-| 𝑑 𝑏 | 𝑏 ′ |
-|---|---|
-| ( Eq 8) Zoffset = − ⌊ | 𝑑 Note 0.0 ≤ Zoffset < 1.0 |
-| 𝑎 |, : |
-| ′ | 𝑎⌋ |
-| 24 June 2021 | Motion Imagery Standards Board 16 |
-
-<span id="page-16-2"></span><span id="page-16-1"></span>(Eq 9) 
-$$y = \left[\frac{d}{b'}(x-a) + Z_{\text{offset}}\right]$$
-(Eq 10) 
+(Eq 10)
 $$x = \frac{b'}{d}(y - Z_{\text{offset}}) + a$$
 
 Re-computing Example 2 with these changes results in:
 
-$$Z_{\text{offset}} = \frac{11}{2.0}(-0.9) - \left[\frac{11}{2.0}(-0.9)\right] = -4.95 - (-5.0) = 0.05$$
+$$Z_{\text{offset}} = \frac{11}{2.0}(-0.9) - \left\lfloor\frac{11}{2.0}(-0.9)\right\rfloor = -4.95 - (-5.0) = 0.05$$
 
-[Table 5](#page-16-0) shows the mapping with the Zoffset (0.05) that correlates to the Zero Point (Izero), value of 5. All negative x values map to 4 or less and all positive values (and zero) map to 5 or greater. Do not use ceiling and rounding; as shown in column 4 and 7 they map positive and zero values with negative value.
+Table 5 shows the mapping with the Zoffset (0.05) that correlates to the Zero Point (Izero), value of 5. All negative x values map to 4 or less and all positive values (and zero) map to 5 or greater. Do not use ceiling and rounding; as shown in column 4 and 7 they map positive and zero values with negative value.
 
-<span id="page-16-0"></span>
+Table 5: Example 2 recomputed using Zoffset
 
-| 1        | 2        | 3                  | 4       | 5     | 6        | 7     |
-|----------|----------|--------------------|---------|-------|----------|-------|
-| x        | x'       | (d/b')x' + Zoffset | ceiling | floor | truncate | round |
-| -0.9     | 0        | 0.05               | 1       | 0     | 0        | 0     |
-| -0.71818 | 0.181818 | 1.05               | 2       | 1     | 1        | 1     |
-| -0.53636 | 0.363636 | 2.05               | 3       | 2     | 2        | 2     |
-| -0.35455 | 0.545455 | 3.05               | 4       | 3     | 3        | 3     |
-| -0.17273 | 0.727273 | 4.05               | 5       | 4     | 4        | 4     |
-| -0.08182 | 0.818182 | 4.55               | 5       | 4     | 4        | 5     |
-| 0        | 0.9      | 5                  | 5       | 5     | 5        | 5     |
-| 0.009091 | 0.909091 | 5.05               | 6       | 5     | 5        | 5     |
-| 0.1      | 1        | 5.55               | 6       | 5     | 5        | 6     |
-| 0.190909 | 1.090909 | 6.05               | 7       | 6     | 6        | 6     |
-| 0.372727 | 1.272727 | 7.05               | 8       | 7     | 7        | 7     |
-| 0.554545 | 1.454545 | 8.05               | 9       | 8     | 8        | 8     |
-| 0.736364 | 1.636364 | 9.05               | 10      | 9     | 9        | 9     |
-| 0.918182 | 1.818182 | 10.05              | 11      | 10    | 10       | 10    |
-| 1.1      | 2        | 11.05              | 12      | 11    | 11       | 11    |
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|---|---|---|---|---|---|---|
+| x | x' | (d/b')x' + Zoffset | ceiling | floor | truncate | round |
+| -0.9 | 0 | 0.05 | 1 | 0 | 0 | 0 |
+| -0.71818 | 0.181818 | 1.05 | 2 | 1 | 1 | 1 |
+| -0.53636 | 0.363636 | 2.05 | 3 | 2 | 2 | 2 |
+| -0.35455 | 0.545455 | 3.05 | 4 | 3 | 3 | 3 |
+| -0.17273 | 0.727273 | 4.05 | 5 | 4 | 4 | 4 |
+| -0.08182 | 0.818182 | 4.55 | 5 | 4 | 4 | 5 |
+| 0 | 0.9 | 5 | 5 | 5 | 5 | 5 |
+| 0.009091 | 0.909091 | 5.05 | 6 | 5 | 5 | 5 |
+| 0.1 | 1 | 5.55 | 6 | 5 | 5 | 6 |
+| 0.190909 | 1.090909 | 6.05 | 7 | 6 | 6 | 6 |
+| 0.372727 | 1.272727 | 7.05 | 8 | 7 | 7 | 7 |
+| 0.554545 | 1.454545 | 8.05 | 9 | 8 | 8 | 8 |
+| 0.736364 | 1.636364 | 9.05 | 10 | 9 | 9 | 9 |
+| 0.918182 | 1.818182 | 10.05 | 11 | 10 | 10 | 10 |
+| 1.1 | 2 | 11.05 | 12 | 11 | 11 | 11 |
 
-**Table 5: Example 2 recomputed using Zoffset**
+### 8.6 Computing d
 
-## *8.6 Computing d*
+In all the previous equations, the number of bytes the user specifies with value L determines the value d. The value d uses all the bits in the bytes including the most significant bit (msb); however, there is only one case which uses the msb for a mapped value. When the user specifies a maximum value, b, which is a power of 2, the mapped integer value can include the msb. In this case the only time the msb is used is when the floating-point value to map is the maximum value. When this happens, the msb is set to 1 and all other bits are set to zero. All other uses of the msb signal special values, see Section 7.2.3.
 
-In all the previous equations, the number of bytes the user specifies with value L determines the value d. The value d uses all the bits in the bytes including the most significant bit (msb); however, there is only one case which uses the msb for a mapped value. When the user specifies a maximum value, b, which is a power of 2, the mapped integer value can include the msb. In this case the only time the msb is used is when the floating-point value to map is the maximum value. When this happens, the msb is set to 1 and all other bits are set to zero. All other uses of the msb signal special values, see Section [7.2.3.](#page-6-0)
-
-<span id="page-16-3"></span>(Eq 11) 
+(Eq 11)
 $$N_{\text{bits}} = 8 * L - 1$$
 
-<span id="page-17-0"></span>(Eq 12) 
-$$d = 2^{N_{bits}}$$
+(Eq 12)
+$$d = 2^{N_{\text{bits}}}$$
 
-[\(Eq 12\)](#page-17-0) shows d is a power of two, which affords an optimization capability described in Section [8.7.](#page-17-1)
+(Eq 12) shows d is a power of two, which affords an optimization capability described in Section 8.7.
 
-## <span id="page-17-1"></span>*8.7 Power of 2 Adjustment for b*
+### 8.7 Power of 2 Adjustment for b
 
 To potentially improve algorithm efficiency and reduce floating-point rounding errors, this standard adjusts the floating-point range, FR, to be a power of two. The cost of this adjustment is a slight reduction in the precision.
 
-Examining the equation for the mapping shows the mapping is primarily a simple division, multiplication, and addition: = ⌊ ′ ( − ) + offset⌋. Floating-point division and multiplication can easily introduce small numeric floating-point rounding errors. To reduce this error and to provide a more efficient algorithm b' is adjusted to be based on a power of two.
+Examining the equation for the mapping shows the mapping is primarily a simple division, multiplication, and addition: $y = \left\lfloor\frac{d}{b'}(x - a) + Z_{\text{offset}}\right\rfloor$. Floating-point division and multiplication can easily introduce small numeric floating-point rounding errors. To reduce this error and to provide a more efficient algorithm b' is adjusted to be based on a power of two.
 
-(Eq 13) 
+(Eq 13)
 $$\bar{b} = 2^{\lceil \log_2 b' \rceil}$$
 
-With the adjustments to b' [\(Eq 9\)](#page-16-1) and [\(Eq 10\)](#page-16-2) are updated as follows:
+With the adjustments to b' (Eq 9) and (Eq 10) are updated as follows:
 
-<span id="page-17-2"></span>(Eq 14) 
-$$y = \left[\frac{d}{\overline{b}}(x-a) + Z_{\text{offset}}\right]$$
+(Eq 14)
+$$y = \left\lfloor\frac{d}{\bar{b}}(x - a) + Z_{\text{offset}}\right\rfloor$$
 
-<span id="page-17-3"></span>(Eq 15) 
-$$x = \frac{\overline{b}}{d} (y - Z_{\text{offset}}) + a$$
+(Eq 15)
+$$x = \frac{\bar{b}}{d}(y - Z_{\text{offset}}) + a$$
 
-Since d and ̅ are both powers of two, an optimization is to pre-compute the forward and reverse scaling factors:
+Since d and $\bar{b}$ are both powers of two, an optimization is to pre-compute the forward and reverse scaling factors:
 
-(Eq 16) 
-$$\frac{d}{\bar{b}} = S_F = 2^{(N_{bits} - [log_2 b'])}$$
+(Eq 16)
+$$\frac{d}{\bar{b}} = S_F = 2^{(N_{\text{bits}} - \lceil \log_2 b' \rceil)}$$
 
-(Eq 17) 
-$$\frac{\overline{b}}{d} = S_R = 2^{(\lceil \log_2 b' \rceil - N_{bits})}$$
+(Eq 17)
+$$\frac{\bar{b}}{d} = S_R = 2^{(\lceil \log_2 b' \rceil - N_{\text{bits}})}$$
 
-Adjusting [\(Eq 14\)](#page-17-2) and [\(Eq 15\)](#page-17-3) produces the final mapping equations:
+Adjusting (Eq 14) and (Eq 15) produces the final mapping equations:
 
-<span id="page-17-4"></span>(Eq 18) 
-$$y = [S_F(x-a) + Z_{offset}]$$
+(Eq 18)
+$$y = \lfloor S_F(x - a) + Z_{\text{offset}} \rfloor$$
 
-<span id="page-17-5"></span>(Eq 19) 
-$$x = S_R (y - Z_{offset}) + a$$
+(Eq 19)
+$$x = S_R(y - Z_{\text{offset}}) + a$$
 
-# *8.8 Computing L from known precision*
+### 8.8 Computing L from known precision
 
 When using this standard there are two starting points based either on: (Starting Point A) the minimum, maximum and known floating-point precision, or (Starting Point B) the minimum, maximum and desired length. The preceding sections describe the steps for computing scaling factors based on Starting Point B, knowing the minimum, maximum and number of bytes (L). This section shows the computation of L based on the known minimum, maximum and known floating-point precision (Starting Point A).
 
-Because the scaling factors ( SF and SR) in ( Eq 18) and ( Eq 19) are rounded up to powers of two,
+Because the scaling factors (S<sub>F</sub> and S<sub>R</sub>) in (Eq 18) and (Eq 19) are rounded up to powers of two, the users precision value, g, is rounded down (providing more precision) to a power of two, g’, to ensure the users required precision is maintained in the mapping.
 
-the users precision value, g, is rounded down ( providing more precision) to a power of two, g’, to ensure the users required precision is maintained in the mapping.
+(Eq 20)
+$$g' = 2^{\lfloor \log_2 g \rfloor}$$
 
-( Eq 20) g ′ = 2 ⌊log2 𝑔⌋ Given,, and g’; where is the minimum value of the range, is the maximum value of the a b a b range, and g’ is the floating-point precision rounded down, the number of bits, Lbits, needed to represent this number for the mapping is :
+Given a, b, and g’; where a is the minimum value of the range, b is the maximum value of the range, and g’ is the floating-point precision rounded down, the number of bits, L<sub>bits</sub>, needed to represent this number for the mapping is:
 
-𝑔′)⌉
+(Eq 21)
+$$L_{\text{bits}} = \left\lceil \log_2\left(\frac{b-a}{g'}\right) \right\rceil + 1 \qquad \text{Note: +1 is for special values bit.}$$
 
-Eq 21) Lbits ⌈𝑙𝑜𝑔2( 𝑏−𝑎 Note +1 is for special values bit. = + 1 Combining
+Combining equations (Eq 20) and (Eq 21) provides a single computation for the bits in (Eq 22). (Eq 23) shows the computation of the number of bytes from L<sub>bits</sub>.
 
-equations ( Eq 20 and ( Eq 21 provides a single computation for the bits in ( Eq 22. ( Eq))) 23
+(Eq 22)
+$$L_{\text{bits}} = \lceil \log_2 (b - a) \rceil - \lfloor \log_2 g \rfloor + 1$$
 
-shows the computation of the number of bytes from Lbits. ( Eq 22
+(Eq 23)
+$$L = \left\lceil \frac{L_{\text{bits}}}{8} \right\rceil$$
 
-| Lbits = | ⌈𝑙𝑜𝑔2(𝑏 | − 𝑎)⌉ − ⌊log2 𝑔⌋ + 1 ( Eq 23) L = ⌈ |
-|---|---|---|
-|  | ( Eq | 11 |
-| Lbits | ⌉ | uses |
+(Eq 11) uses the value of L.
 
-8
+### 8.9 Summary
 
-the value of L. 8.9 Summary
+The following shows a consolidation of all the equations needed to map values to and from floating point to integer.
 
-The following
+Starting Point A: User specifies a, b, and g (the desired precision to use)
 
-shows a consolidation of all the equations needed to map values to and from floating point to integer. Starting Point A : User specifies a, b, and g ( the desired precision to use) One-time computation : Lbits = ⌈𝑙𝑜𝑔2(𝑏 − 𝑎)⌉ − ⌊log2 𝑔⌋ + 1 L = ⌈ Lbits 8 ⌉
+One-time computation:
 
-b and Now are L
+$$L_{\text{bits}} = \lceil \log_2 (b - a) \rceil - \lfloor \log_2 g \rfloor + 1$$
 
-defined for starting point B. Starting Point B :
+$$L = \left\lceil \frac{L_{\text{bits}}}{8} \right\rceil$$
 
-User
+Now a, b and L are defined for starting point B.
 
-specifies, a, b, and L ( number bytes to use) One-time of computation
+Starting Point B: User specifies, a, b, and L (number of bytes to use)
 
-: 𝑏𝑝𝑜𝑤 = ⌈𝑙𝑜𝑔2(𝑏 − 𝑎)⌉ ∗ 𝐿 − ( Number of
+One-time computation:
 
-𝑑𝑝𝑜𝑤 = 8 1
+$$b_{pow} = \lceil \log_2 (b - a) \rceil$$
 
-bits d 𝑆𝐹 = 2 𝑑𝑝𝑜𝑤− 𝑏𝑝𝑜𝑤 ( Scaling for) for forward mapping, note same as bitwise shift) 𝑆𝑅 = 2 (𝑏𝑝𝑜𝑤−𝑑𝑝𝑜𝑤 ( Scaling for reverse)
+$$d_{pow} = 8 * L - 1 \qquad \text{(Number of bits for d)}$$
 
-mapping note same as bitwise shift) Zoffset = 0 ( Default offset to zero) If ( a<0 and b>0) then Zoffset = 𝑆𝐹𝑎 − ⌊𝑆𝐹𝑎⌋ ( only compute if condition met
+$$S_F = 2^{(d_{pow} - b_{pow})} \qquad \text{(Scaling for forward mapping, note same as bitwise shift)}$$
 
-24 June 2021 Motion Imagery Standards Board 19
+$$S_R = 2^{(b_{pow} - d_{pow})} \qquad \text{(Scaling for reverse mapping, note same as bitwise shift)}$$
 
-Once computing the above values, use SF, SR, and Zoffset for forward mapping and reverse
+$$Z_{\text{offset}} = 0 \qquad \text{(Default offset to zero)}$$
 
-mapping every x and y value, respectively.
+If (a<0 and b>0) then $Z_{\text{offset}} = S_F a - \lfloor S_F a \rfloor$ (only compute if condition met)
 
-Per x value :
+Once computing the above values, use SF, SR, and Zoffset for forward mapping and reverse mapping every x and y value, respectively.
 
-𝑦 = ⌊ 𝑆𝐹 ( − 𝑎 + 𝑍offset ⌋ Per y
+Per x value:
 
-| value | 𝑥 = |
+$$y = \lfloor S_F (x - a) + Z_{\text{offset}} \rfloor$$
+
+Per y value:
+
+$$x = S_R (y - Z_{\text{offset}}) + a$$
+
+See Section 7.2.3 for information on handling special values (i.e., infinity, NaN, etc.) of x and y.
+
+## 9 Deprecated Requirements
+
+The following requirements are deprecated because they are not testable.
+
+| Requirement(s) |  |
 |---|---|
-| : | 𝑆𝑅 |
-| 𝑦 − | 𝑍offset 𝑎 Section |
-|  | + See |
+| ST 1201.1-01 (Deprecated) | The binary representation of a floating-point value shall be in the format of an IEEE 754-2008 floating-point value. |
+| ST 1201.1-02 (Deprecated) | The algorithm shall perform the mapping based on a [user] specified floating-point range from a min value to a max value – inclusive (including the end points). |
+| ST 1201.1-03 (Deprecated) | The algorithm shall be a linear mapping from a floating-point value to a non-negative integer value of [user] defined length in bytes. |
+| ST 1201.1-04 (Deprecated) | The binary representation of a non-negative integer value shall be in the format of a standard unsigned integer, with the length, in bytes, defined by the [user’s] implementing Parent Document. |
+| ST 1201.1-05 (Deprecated) | The algorithm shall provide an inverse mapping from a non-negative integer value to the original floating-point value within a [user] specified precision. (Note: the mapping algorithm can supply better precision than what the user specifies. The defined length and precision are related – given one the other can be computed but both cannot be specified by the user). |
+| ST 1201.1-06 (Deprecated) | If the [users] floating-point range includes 0.0, then the algorithm shall map 0.0 exactly to a specific integer value, called a “zero offset.” |
+| ST 1201.1-07 (Deprecated) | All floating-point values that are negative shall map to an integer that is less that the zero offset. |
+| ST 1201.1-08 (Deprecated) | All values that are positive shall map to values greater than or equal to the zero offset. |
+| ST 1201.1-09 (Deprecated) | The algorithm shall be designed to be as few operations as possible (during the actual mapping) for computational efficiency. |
+| ST 1201.1-10 (Deprecated) | The resulting format shall provide a set of special values which map to the IEEE 754-2008 special values, including: ± infinity, ±QNan and ±SNan (note: negative zero is not included in this requirement). |
+| ST 1201.1-11 (Deprecated) | The resulting format shall provide a bit space for custom signals to be sent by the user as defined by the [users] implementing Parent Document (e.g., MISB ST 0601). |
 
-7.2.3 for information on handling special values (i.e., infinity, NaN, etc.) of x and y. 9 Deprecated
+## 10 Appendix A – Usage Examples and Test Values
 
-Requirements The following
+Table 6 shows examples of ranges, precisions, and number of bytes along with the invoking document IMAP notation.
 
-requirements are deprecated because they are not testable. Requirement(s) ST 1201.1-01
+Table 6: Notation examples
 
-| (Deprecated | of a floating-point value shall be in the format of an IEEE |
-|---|---|
-|  | representation 754-2008 |
-| The binary | floating-point value. ST 1201.1-02 |
-| (Deprecated | shall perform the mapping based on a [user] specified floating-point range from |
-|  | a |
-| algorithm |  |
-| The | min value to a max value – inclusive ( including the end points). ST 1201.1-03 |
-| (Deprecated | shall be a linear mapping from a floating-point value to a non￾negative |
-| algorithm | integer |
-| The | value of [user] defined length in bytes. ST 1201.1-04 |
-| (Deprecated | of a non-negative integer value shall be in the format of a standard |
-|  | representation |
-| The binary | unsigned integer, with the length, in bytes, defined by the [user’s implementing |
-|  |] |
+| Name | Min | Max | Precision | Number of Bytes | IMAP Statement |
+|---|---|---|---|---|---|
+| Altitude | -900.0 | 19000.0 | Don’t care | 2 | IMAPB(-900, 19000, 2) |
+| Covariance | -1.0 | 1.0 | Don’t care | 2 | IMAPB(-1, 1, 2) |
+| Radians | -3.14159265 | 3.14159265 | Don’t care | 3 | IMAPB(-3.14159265, 3.14159265, 3) |
+| Altitude | -900.0 | 19000.0 | 0.5 | Don’t care | IMAPA(-900, 19000, 0.5) |
+| Covariance | -1.0 | 1.0 | .0001 | Don’t care | IMAPA(-1, 1, .0001) |
+| Radians | -3.14159265 | 3.14159265 | 0.00314159265 | Don’t care | IMAPA(-3.14159265, 3.14159265, 0.00314159265) |
+| Small Range | 0.1 | 0.9 | Don’t care | 2 | IMAPB(0.1, 0.9, 2) |
 
-Parent Document. ST 1201.1-05
+### 10.1 Detailed Usage Example
 
-(Deprecated shall provide an inverse mapping from a non-negative integer value to the algorithm original The floating-point value within a [user] specified precision. (Note : the mapping algorithm can supply better precision than what the user specifies. The defined length and precision are related – given one the other can be computed but both cannot
+The following illustrates a complete example of the computations for mapping an altitude range using, IMAPA(-900, 19000, 0.5).
 
-be specified by the user. ST 1201.1-06)
+Example 3: Altitude (Starting point A):
 
-| (Deprecated] | floating-point range includes 0.0, then the algorithm shall map 0.0 exactly to |
-|---|---|
-|  | a |
-| [users |  |
-| If the | specific integer value, called a “zero offset.” ST 1201.1-07 |
-| (Deprecated | values that are negative shall map to an integer that is less that the zero |
-| floating-point | offset |
-| All |. ST 1201.1-08 |
-| (Deprecated | are positive shall map to values greater than or equal to the zero offset. ST |
-|  | that |
-| All values | 1201.1-09 |
-| (Deprecated | shall be designed to be as few operations as possible ( during the actual |
-| algorithm | mapping |
-| The |) for computational efficiency. ST 1201.1-10 |
-| (Deprecated | format shall provide a set of special values which map to the IEEE 754-2008 |
-| resulting | special |
-| The | values, including : ± infinity, ±QNan and ±SNan (note : negative zero is not |
-|  | included in this requirement. ST 1201.1-11 |
-|  |) |
-| (Deprecated | format shall provide a bit space for custom signals to be sent by the user as |
-| resulting | defined |
-| The | by the [users] implementing Parent Document (e.g., MISB ST 0601). |
-| 24 June 2021 | Motion Imagery Standards Board 20 |
+- ▪ a = Floating-Point Minimum = -900.0
+- ▪ b = Floating-Point Maximum = 19,000.0
+- ▪ g = Floating-Point Precision = 0.5
 
-10 Appendix A – Usage Examples and Test Values
+Starting Point A - Algorithm: Compute Length L (Bytes)
 
-Table 6 shows examples of ranges, precisions, and number of bytes along with the invoking
-
-document IMAP notation.
-
-Table 6 : Notation examples
-
-Number of
-
-| Name | Min | Max | Precision | IMAP Statement |
-|---|---|---|---|---|
-|  |  |  |  | Bytes |
-| Altitude | -900.0 | 19000.0 | Don’t care | 2 IMAPB(-900, 19000, 2) |
-| Covariance | -1.0 | 1.0 | Don’t care | 2 IMAPB(-1, 1, 2) |
-|  |  |  |  | IMAPB(-3.14159265 |
-| Radians | -3.14159265 | 3.14159265 | Don’t care | 3, |
-|  |  |  |  | 3.14159265, 3) |
-| Altitude | -900.0 | 19000.0 | 0.5 | Don’t care IMAPA(-900, 19000, 0.5) |
-| Covariance | -1.0 | 1.0 |.0001 | Don’t care IMAPA(-1, 1,.0001) |
-|  |  |  |  | IMAPA(-3.14159265, |
-| Radians | -3.14159265 | 3.14159265 | 0.00314159265 | Don’t care 3.14159265, |
-|  |  |  |  | 0.00314159265) |
-| Small Range | 0.1 | 0.9 | Don’t care | 2 IMAPB(0.1, 0.9, 2) |
-
-10.1Detailed Usage Example
-
-The following illustrates a complete example of the computations for mapping an altitude range
-
-using, IMAPA(-900, 19000, 0.5).
-
-Example 3 : Altitude ( Starting point A) :
-
-▪ a = Floating-Point Minimum = -900.0 ▪ b = Floating-Point Maximum = 19,000.0
-
-▪ g = Floating-Point Precision = 0.5
-
-Starting Point A - Algorithm : Compute Length L (Bytes)
-
-1. Lbits = ceiling(log2(b-a))-floor(log2(g))+1
-
-= ceiling(log2(19,000-(-900)-floor(log2(0.5))+1 = 17
-
+1. Lbits = ceiling(log2(b-a))-floor(log2(g))+1<br>= ceiling(log2(19,000-(-900)-floor(log2(0.5))+1 = 17
 2. L = ceiling(Lbits/8) = ceiling(17/8) = 3
-
 3. Follow steps in Starting Point B
 
-Starting Point B - Algorithm : Compute sF, sR and Zoffset
+Starting Point B - Algorithm: Compute sF, sR and Zoffset
 
 1. bPow = ceiling(log2(b-a)) = ceiling(log2(19,000-(-900))) = 15
-
 2. dPow = 8*L-1 = 8*3-1 = 23
-
 3. sF = 2^( dPow -bPow) = 2^(23-15) = 2^8
-
 4. sR = 2^(bPow- dPow) = 2^(15-23) = 2^(-8)
-
 5. Zoffset = 0.0
+6. if (a<0 and b>0) then Zoffset = sF*a-floor(sF*a)<br>= (2^8)*(-900)-floor((2^8)*(-900)) = 0.0
 
-6. if ( a<0 and b>0) then Zoffset = sF*a-floor(sF*a)
+Forward Mapping: Let x = 10.0 (underlined section is the algorithm exercised)
 
-24 June 2021 Motion Imagery Standards Board 21
+1. If x is a special value, then:
+   - y = Table Lookup to map to specified bit pattern
+2. Else x is a normal floating-point number then:
+   - y = truncate(sF*(x-a)+Zoffset) = truncate(2^8*(10.0-(-900))+0.0) = 232,960 = 0x03 8E00
 
-= (2^8)*(-900)-floor((2^8)*(-900)) = 0.0
+Reverse Mapping: Let y = 232,960 = 0x03 8E00
 
-Forward Mapping : Let x = 10.0 ( underlined section is the algorithm exercised)
-
-1. If x is a special value, then :
-
-y = Table Lookup to map to specified bit pattern
-
-2. Else x is a normal floating-point number then :
-
-y = truncate(sF*(x-a)+Zoffset) = truncate(2^8*(10.0-(-900))+0.0) = 232,960
-
-= 0x03 8E00
-
-Reverse Mapping : Let y = 232,960 = 0x03 8E00
-
-Define : Bit(q,y) = the qth bit of y. msb = Most significant bit
+Define: Bit(q,y) = the q<sup>th</sup> bit of y. msb = Most significant bit
 
 1. special_value = Bit(msb,y) & Bit(msb-1,y) = 0 & 0
-
-2. If special_value equals 1 then :
-
-x = Table Lookup to map to specified floating-point value
-
-3. Else y is a normal value then :
-
-x = sR*(y-Zoffset)+a = (2^(-8)) * (232,960-0.0) + (-900) = 10.0
+2. If special_value equals 1 then:
+   - x = Table Lookup to map to specified floating-point value
+3. Else y is a normal value then:
+   - x = sR*(y-Zoffset)+a = (2^(-8)) * (232,960-0.0) + (-900) = 10.0
 
 Table 7 shows some forward mapping and reverse mapping values for this example.
 
-Table 7 : Forward/Reverse mapping for Example 3
+Table 7: Forward/Reverse mapping for Example 3
 
 | x | y | y (hex) | x mapped back |
 |---|---|---|---|
@@ -1088,59 +668,43 @@ Table 7 : Forward/Reverse mapping for Example 3
 | 10.0 | 232,960 | 0x03 8E00 | 10.0 |
 | -infinity | See hex | 0xE8 0000 | -infinity |
 
-The following illustrates a complete example of the computations for mapping the small range
+The following illustrates a complete example of the computations for mapping the small range using, IMAPB(0.1, 0.9, 2).
 
-using, IMAPB(0.1, 0.9, 2).
+Example 4: Small range (Starting point B):
 
-Example 4 : Small range ( Starting point B) :
+- ▪ a = Floating-Point Minimum = 0.1
+- ▪ b = Floating-Point Maximum = 0.9
+- ▪ L = 2 bytes
 
-▪ a = Floating-Point Minimum = 0.1 ▪ b = Floating-Point Maximum = 0.9 ▪ L = 2 bytes
-
-Starting Point B - Algorithm : Compute sF, sR and Zoffset
+Starting Point B - Algorithm: Compute sF, sR and Zoffset
 
 1. bPow = ceiling(log2(b-a)) = ceiling(log2(0.9-(0.1))) = 0
-
 2. dPow = 8*L-1 = 8*2-1 = 15
-
 3. sF = 2^( dPow -bPow) = 2^(15-0) = 2^15
-
 4. sR = 2^(bPow- dPow) = 2^(0-15) = 2^(-15)
-
 5. Zoffset = 0.0
+6. if (a<0 and b>0) then Zoffset = sF*a-floor(sF*a)
 
-6. if ( a<0 and b>0) then Zoffset = sF*a-floor(sF*a)
+Forward Mapping: Let x = 0.5 (underlined section is the algorithm exercised)
 
-24 June 2021 Motion Imagery Standards Board 22
+1. If x is a special value, then:
+   - y = Table Lookup to map to specified bit pattern
+2. Else x is a normal floating-point number then:
+   - y = truncate(sF*(x-a)+Zoffset) = truncate(2^15*(0.5-(0.1))+0.0) = 13,107 = 0x3333
 
-Forward Mapping : Let x = 0.5 ( underlined section is the algorithm exercised)
+Reverse Mapping: Let y = 13,107 = 0x3333
 
-1. If x is a special value, then :
-
-y = Table Lookup to map to specified bit pattern
-
-2. Else x is a normal floating-point number then :
-
-y = truncate(sF*(x-a)+Zoffset) = truncate(2^15*(0.5-(0.1))+0.0) = 13,107
-
-= 0x3333
-
-Reverse Mapping : Let y = 13,107 = 0x3333
-
-Define : Bit(q,y) = the qth bit of y. msb = Most significant bit
+Define: Bit(q,y) = the q<sup>th</sup> bit of y. msb = Most significant bit
 
 1. special_value = Bit(msb,y) & Bit(msb-1,y) = 0 & 0
-
-2. If special_value equals 1 then :
-
-x = Table Lookup to map to specified floating-point value
-
-3. Else y is a normal value then :
-
-x = sR*(y-Zoffset)+a = (2^(-15)) * (13,107-0.0) + (0.1) = 0.499993896484375
+2. If special_value equals 1 then:
+   - x = Table Lookup to map to specified floating-point value
+3. Else y is a normal value then:
+   - x = sR*(y-Zoffset)+a = (2^(-15)) * (13,107-0.0) + (0.1) = 0.499993896484375
 
 Table 8 shows some forward mapping and reverse mapping values for this example.
 
-Table 8 : Forward/Reverse mapping for Example 4
+Table 8: Forward/Reverse mapping for Example 4
 
 | x | y | y (hex) | x mapped back | Error |
 |---|---|---|---|---|
@@ -1148,35 +712,38 @@ Table 8 : Forward/Reverse mapping for Example 4
 | 0.5 | 13,107 | 0x3333 | 0.499993896484375 | 6.10e-6 |
 | 0.9 | 26,214 | 0x6666 | 0.89998779296875 | 1.22e-5 |
 | -infinity | See hex | 0xE800 | -infinity | n/a |
-| 10.2 Test Values |  |  |  |  |
+
+### 10.2 Test Values
 
 Example test values for software development validation.
 
-10.2.1 Test 1
+#### 10.2.1 Test 1
 
 IMAPA(0.0, 100.0, 1E-5)
 
-IMAP Details :
+```
+IMAP Details:
+ Min                 =        0.0
+ Max                 =        100.0
+ Specified Precision =        1.0E-5
+ Adjusted Precision =         7.62939453125E-6
+ SF                  =        1.6777216E7
+ SR                  =        5.9604644775390625E-8
+ Length              =        4
+ Zoffset             =        0.0
+ Actual Precision    =        0.00000005960464477539 (5.960464e-08)
+```
 
-| Min | = | 0.0 |
-|---|---|---|
-| Max | = | 100.0 |
-| Specified Precision | = | 1.0E-5 |
-| Adjusted Precision | = | 7.62939453125E-6 |
-| SF | = | 1.6777216E7 |
-| SR | = | 5.9604644775390625E-8 |
-| Length | = | 4 |
-| Zoffset | = | 0.0 |
-| Actual Precision | = | 0.00000005960464477539 (5.960464e-08) |
-| 24 June 2021 |  | Motion Imagery Standards Board 23 |
+Notes:
 
-Notes : Specified Precision is what the user entered. Adjusted Precision is rounded down to the nearest power of two ( improved precision). Actual Precision is computed precision after scaling factors have been computed from the
+Specified Precision is what the user entered.
 
-length.
+Adjusted Precision is rounded down to the nearest power of two (improved precision).
 
-| IMAP Input | IMAP Output | RIMAP Output | Comments |
+Actual Precision is computed precision after scaling factors have been computed from the length.
+
+| IMAP Input Value | IMAP Output Value (Hex) | RIMAP Output | Comments |
 |---|---|---|---|
-| Value | Value (Hex) |  |  |
 | 0.00000000 | 0x00000000 | 0.00000000 |  |
 | 10.10000000 | 0x0A199999 | 10.09999996 |  |
 | 20.20000000 | 0x14333333 | 20.19999999 |  |
@@ -1188,34 +755,29 @@ length.
 | 80.80000000 | 0x50CCCCCC | 80.79999995 |  |
 | 90.90000000 | 0x5AE66666 | 90.89999998 |  |
 | 100.00000000 | 0x64000000 | 100.00000000 |  |
-| NaN | 0xD0000000 | NaN Quiet NaN |  |
-| Infinity | 0xC8000000 | Infinity Positive | infinity |
-| -Infinity | 0xE8000000 | -Infinity Negative | infinity |
-|  |  | Below IMAP's | minimum range |
-| -1.00000000 | 0xE0000000 | IMAP_BELOW_MINIMUM |  |
+| NaN | 0xD0000000 | NaN | Quiet NaN |
+| Infinity | 0xC8000000 | Infinity | Positive infinity |
+| -Infinity | 0xE8000000 | -Infinity | Negative infinity |
+| -1.00000000 | 0xE0000000 | IMAP_BELOW_MINIMUM | Below IMAP's minimum range (i.e., 0.0) |
+| 101.00000000 | 0xE1000000 | IMAP_ABOVE_MAXIMUM | Above IMAP's maximum range (i.e., 100.0) |
 
-(i.e., 0.0) Above IMAP's maximum range 101.00000000 0xE1000000 IMAP_ABOVE_MAXIMUM (i.e., 100.0)
-
-10.2.2 Test 2
+#### 10.2.2 Test 2
 
 IMAPB(0.0, 100.0, 3)
 
-IMAP Details :
+```
+IMAP Details:
+ Min                 =   0.0
+ Max                 =   100.0
+ SF                  =   65536.0
+ SR                  =   1.52587890625E-5
+ Length              =   3
+ Zoffset             =   0.0
+ Actual Precision    =   0.00001525878906250000 (1.525879e-05)
+```
 
-| Min | = | 0.0 |
-|---|---|---|
-| Max | = | 100.0 |
-| SF | = | 65536.0 |
-| SR | = | 1.52587890625E-5 |
-| Length | = | 3 |
-| Zoffset | = | 0.0 |
-
-Actual Precision = 0.00001525878906250000 (1.525879e-05)
-
-| IMAP Input | IMAP | RIMAP Output | Comments |
+| IMAP Input Value | IMAP Output Value (Hex) | RIMAP Output | Comments |
 |---|---|---|---|
-| Value | Output Value |  |  |
-|  | (Hex) |  |  |
 | 0.00000 | 0x000000 | 0.00000 |  |
 | 10.10000 | 0x0A1999 | 10.09999 |  |
 | 20.20000 | 0x143333 | 20.20000 |  |
@@ -1224,56 +786,48 @@ Actual Precision = 0.00001525878906250000 (1.525879e-05)
 | 50.50000 | 0x328000 | 50.50000 |  |
 | 60.60000 | 0x3C9999 | 60.59999 |  |
 | 70.70000 | 0x46B333 | 70.70000 |  |
-| 24 June 2021 |  | Motion Imagery Standards Board | 24 |
+| 80.80000 | 0x50CCCC | 80.79999 |  |
+| 90.90000 | 0x5AE666 | 90.89999 |  |
+| 100.00000 | 0x640000 | 100.00000 |  |
+| NaN | 0xD00000 | NaN | Quiet NaN |
+| Infinity | 0xC80000 | Infinity | Positive infinity |
+| -Infinity | 0xE80000 | -Infinity | Negative infinity |
+| -1.00000 | 0xE00000 | IMAP_BELOW_MINIMUM | Below IMAP's minimum range (i.e., 0.0) |
+| 101.00000 | 0xE10000 | IMAP_ABOVE_MAXIMUM | Above IMAP's maximum range (i.e., 100.0) |
 
-| 80.80000 | 0x50CCCC | 80.79999 |
-|---|---|---|
-| 90.90000 | 0x5AE666 | 90.89999 |
-| 100.00000 | 0x640000 | 100.00000 |
-| NaN | 0xD00000 | NaN Quiet NaN |
-| Infinity | 0xC80000 | Infinity Positive infinity |
-| -Infinity | 0xE80000 | -Infinity Negative infinity |
-|  |  | Below IMAP's minimum range |
-| -1.00000 | 0xE00000 | IMAP_BELOW_MINIMUM |
-
-(i.e., 0.0) Above IMAP's maximum range 101.00000 0xE10000 IMAP_ABOVE_MAXIMUM (i.e., 100.0)
-
-10.2.3 Test 3
+#### 10.2.3 Test 3
 
 IMAPB(-9.9, 110.0, 3)
 
-IMAP Details :
+```
+IMAP Details:
+ Min                  = -9.9
+ Max                  = 110.0
+ SF                   = 65536.0
+ SR                   = 1.52587890625E-5
+ Length               = 3
+ Zoffset              = 0.5999999999767169
+ Actual Precision     = 0.00001525878906250000 (1.525879e-05)
+```
 
-| Min | = -9.9 |
-|---|---|
-| Max | = 110.0 |
-| SF | = 65536.0 |
-| SR | = 1.52587890625E-5 |
-| Length | = 3 |
-| Zoffset | = 0.5999999999767169 |
-| Actual Precision | = 0.00001525878906250000 (1.525879e-05) |
-| IMAP Input | IMAP Output RIMAP Output Comments |
-| Value | Value (Hex) |
-| -9.90000 | 0x000000 -9.90001 |
-| 0.22500 | 0x0A2000 0.22499 |
-| 10.35000 | 0x144000 10.34999 |
-| 20.47500 | 0x1E6000 20.47499 |
-| 30.60000 | 0x288000 30.59999 |
-| 40.72500 | 0x32A000 40.72499 |
-| 50.85000 | 0x3CC000 50.84999 |
-| 60.97500 | 0x46E000 60.97499 |
-| 71.10000 | 0x510000 71.09999 |
-| 81.22500 | 0x5B2000 81.22499 |
-| 91.35000 | 0x654000 91.34999 |
-| 101.47500 | 0x6F6000 101.47499 |
-| 110.00000 | 0x77E667 110.00000 |
-| 0.00000 | 0x09E667 0.00000 Zero mapping |
-| NaN | 0xD00000 NaN Quiet NaN |
-| Infinity | 0xC80000 Infinity Positive infinity |
-| -Infinity | 0xE80000 -Infinity Negative infinity |
-|  | Below IMAP's minimum range |
-| -100.00000 | 0xE00000 IMAP_BELOW_MINIMUM |
-
-(i.e., -9.9) Above IMAP's maximum range 121.00000 0xE10000 IMAP_ABOVE_MAXIMUM (i.e., 110.0)
-
-24 June 2021 Motion Imagery Standards Board 25
+| IMAP Input Value | IMAP Output Value (Hex) | RIMAP Output | Comments |
+|---|---|---|---|
+| -9.90000 | 0x000000 | -9.90001 |  |
+| 0.22500 | 0x0A2000 | 0.22499 |  |
+| 10.35000 | 0x144000 | 10.34999 |  |
+| 20.47500 | 0x1E6000 | 20.47499 |  |
+| 30.60000 | 0x288000 | 30.59999 |  |
+| 40.72500 | 0x32A000 | 40.72499 |  |
+| 50.85000 | 0x3CC000 | 50.84999 |  |
+| 60.97500 | 0x46E000 | 60.97499 |  |
+| 71.10000 | 0x510000 | 71.09999 |  |
+| 81.22500 | 0x5B2000 | 81.22499 |  |
+| 91.35000 | 0x654000 | 91.34999 |  |
+| 101.47500 | 0x6F6000 | 101.47499 |  |
+| 110.00000 | 0x77E667 | 110.00000 |  |
+| 0.00000 | 0x09E667 | 0.00000 | Zero mapping |
+| NaN | 0xD00000 | NaN | Quiet NaN |
+| Infinity | 0xC80000 | Infinity | Positive infinity |
+| -Infinity | 0xE80000 | -Infinity | Negative infinity |
+| -100.00000 | 0xE00000 | IMAP_BELOW_MINIMUM | Below IMAP's minimum range (i.e., -9.9) |
+| 121.00000 | 0xE10000 | IMAP_ABOVE_MAXIMUM | Above IMAP's maximum range (i.e., 110.0) |
