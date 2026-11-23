@@ -30,9 +30,9 @@
 //! Nested sets this crate does not model come back as
 //! [`St0601Value::Nested`] with their standard named; their value is reachable
 //! through [`NestedSet::raw`]. Packs and lists come back as
-//! [`St0601Value::Pack`], reachable through [`Pack::raw`]; typed pack
-//! accessors are a later additive change. A tag ST 0601 does not define is
-//! [`St0601Value::Bytes`].
+//! [`St0601Value::Pack`]; [`Pack`] has a typed accessor for each of the packs
+//! and lists ST 0601 defines in its §8, and [`Pack::raw`] returns the bytes
+//! for the rest. A tag ST 0601 does not define is [`St0601Value::Bytes`].
 //!
 //! # Standards
 //!
@@ -51,9 +51,18 @@
 
 extern crate alloc;
 
+mod geo;
+mod packs;
 mod st0102;
 mod st0903;
 
+pub use geo::GeoPoint;
+pub use packs::{
+    St0601ActivePayloads, St0601AirbaseLocations, St0601ControlCommand, St0601CountryCodes,
+    St0601FrameRate, St0601HorizonPixelPack, St0601Oids, St0601Payload, St0601Payloads,
+    St0601ViewDomain, St0601ViewInterval, St0601Wavelength, St0601Wavelengths, St0601Waypoint,
+    St0601Waypoints,
+};
 pub use st0102::{
     St0102Classification, St0102CountryCodingMethod, St0102ObjectCountryCodes,
     St0102ObjectCountryCodingMethod, St0102Security,
@@ -147,9 +156,8 @@ impl<'a> NestedSet<'a> {
     }
 }
 
-/// A pack or list ST 0601 item whose typed accessors do not exist yet.
-///
-/// `tag` identifies the item and `raw` is its value, uninterpreted.
+/// A pack or list ST 0601 item. `tag` identifies the item and `raw` is its
+/// value, uninterpreted; the typed accessors are on this type.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct Pack<'a> {
@@ -185,7 +193,7 @@ pub enum St0601Value<'a> {
     Time(jiff::Timestamp),
     /// A nested Local Set, with its standard named.
     Nested(NestedSet<'a>),
-    /// A pack or list whose typed accessors do not exist yet.
+    /// A pack or list; see [`Pack`] for its typed accessors.
     Pack(Pack<'a>),
     /// Raw bytes of a tag ST 0601 does not define.
     Bytes(&'a [u8]),
@@ -207,7 +215,7 @@ const TAG_SEGMENT_LOCAL_SET: u32 = 100;
 const TAG_AMEND_LOCAL_SET: u32 = 101;
 
 // Pack and list tags from the ST 0601.19 tag table, plus defined items
-// `misb` 0.2 leaves as bytes.
+// `misb` leaves as bytes.
 const TAG_WEAPON_LOAD: u32 = 60;
 const TAG_WEAPON_FIRED: u32 = 61;
 const TAG_LASER_PRF_CODE: u32 = 62;

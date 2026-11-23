@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Typed accessors on `Pack` for the ST 0601.19 packs and lists that `misb`
+  decodes: `image_horizon`, `control_commands`, `verified_commands`,
+  `active_wavelengths`, `country_codes`, `frame_rate`, `wavelengths`,
+  `airbase_locations`, `payloads`, `active_payloads`, `waypoints` and
+  `view_domain`. Each returns `None` for another tag or malformed bytes.
+  Lists are iterators that do not allocate.
+- `GeoPoint`, the WGS84 position shared by the ST 0601 and ST 0903 views.
+  `St0903GeoPoint` is now an alias of it.
+
 ### Changed
 
 - Decoding uses `misb` 0.5 (was 0.2). No change to this crate's API or output.

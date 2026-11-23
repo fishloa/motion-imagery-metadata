@@ -44,8 +44,11 @@ transmux = { version = "0.33", features = ["motion-imagery-metadata"] }
 - **Other nested Local Sets** (ST 0806, ST 1206, ST 1002, ST 1601, ST 1602,
   ST 1607): named by `NestedSet::standard()` and available uninterpreted
   through `NestedSet::raw()`.
-- **Packs and lists**: tag and raw value through `Pack::tag()` and
-  `Pack::raw()`.
+- **Packs and lists**: `Pack` has a typed accessor for each ST 0601.19 pack
+  and list that `misb` decodes: horizon pixels (81), control commands (115,
+  116), active wavelengths (121), country codes (122), frame rate (127),
+  wavelengths (128), airbase locations (130), payloads (138, 139), waypoints
+  (141) and view domain (142). `Pack::raw()` returns the bytes.
 - **Undefined tags**: `St0601Value::Bytes`.
 
 ## Dependencies

@@ -18,6 +18,8 @@ use core::fmt;
 
 use broadcast_common::impl_spec_display;
 
+use crate::geo::{self, GeoPoint};
+
 /// A VMTI LS item that `misb` leaves as raw bytes (ST 0903.6 items 13, 102
 /// and 103).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -117,48 +119,8 @@ impl St0903TargetItem {
 
 impl_spec_display!(St0903TargetItem);
 
-/// A WGS84 position decoded from a VTarget location pack.
-#[derive(Debug, Clone, Copy, PartialEq)]
-#[non_exhaustive]
-pub struct St0903GeoPoint {
-    lat: f64,
-    lon: f64,
-    height: Option<f64>,
-}
-
-impl St0903GeoPoint {
-    /// A position in degrees and metres above the WGS84 ellipsoid.
-    pub fn new(lat: f64, lon: f64, height: Option<f64>) -> Self {
-        Self { lat, lon, height }
-    }
-
-    /// Latitude in degrees.
-    pub fn lat(&self) -> f64 {
-        self.lat
-    }
-
-    /// Longitude in degrees.
-    pub fn lon(&self) -> f64 {
-        self.lon
-    }
-
-    /// Height above the WGS84 ellipsoid in metres, when the pack carries it.
-    pub fn height(&self) -> Option<f64> {
-        self.height
-    }
-}
-
-fn geo_from_misb(point: misb::GeoPoint) -> St0903GeoPoint {
-    St0903GeoPoint::new(point.lat, point.lon, point.height)
-}
-
-fn geo_into_misb(point: St0903GeoPoint) -> misb::GeoPoint {
-    misb::GeoPoint {
-        lat: point.lat(),
-        lon: point.lon(),
-        height: point.height(),
-    }
-}
+/// A VTarget location position: the same shape as [`GeoPoint`].
+pub type St0903GeoPoint = GeoPoint;
 
 /// One VTarget record: the pack's `targetId` and its typed items.
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -223,15 +185,15 @@ impl<'a> St0903Target<'a> {
     /// Target Location pack (item 17). The pack's optional sigma/rho fields
     /// are not decoded.
     pub fn location(&self) -> Option<St0903GeoPoint> {
-        self.target.location().map(geo_from_misb)
+        self.target.location().map(geo::from_misb)
     }
 
     /// The ground position: item 17 when present, otherwise the offsets of
     /// items 10/11 added to `frame_center`.
     pub fn ground_position(&self, frame_center: Option<St0903GeoPoint>) -> Option<St0903GeoPoint> {
         self.target
-            .ground_position(frame_center.map(geo_into_misb))
-            .map(geo_from_misb)
+            .ground_position(frame_center.map(geo::into_misb))
+            .map(geo::from_misb)
     }
 
     /// Algorithm ID (item 22).
