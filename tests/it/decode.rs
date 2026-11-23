@@ -321,3 +321,51 @@ fn st0903_vmti_set_decodes_every_typed_item() {
         other => panic!("{other:?}"),
     }
 }
+
+#[test]
+fn display_matches_name() {
+    for value in [1u8, 5, 0, 0xFF] {
+        let classification = St0102Classification::from_u8(value);
+        let country = St0102CountryCodingMethod::from_u8(value);
+        let object = St0102ObjectCountryCodingMethod::from_u8(value);
+        for (shown, name, reserved) in [
+            (
+                classification.to_string(),
+                classification.name(),
+                matches!(classification, St0102Classification::Reserved(_)),
+            ),
+            (
+                country.to_string(),
+                country.name(),
+                matches!(country, St0102CountryCodingMethod::Reserved(_)),
+            ),
+            (
+                object.to_string(),
+                object.name(),
+                matches!(object, St0102ObjectCountryCodingMethod::Reserved(_)),
+            ),
+        ] {
+            if reserved {
+                assert_eq!(shown, format!("{name}(0x{value:02X})"));
+            } else {
+                assert_eq!(shown, name);
+            }
+        }
+    }
+    assert_eq!(
+        St0102Classification::from_u8(0).to_string(),
+        "reserved(0x00)"
+    );
+    assert_eq!(
+        St0903VmtiItem::MiisId.to_string(),
+        St0903VmtiItem::MiisId.name()
+    );
+    assert_eq!(
+        St0903TargetItem::VChip.to_string(),
+        St0903TargetItem::VChip.name()
+    );
+    match motion_imagery_metadata::decode(73, &[]) {
+        St0601Value::Nested(set) => assert_eq!(set.standard().to_string(), "ST 0806"),
+        other => panic!("{other:?}"),
+    }
+}
