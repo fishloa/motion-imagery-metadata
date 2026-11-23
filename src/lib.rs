@@ -3,10 +3,11 @@
 //! MISB ST 0601 carries the telemetry a UAS payload computer emits next to
 //! full-motion video (STANAG 4609): platform and sensor attitude, frame-centre
 //! position, timestamps, and nested Local Sets for security markings and
-//! moving-target indications. This crate takes one ST 0601 item — its BER-OID
-//! tag and its value bytes — and returns a typed [`St0601Value`]: the scaled
-//! number the tag table defines, text, a UTC instant in microseconds, a nested
-//! Local Set, or the raw bytes of a pack/list the decoder does not interpret.
+//! moving-target indications. This crate takes one ST 0601 item, its BER-OID
+//! tag and its value bytes, and returns a typed [`St0601Value`]: the scaled
+//! number the tag table defines, text, a UTC instant as a `jiff::Timestamp`, a
+//! nested Local Set, or the raw bytes of a pack/list the decoder does not
+//! interpret.
 //!
 //! # Scope
 //!
@@ -25,20 +26,23 @@
 //!
 //! # What stays raw, and why
 //!
-//! Items the `misb` decoder leaves as bytes are not re-decoded by hand
-//! (#4041). Nested sets the workspace does not model come back as
+//! Items the `misb` decoder leaves as bytes are not re-decoded by hand.
+//! Nested sets this crate does not model come back as
 //! [`St0601Value::Nested`] with their standard named; their value is reachable
 //! through [`NestedSet::raw`]. Packs and lists come back as
 //! [`St0601Value::Pack`], reachable through [`Pack::raw`]; typed pack
 //! accessors are a later additive change. A tag ST 0601 does not define is
 //! [`St0601Value::Bytes`].
 //!
-//! # Spec citations
+//! # Standards
 //!
-//! - MISB ST 0601.19: `private/specs-verified/misc/misb/st0601-tag-table.md`.
-//! - MISB ST 0102.12: `private/specs-verified/misc/misb/st0102-security-ls.md`.
-//! - MISB ST 0903.6: `private/specs-verified/misc/misb/st0903-vmti-ls.md`.
-//! - MISB ST 1201.5: `private/specs-verified/misc/misb/st1201-imapb.md`.
+//! - MISB ST 0601.19 UAS Datalink Local Set.
+//! - MISB ST 0102.12 Security Metadata Local Set.
+//! - MISB ST 0903.6 Video Moving Target Indicator Local Set.
+//! - MISB ST 1201.5 Floating Point to Integer Mapping.
+//!
+//! The standards are published by the NSG MISB; this crate contains no spec
+//! text.
 //!
 //! `no_std` + `alloc`.
 

@@ -6,16 +6,10 @@ Typed MISB ST 0601 UAS Datalink Local Set item values, decoded by the
 MISB ST 0601 is the telemetry a UAS payload computer carries next to full-motion
 video in STANAG 4609: platform and sensor attitude, frame-centre position,
 timestamps, and nested Local Sets for security markings and moving-target
-indications. This crate turns one item — a BER-OID tag and its value bytes —
-into a typed value:
+indications. This crate turns one item, a BER-OID tag and its value bytes, into
+a typed value.
 
-- scaled numbers, unsigned/signed integers, UTF-8 text, and UTC instants
-  (microseconds since the POSIX epoch);
-- a nested Local Set with its standard named (`NestedSet::standard`), plus the
-  typed ST 0102 Security (`NestedSet::security`) and ST 0903 VMTI
-  (`NestedSet::vmti`) views;
-- a pack or list, with its tag and raw value (`Pack::tag`, `Pack::raw`);
-- `Bytes` for a tag ST 0601 does not define.
+## Usage
 
 ```rust
 use motion_imagery_metadata::{decode, St0601Value};
@@ -23,6 +17,8 @@ use motion_imagery_metadata::{decode, St0601Value};
 let heading = decode(5, &[0x71, 0xC2]);
 assert!(matches!(heading, St0601Value::Number(degrees) if (degrees - 159.9744).abs() < 1e-3));
 ```
+
+The same code is built as the `readme` example.
 
 ## Scope
 
@@ -32,8 +28,25 @@ in `transmux`. Enable that crate's `motion-imagery-metadata` feature to call
 `LocalSetItem::value_typed()`, which delegates here:
 
 ```toml
-transmux = { version = "0.32", features = ["motion-imagery-metadata"] }
+transmux = { version = "0.33", features = ["motion-imagery-metadata"] }
 ```
+
+## Supported standards
+
+- **MISB ST 0601.19** UAS Datalink Local Set: scaled numbers, unsigned and
+  signed integers, UTF-8 text, and UTC instants (`St0601Value::Time`, a
+  `jiff::Timestamp`).
+- **MISB ST 0102.12** Security Metadata Local Set: `NestedSet::security()`
+  returns the typed `St0102Security` view.
+- **MISB ST 0903.6** Video Moving Target Indicator Local Set:
+  `NestedSet::vmti()` returns `St0903Vmti`, with typed VMTI items, targets and
+  raw views for items the decoder does not interpret.
+- **Other nested Local Sets** (ST 0806, ST 1206, ST 1002, ST 1601, ST 1602,
+  ST 1607): named by `NestedSet::standard()` and available uninterpreted
+  through `NestedSet::raw()`.
+- **Packs and lists**: tag and raw value through `Pack::tag()` and
+  `Pack::raw()`.
+- **Undefined tags**: `St0601Value::Bytes`.
 
 ## Dependencies
 
@@ -41,28 +54,17 @@ transmux = { version = "0.32", features = ["motion-imagery-metadata"] }
 motion-imagery-metadata = "0.1"
 ```
 
-Depends only on `broadcast-common` (workspace foundation) and `misb`. No `misb`
-type appears in the public API or in any trait impl.
+Depends on `broadcast-common`, `misb` and `jiff`. No `misb` type appears in the
+public API or in any trait impl.
 
-## What stays raw, and why (#4041)
+## Credits
 
-The tag table, the linear/IMAPB scalings and the ST 0102/ST 0903 item decoders
-are the `misb` crate's (ST 0601.19, ST 0102.12, ST 0903.6, ST 1201.5). Items it
-leaves as bytes are not re-decoded by hand here:
+The ST 0601 tag table and the ST 0102 / ST 0903 / ST 1201 decoders come from
+the [`misb`](https://crates.io/crates/misb) crate by Matthew Busel.
 
-| Items | Result | Why |
-|---|---|---|
-| 73, 95, 97–101 | `Nested` with its standard named | Those nested standards are not modelled by the workspace; `NestedSet::raw` keeps the value. |
-| 60, 61, 81, 102, 115, 116, 121, 122, 127, 128, 130, 138–143 | `Pack` | Packs and lists need typed accessors that are a later, additive change; `Pack::raw` keeps the value. |
-| 62, 66, 94 | `Pack` | `misb` 0.2 leaves the Laser PRF Code, the deprecated covariance item and the MIIS Core Identifier as bytes; surfaced as raw rather than guessed. |
-| any other tag | `Bytes` | ST 0601 does not define it. |
-
-## Spec citations
-
-- MISB ST 0601.19: `private/specs-verified/misc/misb/st0601-tag-table.md`
-- MISB ST 0102.12: `private/specs-verified/misc/misb/st0102-security-ls.md`
-- MISB ST 0903.6: `private/specs-verified/misc/misb/st0903-vmti-ls.md`
-- MISB ST 1201.5: `private/specs-verified/misc/misb/st1201-imapb.md`
+MISB standards are published by the NSG MISB. This repository contains no spec
+text; the test suite reads optional spec transcriptions from a directory named
+by `MIM_PRIVATE_DIR`.
 
 ## License
 
