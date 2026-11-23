@@ -28,7 +28,12 @@ to keep in this repository.
 ## Known defect
 
 `DynamicConstantMISMMSPacketData.bin` does not verify its own tag-1 Checksum
-(`0xAA43` stored, `0x3E1E` computed). The upstream test comments record the
-cause: the example in circulation was hand-corrected without recomputing the
-sum. The packet is kept unmodified so the bytes stay traceable; tests assert
-only the values they need rather than the checksum.
+(`0xAA43` stored, `0x3E1E` computed). Compared with the packet printed in
+ST 0902.5 Annex C (`specs-md/misb_st0902.5_2015_motion_imagery_sensor_minimum_metadata_set.md`),
+the file differs in exactly four bytes, offsets 125-128: the tag 20 Sensor
+Relative Azimuth value is `7D C5 5E CE` in the file and `00 00 00 00` in the
+standard. The printed packet verifies its checksum (`0xAA43`); the file changed
+the value without recomputing it. The packet is kept unmodified so the bytes
+stay traceable; tests assert only the values they need rather than the
+checksum. `DynamicOnlyMISMMSPacketData.bin` is byte-identical to the standard's
+printed packet.
