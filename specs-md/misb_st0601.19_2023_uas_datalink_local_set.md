@@ -10,19 +10,16 @@ MISB ST 0601 defines the Unmanned Air System (UAS) Datalink Local Set (LS) for U
 
 The UAS Datalink LS is a bandwidth-efficient, extensible Key-Length-Value (KLV) metadata Local Set conforming to SMPTE ST 336 [1]. This standard defines the Local Set items with requirements for their use and provides additional details with examples.
 
-Past versions of MISB ST 0601 provided a mapping to MISB EG 0104 Predator UAV Basic
 
-Universal Metadata Set metadata and Exploitation Support Data (ESD) metadata. MISB EG 0104 and ESD are both deprecated as of 18 September 2008. If mapping EG 0104 or ESD data to a ST 0601 Local Set, please refer to previous versions of ST 0601.
 
-(Quick link to items comprising UAS Datalink Local Set in numeric order, see Table 1, or in alphabetical order, see Table 2).
+Past versions of MISB ST 0601 provided a mapping to MISB EG 0104 Predator UAV Basic Universal Metadata Set metadata and Exploitation Support Data (ESD) metadata. MISB EG 0104 and ESD are both deprecated as of 18 September 2008. If mapping EG 0104 or ESD data to a ST 0601 Local Set, please refer to previous versions of ST 0601. (Quick link to items comprising UAS Datalink Local Set in numeric order, see Table 1, or in alphabetical order, see Table 2).
 
 # 2 References
 
 MISB references cited here-in reflect versions current to the publication date of a document. In the event of a MISB document correction, the corrected document will have a single letter Minor Version appended to the Major Version number per the MISB Document Development Process
 
-[2]. For example, corrections to ST 0001.2, which has a Major Version of 2, result in a new version titled ST 0001.2a, which includes a Minor Version of “a”. The MISB will not update the referring document (this document) with the Minor Version number change. When acquiring any MISB reference listed below from an NGA repository the latest version may be either a Major or
 
-Minor Version.
+[2]. For example, corrections to ST 0001.2, which has a Major Version of 2, result in a new version titled ST 0001.2a, which includes a Minor Version of “a”. The MISB will not update the referring document (this document) with the Minor Version number change. When acquiring any MISB reference listed below from an NGA repository the latest version may be either a Major or Minor Version.
 
 [1] SMPTE ST 336:2017 Data Encoding Protocol Using Key-Length-Value.
 
@@ -43,25 +40,21 @@ Minor Version.
 
 [9] BIPM The International System of Units (SI) 9th Edition, May 2019.
 
-[10] MISB ST 1010.3 Generalized Standard Deviation and Correlation Coefficient Metadata,
 
-Oct 2016.
+[10] MISB ST 1010.3 Generalized Standard Deviation and Correlation Coefficient Metadata, Oct 2016.
 
-[11] MIL-STD-2500C (CN2) National Imagery Transmission Format Version 2.1 for the
 
-National Imagery Transmission Format, Change Notice 2, 02 Jan 2019.
+[11] MIL-STD-2500C (CN2) National Imagery Transmission Format Version 2.1 for the National Imagery Transmission Format, Change Notice 2, 02 Jan 2019.
 
 [12] MISB ST 1201.5 Floating Point to Integer Mapping, Jun 2021.
 
 [13] MISB ST 0801.9 Photogrammetry Metadata for Motion Imagery, Oct 2021.
 
-[14] MISB ST 0102.12 Security Metadata Universal and Local Sets for Motion Imagery Data,
 
-Jun 2017.
+[14] MISB ST 0102.12 Security Metadata Universal and Local Sets for Motion Imagery Data, Jun 2017.
 
-[15] Federal Aviation Administration (FAA) FAA-H-8083-25 Pilot’s Handbook of
 
-Aeronautical Knowledge, 2016.
+[15] Federal Aviation Administration (FAA) FAA-H-8083-25 Pilot’s Handbook of Aeronautical Knowledge, 2016.
 
 [16] MISB ST 0903.6 Video Moving Target Indicator Metadata, Oct 2021.
 
@@ -125,9 +118,8 @@ This document defines the UAS Datalink Local Set and is under configuration mana
 
 # 6 UAS Datalink Local Set
 
-The UAS Datalink Local Set is a list of metadata elements (e.g., latitude, longitude, roll, pitch, yaw, MISP timestamp) that provide information about a platform and its sensor at a given time. When populated with data (i.e., a data instance), some metadata items contain lists or hierarchies of additional metadata making the UAS Datalink LS instance the root of the tree. The combination of the UAS Datalink LS Universal Label, the length of the data tree instance, and the data tree instance itself, constitutes a UAS Datalink KLV Packet. A series of UAS Datalink
 
-Packets is the UAS Datalink Metadata Stream, or just metadata stream.
+The UAS Datalink Local Set is a list of metadata elements (e.g., latitude, longitude, roll, pitch, yaw, MISP timestamp) that provide information about a platform and its sensor at a given time. When populated with data (i.e., a data instance), some metadata items contain lists or hierarchies of additional metadata making the UAS Datalink LS instance the root of the tree. The combination of the UAS Datalink LS Universal Label, the length of the data tree instance, and the data tree instance itself, constitutes a UAS Datalink KLV Packet. A series of UAS Datalink Packets is the UAS Datalink Metadata Stream, or just metadata stream.
 
 
 ## 6.1 Metadata Usage
@@ -162,18 +154,14 @@ ST 0601.8-19 Historical 16-byte Universal Label Keys shall be forbidden in futur
 
 ## 6.3 UAS Datalink LS Packet Structure
 
-Figure 1 illustrates the general structure of a UAS Datalink LS packet. A packet is a combination
-
-of a UL Key, the Length of the Value, and the Value. UAS Datalink LS packets require the following items: Precision Time Stamp (Item 2), UAS Datalink LS Version Number (Item 65)
-
-and Checksum (Item 1).
-
-The Precision Time Stamp (Item 2) is a sampled and quantized time value of the MISP Time
-
-System as defined in MISB ST 0603 [4]. The Precision Time Stamp represents the time of birth of the metadata within the packet. Section 6.4 provides details on timestamps. The UAS Datalink LS Version Number (Item 65) states the version of the MISB ST 0601 document used when constructing the packet. Section 6.6 provides details on version numbers. Each UAS Datalink LS
 
 
-packet includes a Checksum (Item 1) to validate the contents of the whole packet. Section 6.6 provides details on Checksums.
+Figure 1 illustrates the general structure of a UAS Datalink LS packet. A packet is a combination of a UL Key, the Length of the Value, and the Value. UAS Datalink LS packets require the following items: Precision Time Stamp (Item 2), UAS Datalink LS Version Number (Item 65) and Checksum (Item 1).
+
+
+
+
+The Precision Time Stamp (Item 2) is a sampled and quantized time value of the MISP Time System as defined in MISB ST 0603 [4]. The Precision Time Stamp represents the time of birth of the metadata within the packet. Section 6.4 provides details on timestamps. The UAS Datalink LS Version Number (Item 65) states the version of the MISB ST 0601 document used when constructing the packet. Section 6.6 provides details on version numbers. Each UAS Datalink LS packet includes a Checksum (Item 1) to validate the contents of the whole packet. Section 6.6 provides details on Checksums.
 
 A packet can include any combination of metadata items from the UAS Datalink LS. Except for the Precision Time Stamp and Checksum, the order of items within a UAS Datalink LS packet is arbitrary, unless dictated by use of any Standard Deviation Correlation Coefficient Floating Length Pack (SDCC-FLP). In addition, some items have multiple instances within a single packet, so an item’s use may not be unique in the LS (however the length and value will usually be different).
 
@@ -214,9 +202,8 @@ Figure 1: Example of a UAS Datalink LS Packet
 
 ### 6.3.1 KLV Metadata in Motion Imagery
 
-MISB ST 0107 [5] provides a set of baseline requirements for applying KLV metadata in Motion
 
-Imagery.
+MISB ST 0107 [5] provides a set of baseline requirements for applying KLV metadata in Motion Imagery.
 
 
 Requirement
@@ -225,9 +212,8 @@ ST 0601.8-03 All UAS Datalink LS metadata shall be expressed in accordance with 
 
 ### 6.3.2 Nested Packs within the UAS Datalink LS
 
-To reduce bandwidth, KLV pack structures eliminate the tag and potentially the length when sending a group of related data items. Because packs do not include tags, they have a predefined order for items. There are two types of packs, a Variable Length Pack (VLP) and a Defined
 
-Length Pack (DLP).
+To reduce bandwidth, KLV pack structures eliminate the tag and potentially the length when sending a group of related data items. Because packs do not include tags, they have a predefined order for items. There are two types of packs, a Variable Length Pack (VLP) and a Defined Length Pack (DLP).
 
 A VLP is a group of items represented as length-value pairs with each item’s tag suppressed. Lengths in BER short or long form precede each item’s value as illustrated in Figure 2. The VLP is a TLV triplet, where the Tag in Figure 2 is the tag for the VLP. The Length (Total) (in BER short or long form) represents the sum of all length-value pairs that follow. This length-value pair pattern continues for all represented items.
 
@@ -266,11 +252,9 @@ The Motion Imagery Handbook [6] provides additional details and references on pa
 
 To allow re-use of metadata items in the UAS Datalink LS (e.g., platform location and sensor pointing angles), while providing greater flexibility to system implementers, other Local Sets with defined items in the UAS Datalink LS may nest within the UAS Datalink LS.
 
-A nested Local Set is the same as any standalone metadata item defined within the UAS Datalink
 
-LS, where this document defines the Tag, and the Length is determined by the size of its Value. The Value then contains a set of TLV triplets defined by another standard or document. The Value does not include the nested Local Set’s key or length. If the nested Local Set defines a checksum (or CRC) item, the Value does not include the checksum (or CRC) item. Figure 5 illustrates an example of a packet where the RVT LS (MISB ST 0806 [7]) nests within the UAS
 
-Datalink LS.
+A nested Local Set is the same as any standalone metadata item defined within the UAS Datalink LS, where this document defines the Tag, and the Length is determined by the size of its Value. The Value then contains a set of TLV triplets defined by another standard or document. The Value does not include the nested Local Set’s key or length. If the nested Local Set defines a checksum (or CRC) item, the Value does not include the checksum (or CRC) item. Figure 5 illustrates an example of a packet where the RVT LS (MISB ST 0806 [7]) nests within the UAS Datalink LS.
 
 
 | 16 Bytes Identifier | BER Encoded Length | Variable Length |
@@ -303,9 +287,8 @@ Notes:
 
 Figure 5: Nested Packet Example
 
-In this example, the value of UAS Datalink LS Item 73, RVT Local Set, is the RVT LS with its own defined set of items. The items within the RVT LS are completely independent of the items in the UAS Datalink LS. For example, as shown in Figure 5, the RVT LS defines Item 8 as the Version Number while the UAS Datalink LS defines Item 8 as the Platform True Airspeed. UAS Datalink LS embeds the RVT LS within the value of Item 73 so Item 8, for RVT LS, parses within the scope of Item 73, while the Item 8 for UAS Datalink LS parses within the scope of the
 
-UAS Datalink LS.
+In this example, the value of UAS Datalink LS Item 73, RVT Local Set, is the RVT LS with its own defined set of items. The items within the RVT LS are completely independent of the items in the UAS Datalink LS. For example, as shown in Figure 5, the RVT LS defines Item 8 as the Version Number while the UAS Datalink LS defines Item 8 as the Platform True Airspeed. UAS Datalink LS embeds the RVT LS within the value of Item 73 so Item 8, for RVT LS, parses within the scope of Item 73, while the Item 8 for UAS Datalink LS parses within the scope of the UAS Datalink LS.
 
 ### 6.3.4 Data Structures and Records
 
@@ -322,14 +305,13 @@ It is mandatory to include a Precision Time Stamp representing absolute time as 
 
 The first item of a UAS Datalink LS packet is the Precision Time Stamp as shown in Figure 6. It applies to all metadata in the packet and corresponds to the time of birth of all the data contained within the packet.
 
+```
 Precision Time Stamp
-
-| UAS Datalink LS | T \| L \| V | T \| L \| V | T \| L \| V | T \| L \| V | T \| L \| V |
-|---|---|---|---|---|---|
-| BER | Length |  |  |  |  |
-| 16-byte Key | Timestamp | metadata | metadata | … Version | Checksum |
-
+UAS Datalink LS T | L | V T | L | V T | L | V T | L | V T | L | V
+BER Length
+16-byte Key Timestamp metadata metadata … Version Checksum
 Timestamp applies to all metadata
+```
 
 Figure 6: Packet Timestamp Example
 
@@ -337,16 +319,14 @@ Requirement(s)
 
 ST 0601.8-09 All instances of a UAS Datalink LS shall contain Item 2, Precision Time Stamp, as the first item of the LS.
 
-ST 0601.8-10 The value assigned to Item 2, Precision Time Stamp, shall represent the time of birth of the metadata of all the items contained in that instance of the UAS Datalink
 
-LS.
+ST 0601.8-10 The value assigned to Item 2, Precision Time Stamp, shall represent the time of birth of the metadata of all the items contained in that instance of the UAS Datalink LS.
 
 In some cases, the time of birth timestamp may not directly correspond to the sample time of a metadata value. Thus, the maximum timestamp error encountered will be the difference in time between the current metadata packet, and the packet immediately preceding it. A recommendation is for systems to adjust metadata repetition rates to meet timing criteria.
 
-The Precision Time Stamp provides two purposes: a baseline time for coordinating or synchronizing metadata with Motion Imagery and the actual real-world time. MISP conformant Motion Imagery will contain a Precision Time Stamp within the Motion Imagery frames (see
 
 
-MISB ST 0604 [8]) and a Precision Time Stamp within each metadata packet. These Precision Time Stamps enable the correlation of Motion Imagery frames and the metadata. Any modifications to the metadata Precision Time Stamp will break the synchronization between the metadata and Motion Imagery frames.
+The Precision Time Stamp provides two purposes: a baseline time for coordinating or synchronizing metadata with Motion Imagery and the actual real-world time. MISP conformant Motion Imagery will contain a Precision Time Stamp within the Motion Imagery frames (see MISB ST 0604 [8]) and a Precision Time Stamp within each metadata packet. These Precision Time Stamps enable the correlation of Motion Imagery frames and the metadata. Any modifications to the metadata Precision Time Stamp will break the synchronization between the metadata and Motion Imagery frames.
 
 There are some cases where the Precision Time Stamp does not correctly represent real-world time; therefore, a Correction Offset (Item 137) provides a means to adjust the time presented to end users. The Correction Offset is typically a post-mission update and is usually a constant value over the whole mission or flight. The Correction Offset eliminates the need to do a post-mission change of the Precision Time Stamp value, which if changed can cause synchronization issues with the Motion Imagery frames. To compute the Corrected Time (TCorrected) for display or other uses, add the Correction Offset (TCorrection) to the Precision Time Stamp (TPrecision), as shown in Equation 1.
 
@@ -372,13 +352,11 @@ Within a constrained bandwidth channel shared by both Motion Imagery and metadat
 
 #### 6.5.1.1 List Distribution
 
-Certain items in the Local Set contain a list of elements, such as the Payload Record described in
 
-Item 138. These Local Set items may have their lists distributed over multiple packets instead of sending the full list in one packet. Metadata items which allow for this type of distribution have comments within their “Details” section. Transmission of a list over multiple packets requires the receiver to creates a full list from the individual parts. Unless noted by the item description, the list elements follow similar rules to the Report-on-Change updating, not including list elements in a 30 second time frame, means the list element is no longer part of the list.
+Certain items in the Local Set contain a list of elements, such as the Payload Record described in Item 138. These Local Set items may have their lists distributed over multiple packets instead of sending the full list in one packet. Metadata items which allow for this type of distribution have comments within their “Details” section. Transmission of a list over multiple packets requires the receiver to creates a full list from the individual parts. Unless noted by the item description, the list elements follow similar rules to the Report-on-Change updating, not including list elements in a 30 second time frame, means the list element is no longer part of the list.
 
-Figure 7 illustrates the transmission of a six element Payload List to the Receiver within three
 
-packets (Packet 7, 23, and 39) spread over a period of 20 seconds. The Receiver fills in the list over time: within Packet 7’s data, item 138 contains two elements of the list; Packets 8 through 22 (not shown) do not contain any Payload List data; Packet 23’s data add two more items to the list; and so on. The result is all six items after 20 seconds. All elements in the lists have unique identifiers, so the Receiver continues to manage the list as items arrive.
+Figure 7 illustrates the transmission of a six element Payload List to the Receiver within three packets (Packet 7, 23, and 39) spread over a period of 20 seconds. The Receiver fills in the list over time: within Packet 7’s data, item 138 contains two elements of the list; Packets 8 through 22 (not shown) do not contain any Payload List data; Packet 23’s data add two more items to the list; and so on. The result is all six items after 20 seconds. All elements in the lists have unique identifiers, so the Receiver continues to manage the list as items arrive.
 
 |  | Packet 7 | Packet 23 | Packet 39 |  |
 |---|---|---|---|---|
@@ -396,21 +374,18 @@ Figure 7: List Distribution
 
 A 16-bit checksum accompanies every UAS Datalink LS packet as the last item; this aids detecting erroneous metadata from being presented with the Motion Imagery. The checksum is a running 16-bit summation through the entire packet beginning with the 16-byte Local Set Key and ending with the length field of the checksum LS item (see Figure 8).
 
+```
 UAS Datalink LS Version Number
-
-| UAS Datalink LS | T \| L \| V | T \| L \| V | T \| L \| V | T \| L \| V |
-|---|---|---|---|---|
-| BER | Length |  | … | T \| L \| Checksum |
-| 16-byte Key | Timestamp | metadata | metadata | Version |
-
+UAS Datalink LS T | L | V T | L | V T | L | V T | L | V
+BER Length … T | L | Checksum
+16-byte Key Timestamp metadata metadata Version
 Checksum is computed from the start of the 16-byte Key up to and including the 1-byte length field in the Checksum metadata item.
-
+```
 
 Figure 8: Checksum Computation Range
 
-Note the presence of the three required items: Precision Time Stamp, UAS Datalink LS Version
 
-Number and Checksum.
+Note the presence of the three required items: Precision Time Stamp, UAS Datalink LS Version Number and Checksum.
 
 Below is an example algorithm for calculating the checksum:
 
@@ -452,47 +427,46 @@ This section provides a summary of all the UAS Datalink LS items, with further d
 
 ## 7.1 UAS Datalink Local Set Items Summary
 
-Table 1 lists a summary of the metadata items within the UAS Datalink LS. Full details of each
 
-item are in Section 8. The column designations are as follows:
+Table 1 lists a summary of the metadata items within the UAS Datalink LS. Full details of each item are in Section 8. The column designations are as follows:
 
-- The “Tag” column is the KLV Local Set tag number for the item. The tag is a BER-OID
 
-encoded integer value. Single-byte tags represent tag numbers from 1 through 127. Tag numbers greater than 127 use two-bytes (or more).
+- The “Tag” column is the KLV Local Set tag number for the item. The tag is a BER-OID encoded integer value. Single-byte tags represent tag numbers from 1 through 127. Tag numbers greater than 127 use two-bytes (or more).
 
 - The “Name” column is the label associated with the item.
 
 - The “Units” column indicates the units of the data specified in the item’s value field.
 
-o Units of “None” indicate the value is not a measurement and units do not apply o Units of “Set” or “Pack” indicate the value is a collection of information in the form of a Local Set or Pack o All other Units are SI [9] enumerations (e.g., µs is microseconds, ° is degrees)
+  - Units of “None” indicate the value is not a measurement and units do not apply
+
+  - Units of “Set” or “Pack” indicate the value is a collection of information in the form of a Local Set or Pack
+
+  - All other Units are SI [9] enumerations (e.g., µs is microseconds, ° is degrees)
 
 - The “Format” column indicates the item’s KLV format for the Value.
 
-- The “Length” column indicates the nominal length of the value. This may be a required
 
-length or variable length depending on the value.
+- The “Length” column indicates the nominal length of the value. This may be a required length or variable length depending on the value.
 
-- The “SDCC” column indicates whether the item is usable within a Standard Deviation
 
-Correlation Coefficient Floating Length Pack (SDCC-FLP) structure. The details of the
 
-SDCC-FLP construct are in MISB ST 1010 [10].
+- The “SDCC” column indicates whether the item is usable within a Standard Deviation Correlation Coefficient Floating Length Pack (SDCC-FLP) structure. The details of the SDCC-FLP construct are in MISB ST 1010 [10].
 
-o The item can be a part of the SDDCC-FLP when this column is “Y”
+  - The item can be a part of the SDDCC-FLP when this column is “Y”
 
-o The item may not be a part of the SDCC-FLP when this column is “N”
+  - The item may not be a part of the SDCC-FLP when this column is “N”
 
-- The “MUL” column indicates whether an item may have multiple instances within a
 
-single instance of the UAS Datalink Local set.
+- The “MUL” column indicates whether an item may have multiple instances within a single instance of the UAS Datalink Local set.
 
-o When this column’s value is “Y” the item may have multiple instances o When this column’s value is “N” the item is unique within the instance of the LS
+  - When this column’s value is “Y” the item may have multiple instances
+
+  - When this column’s value is “N” the item is unique within the instance of the LS
 
 Notes:
 
-- See the Motion Imagery Handbook for further information on data types, such as
 
-IMAPB.
+- See the Motion Imagery Handbook for further information on data types, such as IMAPB.
 
 
 Table 1: UAS Datalink Local Set Items
@@ -715,44 +689,43 @@ The metadata items associated with sensor location are:
 
 2. Longitude - Sensor Longitude (Item 14)
 
-3. Height - Sensor Altitude (Item 15), or Sensor Ellipsoid Height (Item 75), or Sensor Ellipsoid Height Extended (Item 104). Note: a single instantiation is preferred, which is
 
-Item 75 | Item 104, for HAE-based photogrammetric purposes.
+3. Height - Sensor Altitude (Item 15), or Sensor Ellipsoid Height (Item 75), or Sensor Ellipsoid Height Extended (Item 104). Note: a single instantiation is preferred, which is Item 75 | Item 104, for HAE-based photogrammetric purposes.
 
 ### 7.2.2 Platform Rotations
 
 There are two frames of reference for measuring platform rotations: North-East-Down (NED) coordinate system and Platform coordinate system. Figure 9 illustrates the NED coordinate system for any geodetic point above, on, or below the earth’s WGS 84 ellipsoid. The NED coordinate system has a North axis (red), East axis (green), and Down axis (blue). The North and East axes defines the NED horizontal plane (yellow). Figure 10 illustrates the three axis and the horizontal plane defined by the North and East axis.
 
+```
 North (X) North Pole East (Y)
-
-| Greenwich | Down (Z) |
-|---|---|
-| Meridian |  |
-| Ellipsoid | Height Above |
-|  | Ellipsoid |
-| Equator | Geodetic |
-|  | Longitude |
-|  | Latitude |
-|  | South Pole |
+Greenwich Down (Z)
+Meridian
+Ellipsoid Height Above
+Ellipsoid
+Equator Geodetic
+Longitude
+Latitude
+South Pole
+```
 
 Figure 9: North-East-Down Absolute Orientation
 
 
+```
 North
-
 East Down
+```
 
 Figure 10: North-East-Down (NED) Coordinate System and Horizontal Plane
 
-Figure 11 illustrates the Platform coordinate system with the Longitudinal axis (red), Transverse axis (green), and Vertical axis (blue). These axes provide the basis for the definitions of platform orientations and the NED coordinate system provides the reference frame for defining the
 
-rotation amounts.
+Figure 11 illustrates the Platform coordinate system with the Longitudinal axis (red), Transverse axis (green), and Vertical axis (blue). These axes provide the basis for the definitions of platform orientations and the NED coordinate system provides the reference frame for defining the rotation amounts.
 
+```
 Longitudinal Axis
-
 Vertical Axis
-
 Transverse Axis
+```
 
 Figure 11: Platform Axis and Longitudinal-Vertical Plane
 
@@ -763,13 +736,12 @@ The metadata items associated with platform attitude and rotations are:
 The platform heading angle is the angle between the projection of the platform longitudinal axis (line made by the fuselage) onto the horizontal plane and true north. Angles increase in a clockwise direction when looking from above the platform. North is 0 degrees, east is 90, south is 180, and west is 270 degrees from true north. Figure 12 illustrates a platform with a pitch greater than zero, the horizontal plane (yellow), north direction (black) on the horizontal plane, and the projection (purple) of the longitudinal axis (red) onto the horizontal plane. The illustration shows the Platform Heading Angle is the angle on the horizontal plane from North angle to the longitudinal axis projection.
 
 
+```
 Platform Heading Angle
-
 Platform Pitch Angle
-
 Longitudinal
-
 Projection
+```
 
 Figure 12: Platform Heading Angle
 
@@ -777,62 +749,54 @@ Figure 12: Platform Heading Angle
 
 The pitch angle of the platform is the angle between the longitudinal axis (line made by the fuselage) and the horizontal plane. Angles are positive when the platform nose is above the horizontal plane. When the Platform Pitch angle equals exactly ± 90 gimbal lock occurs, see Section 7.2.2.1. Figure 13 illustrates a side view of a platform with the platform’s longitudinal (red) and vertical (blue) axes. The figure shows a side view of the Horizontal Plane (yellow) relative to the earth’s ellipsoid (green). In this diagram the Platform Pitch is a positive angle between the Horizontal Plane and the Longitudinal Axis; negative angles occur when the platform’s nose drops below the Horizontal Plane.
 
+```
 Platform Pitch Zenith Angle Longitudinal Axis
-
 + Horizontal Plane
-
 -
-
 Vertical Axis
-
 Earth
-
 Nadir
+```
 
 Figure 13: Platform Pitch Angle
 
 3. Platform Roll - Platform Roll Angle (Item 7), or full-range Platform Roll (Item 91)
 
-The platform roll angle is the angle of rotation about the longitudinal axis measured from the platform’s vertical axis to the roll-reference plane. The roll-reference plane is the mathematical plane formed by the NED down vector and platform longitudinal axis (line made by the fuselage). Positive angles correspond to clockwise rotation about the longitudinal axis, e.g., from a pilot’s perspective sitting in the cockpit facing forward during
 
 
-level flight, the starboard (right) wing lowers during the rotation. The left side of Figure 14 illustrates a platform above a Horizontal Plane (green) where the platform is pitching up and rolling counterclockwise. The middle illustration depicts the definition of the Roll-Reference
 
-Plane (blue), created from the Longitudinal axis and NED Down Vector. The right figure illustrates the Roll Angle (yellow) as the angle between the Roll-Reference Plane and
 
-Vertical Axis (red).
+The platform roll angle is the angle of rotation about the longitudinal axis measured from the platform’s vertical axis to the roll-reference plane. The roll-reference plane is the mathematical plane formed by the NED down vector and platform longitudinal axis (line made by the fuselage). Positive angles correspond to clockwise rotation about the longitudinal axis, e.g., from a pilot’s perspective sitting in the cockpit facing forward during level flight, the starboard (right) wing lowers during the rotation. The left side of Figure 14 illustrates a platform above a Horizontal Plane (green) where the platform is pitching up and rolling counterclockwise. The middle illustration depicts the definition of the Roll-Reference Plane (blue), created from the Longitudinal axis and NED Down Vector. The right figure illustrates the Roll Angle (yellow) as the angle between the Roll-Reference Plane and Vertical Axis (red).
 
-| Longitudinal Axis | Longitudinal Axis |
-|---|---|
-|  | NED Down |
-|  | Vector |
-| NED Down |  |
-| Vertical Axis Vector |  |
-|  | NED Down |
-|  | Vector |
-|  | Roll Angle |
-| Horizontal Plane |  |
-|  | Vertical Axis Vertical Axis |
+```
+Longitudinal Axis Longitudinal Axis
+NED Down
+Vector
+NED Down
+Vertical Axis Vector
+NED Down
+Vector
+Roll Angle
+Horizontal Plane
+Vertical Axis Vertical Axis
+```
 
 Figure 14: Platform Roll Angle
 
 #### 7.2.2.1 Gimbal Lock
 
-When the Platform Pitch is equal to exactly ±90 degrees, both the heading angle and roll angles are undefined; this is known as gimbal lock. The Platform Heading Angle is undefined because the projection of the platform longitudinal axis onto the horizontal plane becomes a single point. During gimbal lock the Platform Pitch Angle is undefined since the NED Down Vector and
 
-Longitudinal Axes are colinear.
+When the Platform Pitch is equal to exactly ±90 degrees, both the heading angle and roll angles are undefined; this is known as gimbal lock. The Platform Heading Angle is undefined because the projection of the platform longitudinal axis onto the horizontal plane becomes a single point. During gimbal lock the Platform Pitch Angle is undefined since the NED Down Vector and Longitudinal Axes are colinear.
 
 This standard does not historically address the issue of gimbal lock because this standard is originally for UAS systems that would not pitch to ±90 degrees. More recent versions of this standard now allow for pitch angles up to ±90 degrees. The correct method for addressing gimbal lock is to report orientations in quaternions instead of Euler (or Tait–Bryan) angles, but this change would impact existing systems.
 
 When gimbal lock occurs, the following methods are suggestions for reporting Platform Heading and Platform Roll angles:
 
-- When gimbal lock occurs, producers may report the Platform Heading Angle as the angle between the platform’s vertical axis (which will be on the horizontal plane) and true
 
-north; however, depending on the Platform Roll Angle, the value may be a drastic change from a previous packet’s value (i.e., a discontinuity or “jump”).
+- When gimbal lock occurs, producers may report the Platform Heading Angle as the angle between the platform’s vertical axis (which will be on the horizontal plane) and true north; however, depending on the Platform Roll Angle, the value may be a drastic change from a previous packet’s value (i.e., a discontinuity or “jump”).
 
-- When gimbal lock occurs, producers may report the Platform Roll Angle as the angle between the platform’s vertical axis (which will be on the horizontal plane) and true north
 
-(same as Platform Heading Angle); however, the value may be a drastic change from a previous packet’s value (i.e., a discontinuity or “jump”).
+- When gimbal lock occurs, producers may report the Platform Roll Angle as the angle between the platform’s vertical axis (which will be on the horizontal plane) and true north (same as Platform Heading Angle); however, the value may be a drastic change from a previous packet’s value (i.e., a discontinuity or “jump”).
 
 
 Alternatively, producers may set both values to undefined by using ZLI; however, this will stop reporting of platform rotations while the pitch is equal to ±90 degrees. For example, it may be important to report the heading or roll as the platform is flying vertically (nose up).
@@ -859,77 +823,78 @@ Positive angles are clockwise when looking from behind the camera.
 
 To properly determine the orientation of a sensor on an airborne platform using the UAS Datalink LS metadata items outlined in Section 7.2, a specific order of position and rotation angles must be followed. The order of operations required to determine a sensor’s orientation is as follows:
 
-1. Given the sensors position defined by geodetic Latitude, Longitude, and Altitude using a. Item 13, Sensor Latitude b. Item 14, Sensor Longitude c. Item 15, Sensor Altitude (or Item 75: Sensor Ellipsoid Height or Item 104: Sensor Ellipsoid Height Extended). Note: a single instantiation is preferred, which is Item
 
-75 | Item 104, for HAE-based photogrammetric purposes.
+1. Given the sensors position defined by geodetic Latitude, Longitude, and Altitude using
+   a. Item 13, Sensor Latitude
+   b. Item 14, Sensor Longitude
+   c. Item 15, Sensor Altitude (or Item 75: Sensor Ellipsoid Height or Item 104: Sensor Ellipsoid Height Extended). Note: a single instantiation is preferred, which is Item 75 | Item 104, for HAE-based photogrammetric purposes.
 
 2. Define a local North-East-Down (NED, right hand rule) coordinate system at the sensors position
 
+
+
+
 3. Perform a Platform Rotation. Start with Yaw, then Pitch, the Roll.
-
-a. Item 5, Platform Heading Angle b. Item 6, Platform Pitch Angle (or Item 90: Platform Pitch Angle (Full))
-
-
-c. Item 7, Platform Roll Angle (or Item 91: Platform Roll Angle (Full))
+   a. Item 5, Platform Heading Angle
+   b. Item 6, Platform Pitch Angle (or Item 90: Platform Pitch Angle (Full))
+   c. Item 7, Platform Roll Angle (or Item 91: Platform Roll Angle (Full))
 
 Refer to Figure 15 for the different platform rotations outlined in steps 2 and 3 above.
 
+```
 Platform Rotation Angle Example
-
 Arbitrary Platform Longitudinal Orientation Axis
-
 North
-
 Vertical Axis East Platform Aligned to North-East-Down
-
 Transverse
-
-| Axis | Down |
-|---|---|
-| 1 | North |
-| Rotation |  |
-|  | Longitudinal |
-|  | Axis |
-|  | East |
-| Heading Transverse | Platform |
-| Axis | Heading Angle |
-|  | Longitudinal |
-|  | Axis |
-|  | North |
-| Down |  |
-| 2 | Platform |
-|  | Pitch Angle |
-| Rotation | Platform |
-|  | Heading |
-|  | East |
-| Transverse Vertical |  |
-| Pitch Axis Axis | Longitudinal |
-|  | Axis |
-|  | Horizontal Plane |
-| Down |  |
-| 3 |  |
-|  | Platform |
-| Rotation | Heading |
-|  | Vertical |
-|  | Axis |
-| Roll |  |
-| Transverse | Platform |
-| Axis | Roll Angle |
+Axis Down
+1 North
+Rotation
+Longitudinal
+Axis
+East
+Heading Transverse Platform
+Axis Heading Angle
+Longitudinal
+Axis
+North
+Down
+2 Platform
+Pitch Angle
+Rotation Platform
+Heading
+East
+Transverse Vertical
+Pitch Axis Axis Longitudinal
+Axis
+Horizontal Plane
+Down
+3
+Platform
+Rotation Heading
+Vertical
+Axis
+Roll
+Transverse Platform
+Axis Roll Angle
+```
 
 Figure 15 : Platform Rotation Angle Example
 
 
-4. Perform a Sensor Rotation. Start with Yaw, then Pitch, then Roll a. Item 18, Sensor Relative Azimuth Angle b. Item 19, Sensor Relative Elevation Angle c. Item 20, Sensor Relative Roll Angle
+4. Perform a Sensor Rotation. Start with Yaw, then Pitch, then Roll
+   a. Item 18, Sensor Relative Azimuth Angle
+   b. Item 19, Sensor Relative Elevation Angle
+   c. Item 20, Sensor Relative Roll Angle
 
 Refer to Figure 16 for the different sensor rotations outlined in steps 4 above.
 
+```
 Sensor Rotation Angle Example Aircraft Transverse- Longitudinal Plane
-
 Sensor Relative 1 Azimuth Angle
-
 Sensor Relative 3 Roll Angle
-
 Sensor Relative 2 Pitch Angle
+```
 
 Figure 16 : Sensor Rotation Angle Example
 
@@ -940,27 +905,19 @@ Once the platform and sensor attitude are known, the user is free to use other m
 
 Each pixel in a Motion Imagery frame represents a geographic point in the scene. Providing the coordinates for every pixel is difficult to compute and would require a large amount of bandwidth to transmit to receivers. Instead, the UAS Datalink LS includes a summary of the center and bounding area, or corner points, of the image. Figure 17 illustrates an example of corner-coordinate metadata as used in a Motion Imagery system.
 
+```
 Frame Center Relative Corner Points North
-
 Angle to Image Center North Aircraft heading Item 23,24,25
-
 Sensor Relative Rotation Angle
-
 Item 32,33 4
-
 West East
-
 1
-
 Item 26,27
-
 3
-
 Item 30,31 2 Item 28,29
-
 Image Top
-
 Corner Points South
+```
 
 Figure 17: Corner Coordinate Metadata
 
@@ -970,10 +927,9 @@ Corners not corresponding to geographic locations, i.e., above the horizon, are 
 
 The UAS Datalink LS provides two different methods for representing the corner coordinates which can provide either a savings in band width or provide an enhanced range. The two methods are absolute coordinates and relative to center point offsets.
 
-Where absolute corner coordinates are known use Items 82-89. Figure 18 shows the mapping of absolute corner point coordinates to their respective items. Each Latitude and Longitude absolute
 
 
-corner point has one 8-byte floating point value corresponding to decimal degrees which covers the entire globe.
+Where absolute corner coordinates are known use Items 82-89. Figure 18 shows the mapping of absolute corner point coordinates to their respective items. Each Latitude and Longitude absolute corner point has one 8-byte floating point value corresponding to decimal degrees which covers the entire globe.
 
 Figure 18: Corner Points Based on Absolute Positions
 
@@ -988,15 +944,13 @@ Figure 19: Corner Points Calculated Using Offsets from Image Center
 
 SAR imagery uses the same UAS Datalink LS Items as described above, but the positions of the corner points is different for SAR imagery as is shown in Figure 20. Either the absolute or relative specification of the corner points can be used, but their interpretation of position is different.
 
+```
 N SAR Latitude/Longitude 4 Corner Latitude Point 1 (Full | Offset) 4 Corner Longitude Point 1 (Full | Offset)
-
 SAR Latitude/Longitude 1 1 Corner Latitude Point 2 (Full | Offset) Corner Longitude Point 2 (Full | Offset) Image center
-
 W E SAR Latitude/Longitude 3 Corner Latitude Point 4 (Full | Offset) 3
-
 Corner Longitude Point 4 (Full | Offset) SAR Latitude/Longitude 2 2 Corner Latitude Point 3 (Full | Offset) Corner Longitude Point 3 (Full | Offset) S
-
 Sensor
+```
 
 Figure 20: Corner Points Ordering for SAR
 
@@ -1036,15 +990,12 @@ For historical reasons, the “Reserved” value maintains backward compatibilit
 
 Some use cases require functions such as sharing, editing, adding, and deleting one or more items within a metadata set. The Motion Imagery Handbook defines metadata operation LSs that provide these functions while retaining the original metadata, as necessary. The Motion Imagery Handbook defines two metadata structures to support these functions: Segment and Amend.
 
-In MISB ST 0601 the Segment metadata is a LS in Item 100. Item 100 may appear in the UAS
 
-Datalink LS multiple times supporting different uses in the same packet. The Segment LS item enables defining shared common metadata items, while reusing metadata items in describing multiple unique image areas within an image (see for example, the Composite Imaging LS).
+In MISB ST 0601 the Segment metadata is a LS in Item 100. Item 100 may appear in the UAS Datalink LS multiple times supporting different uses in the same packet. The Segment LS item enables defining shared common metadata items, while reusing metadata items in describing multiple unique image areas within an image (see for example, the Composite Imaging LS).
 
-In ST 0601 the Amend metadata is a LS in Item 101. Item 101 may appear in the UAS Datalink
 
-LS multiple times supporting different uses within the same UAS Datalink packet. The Amend
 
-LS item enables editing, adding, and deleting metadata, while preserving existing metadata.
+In ST 0601 the Amend metadata is a LS in Item 101. Item 101 may appear in the UAS Datalink LS multiple times supporting different uses within the same UAS Datalink packet. The Amend LS item enables editing, adding, and deleting metadata, while preserving existing metadata.
 
 The Motion Imagery Handbook defines a Metadata Substream ID (MSID) to uniquely assign an identifier to a metadata substream. Including a MSID into each Segment or Amend LS enables a series of Segment or Amend LSs to be a metadata substream within the UAS Datalink metadata stream. ST 0601 defines Item 143 as the MSID, which uses a truncation pack to contain a local (i.e., serial number) or universal id (i.e., UUID) as the identifying method.
 
@@ -1060,10 +1011,9 @@ The Motion Imagery Handbook discusses Amend/Segment LS hierarchies. A hierarchy 
 
 Amend or Segment LSs within the parent. Every child LS also includes a MSID, thus defining a metadata substream within a substream. The MSID also acts as signaling for a substream. The hierarchy is recursive enabling multiple levels of substreams within the ST 0601 metadata stream.
 
-Because of Report-on-Change it is possible to have unreported data in any levels of an
 
 
-Amend/Segment hierarchy; however, when including an Amend/Segment LS, data producers must retain the parent(s) Amend/Segment LS “lineage”. An Amend/Segment LS lineage includes its parent(s) MSID(s) for every parent up to the root UAS Datalink LS. Once defining Amend/Segment parent/child LSs, every time the child LS reports metadata the parent must be a part of the report.
+Because of Report-on-Change it is possible to have unreported data in any levels of an Amend/Segment hierarchy; however, when including an Amend/Segment LS, data producers must retain the parent(s) Amend/Segment LS “lineage”. An Amend/Segment LS lineage includes its parent(s) MSID(s) for every parent up to the root UAS Datalink LS. Once defining Amend/Segment parent/child LSs, every time the child LS reports metadata the parent must be a part of the report.
 
 Requirement(s)
 
@@ -1077,17 +1027,18 @@ This section provides detailed information on each metadata item including infor
 
 The left side of Figure 21 illustrates metadata items (Time, Position, etc.) represented in common software formats (int, float, etc.). A metadata encoder (e.g., computer, sensor, or Motion Imagery encoder) encodes the Software Format values into their binary KLV Format (Item 1, Item 2, etc.). The KLV Format metadata along with the Motion Imagery are transmitted to one or more receivers which decode the KLV Format metadata back into Software Format values for display, computation, or other uses as shown in the right side of the figure.
 
-| Software Format | KLV Format | Software Format |
-|---|---|---|
-| Time |  | Time |
-| Position |  | Position |
-| Sensor |  | Sensor |
-| Angles | (Binary) | Angles |
-| Etc. | Item 1 | Etc. |
-|  | Item 2 |  |
-| Metadata | Item 3 | Metadata |
-|  | Etc. |  |
-| Encoder |  | Decoder |
+```
+Software Format KLV Format Software Format
+Time Time
+Position Position
+Sensor Sensor
+Angles (Binary) Angles
+Etc. Item 1 Etc.
+Item 2
+Metadata Item 3 Metadata
+Etc.
+Encoder Decoder
+```
 
 Figure 21: Illustration of Software Format and KLV Format usage
 
@@ -1095,14 +1046,12 @@ In each metadata item’s subsection below, an item “summary table” presents
 
 - Description – a brief description of the item’s meaning.
 
-- Units – the units used for measured items. “None” indicates the item is not a measured
 
-quantity.
+- Units – the units used for measured items. “None” indicates the item is not a measured quantity.
 
 
-- Format (Software) – the data format used within a software application to represent the
 
-value of an item. Formats are:
+- Format (Software) – the data format used within a software application to represent the value of an item. Formats are:
 
   - byte – One or more bytes which represent a binary value
   - int8 – 8-bit, 2’s complement signed integer
@@ -1142,46 +1091,48 @@ value of an item. Formats are:
   - set – Local Set
   - utf8 – String of characters following the utf8 standard
 
-- Min (KLV) – specifies the minimum value allowed for the value. When mapping values
 
-the Min(KLV) can be very different than the Min(Software).
-
-- Max (KLV) – specifies the maximum value allowed for the value. When mapping values
-
-the Max(KLV) can be very different than the Max(Software).
-
-- Offset (KLV) – specifies the offset used when mapping between software and KLV
-
-formats. • Length – specifies the nominal length to use. If Required Length has a value other than “N/A” then the length will equal the Required Length. A length of “Variable” means the length is determined at run-time for the Tag-Length-Value item.
-
-- Max Length – specifies the recommended maximum length. With some items the
+- Min (KLV) – specifies the minimum value allowed for the value. When mapping values the Min(KLV) can be very different than the Min(Software).
 
 
-underlying standard or data structure does not have a limit. If the Max Length is not determinable it will have a value of “Not Limited.” Network guards may use this value as a check to prevent data leaks.
+- Max (KLV) – specifies the maximum value allowed for the value. When mapping values the Max(KLV) can be very different than the Max(Software).
 
-- Required Length – specifies a required length if one exists. With a required length the value portion of the Tag-Length-Value is not to exceed the number of required length
 
-bytes nor the value be less than the required length. See requirement below.
+- Offset (KLV) – specifies the offset used when mapping between software and KLV formats.
+
+- Length – specifies the nominal length to use. If Required Length has a value other than “N/A” then the length will equal the Required Length. A length of “Variable” means the length is determined at run-time for the Tag-Length-Value item.
+
+
+
+- Max Length – specifies the recommended maximum length. With some items the underlying standard or data structure does not have a limit. If the Max Length is not determinable it will have a value of “Not Limited.” Network guards may use this value as a check to prevent data leaks.
+
+
+- Required Length – specifies a required length if one exists. With a required length the value portion of the Tag-Length-Value is not to exceed the number of required length bytes nor the value be less than the required length. See requirement below.
 
 - Resolution – specifies the smallest representative values in the KLV format. With variable length values a list of resolutions based on the length is provided.
 
-- Special Values – specifies signaling values for numeric values, such as “Out of Range” or “N/A (Off-Earth),” if they exist for the item. A Special Value listed as “None”
 
-indicates there are no special values, currently, for the item. A Special Value listed as “N/A” indicates special values do not apply to the item because it is not a numeric value (e.g., a string or set are not numeric items). • Allowed in SDCC Pack – a Yes or No indication if the item is allowed in a Standard Deviation Cross Correlation (SDCC) Pack. Yes, indicates the item is allowed in the
 
-SDDC Pack. • Multiples Allowed – a Yes or No indication if multiple instances of the item are allowable in a single instantiation of a UAS Datalink LS. Yes, indicates multiple instances of the item may be in the LS.
+- Special Values – specifies signaling values for numeric values, such as “Out of Range” or “N/A (Off-Earth),” if they exist for the item. A Special Value listed as “None” indicates there are no special values, currently, for the item. A Special Value listed as “N/A” indicates special values do not apply to the item because it is not a numeric value (e.g., a string or set are not numeric items).
 
-- Software Value to KLV Value – defines the method (i.e., an equation) of converting from a Software Value to its KLV Value. o IMAPB represents the forward mapping of a Software Value to a KLV Value
+- Allowed in SDCC Pack – a Yes or No indication if the item is allowed in a Standard Deviation Cross Correlation (SDCC) Pack. Yes, indicates the item is allowed in the SDDC Pack.
 
-using the min, max, length and [soft] value.
+- Multiples Allowed – a Yes or No indication if multiple instances of the item are allowable in a single instantiation of a UAS Datalink LS. Yes, indicates multiple instances of the item may be in the LS.
 
-- KLV Value to Software Value – defines the method (i.e., an equation) of converting from a KLV Value to its Software Value. The KLV Value bit pattern in each equation is
 
-interpretable in diverse ways. KLVuint means to interpret the value as an unsigned integer. KLVint means to interpret the value as a two’s complement integer. KLVval means to interpret as a byte (or utf8 character). o RIMAPB represents the reverse mapping of a KLV Value to its Software Value using the min, max, length and [KLV] value. • Example Software Value – example value in the native format of the value.
+- Software Value to KLV Value – defines the method (i.e., an equation) of converting from a Software Value to its KLV Value.
 
-- Example KLV Value – example of the Tag-Length-Value after encoding the Software value. The tag and length are in base 10 and prefixed with “0d,” while the value is in base
+  - IMAPB represents the forward mapping of a Software Value to a KLV Value using the min, max, length and [soft] value.
 
-16 (i.e., hex) and prefixed with “0x.”
+
+- KLV Value to Software Value – defines the method (i.e., an equation) of converting from a KLV Value to its Software Value. The KLV Value bit pattern in each equation is interpretable in diverse ways. KLVuint means to interpret the value as an unsigned integer. KLVint means to interpret the value as a two’s complement integer. KLVval means to interpret as a byte (or utf8 character).
+
+  - RIMAPB represents the reverse mapping of a KLV Value to its Software Value using the min, max, length and [KLV] value.
+
+- Example Software Value – example value in the native format of the value.
+
+
+- Example KLV Value – example of the Tag-Length-Value after encoding the Software value. The tag and length are in base 10 and prefixed with “0d,” while the value is in base 16 (i.e., hex) and prefixed with “0x.”
 
 - The bottom section of the summary table provides notes, clarification, purpose, or other information about the metadata item.
 
@@ -1196,9 +1147,8 @@ Programmer’s Notes: the item’s “Example Value” is in full precision, bey
 
 2) The precision and the maximum value determine the type of value to use (single precision float vice double).
 
-3) The type of value determines the number of digits (7 to 9 for single, 15 to 17 for double)
 
-needed. Nine- and 17-digits account for any rounding issues in the final digits. The final one or two digits may be different for different complier optimization/hardware.
+3) The type of value determines the number of digits (7 to 9 for single, 15 to 17 for double) needed. Nine- and 17-digits account for any rounding issues in the final digits. The final one or two digits may be different for different complier optimization/hardware.
 
 
 ## 8.1 Item 1: Checksum
@@ -1307,9 +1257,8 @@ KLV Value To Software Value                                   Soft val = KLVuint
 
 This metadata item is an implementation of the MISP Time System. This item represents time as the number of microseconds elapsed since January 1, 1970 (1970-01-01T00:00:00Z) using an unsigned eight (8) byte integer. A Precision Time Stamp discretely labels a scale of time. The Precision Time Stamp does not include leap seconds and therefore the Precision Time Stamp does not represent UTC.
 
-The Precision Time Stamp is critical for synchronizing metadata to the Motion Imagery by correlating it to a Precision Time Stamp embedded in the Motion Imagery. See Section 6.4 for further information about the usage and importance of the Precision Time Stamp in UAS
 
-Datalink Local Set.
+The Precision Time Stamp is critical for synchronizing metadata to the Motion Imagery by correlating it to a Precision Time Stamp embedded in the Motion Imagery. See Section 6.4 for further information about the usage and importance of the Precision Time Stamp in UAS Datalink Local Set.
 
 
 ## 8.3 Item 3: Mission ID
@@ -1432,28 +1381,25 @@ KLV Value To Software Value                   Soft val = (          ) ∗ KLVint
 The platform heading angle is the angle between the projection of the platform longitudinal axis (line made by the fuselage) onto the horizontal plane and true north. Angles increase in a clockwise direction when looking from above the platform. North is 0 degrees, east is 90, south is 180, and west is 270 degrees from true north. Figure 22 illustrates a platform with a pitch greater than zero, the horizontal plane (yellow), north direction (black) on the horizontal plane, and the projection (purple) of the longitudinal axis (red) onto the horizontal plane. The illustration shows the Platform Heading Angle is the angle on the horizontal plane from North angle to the longitudinal axis projection.
 
 
+```
 Platform Heading Angle
-
 Platform Pitch Angle
-
 Longitudinal
-
 Projection
+```
 
 Figure 22: Platform Heading Angle
 
-Figure 23 illustrates a top view of a platform with zero pitch. The figure shows the platform’s
 
-Longitudinal Axis (red), Transverse Axis (green), Horizontal Plane as the yellow circle, and all four true compass directions (North, East, South, and West) on the Horizontal Plane. The Platform Heading Angle is the angle between true North and the Longitudinal Axis.
+Figure 23 illustrates a top view of a platform with zero pitch. The figure shows the platform’s Longitudinal Axis (red), Transverse Axis (green), Horizontal Plane as the yellow circle, and all four true compass directions (North, East, South, and West) on the Horizontal Plane. The Platform Heading Angle is the angle between true North and the Longitudinal Axis.
 
+```
 North Platform Heading Angle
-
 Longitudinal Axis
-
-| West | East |
-|---|---|
-|  | Transverse |
-|  | South Axis |
+West East
+Transverse
+South Axis
+```
 
 Figure 23: Platform Heading Angle (Top View)
 
@@ -1505,24 +1451,20 @@ KLV Value To Software Value                  Soft val = (          ) ∗ KLVint 
 
 For legacy purposes, both range-restricted (Item 6) and full-range (Item 90) representations of Platform Pitch Angle MAY appear in the same MISB ST 0601 packet. A single representation is preferred favoring the full-range version (Item 90) as per Section 6.1.
 
-The pitch angle of the platform is the angle between the longitudinal axis (line made by the fuselage) and the horizontal plane. Angles are positive when the platform nose is above the horizontal plane. Figure 24 illustrates a side view of a platform with the platform’s longitudinal (red) and vertical (blue) axes. The figure shows a side view of the Horizontal Plane (yellow) relative to the earth’s ellipsoid (green). In this diagram the Platform Pitch is a positive angle
 
 
-between the Horizontal Plane and the Longitudinal Axis; negative angles are when the platform’s nose goes below the Horizontal Plane.
+The pitch angle of the platform is the angle between the longitudinal axis (line made by the fuselage) and the horizontal plane. Angles are positive when the platform nose is above the horizontal plane. Figure 24 illustrates a side view of a platform with the platform’s longitudinal (red) and vertical (blue) axes. The figure shows a side view of the Horizontal Plane (yellow) relative to the earth’s ellipsoid (green). In this diagram the Platform Pitch is a positive angle between the Horizontal Plane and the Longitudinal Axis; negative angles are when the platform’s nose goes below the Horizontal Plane.
 
 This item limits the pitch angles to +/- 20 degrees to increase metadata resolution within this range; see Item 90 for full resolution.
 
+```
 Platform Pitch Zenith Angle Longitudinal Axis
-
 + Horizontal Plane
-
 -
-
 Vertical Axis
-
 Earth
-
 Nadir
+```
 
 Figure 24: Platform Pitch Angle
 
@@ -1572,44 +1514,39 @@ KLV Value To Software Value                 Soft val = (          ) ∗ KLVint =
 
 For legacy purposes, both range-restricted (Item 7) and full-range (Item 91) representations of Platform Roll Angle MAY appear in the same MISB ST 0601 packet. A single representation is preferred favoring the full-range version (Item 91) as per Section 6.1.
 
-The platform roll angle is the angle of rotation about the longitudinal axis measured from the platform’s vertical axis to the roll-reference plane. The roll-reference plane is the mathematical plane formed by the NED down vector and platform longitudinal axis (line made by the fuselage). Positive angles correspond to clockwise rotation about the longitudinal axis, e.g., from a pilot’s perspective sitting in the cockpit facing forward during level flight, the starboard (right)
 
-wing lowers during the rotation.
-
-Figure 25 is a simplistic illustration of platform roll using a platform flying out from the page with no platform pitch. The illustration shows the platform’s vertical axis and the edge of the
-
-roll-reference plane; the angle between these two is the Platform Roll Angle.
+The platform roll angle is the angle of rotation about the longitudinal axis measured from the platform’s vertical axis to the roll-reference plane. The roll-reference plane is the mathematical plane formed by the NED down vector and platform longitudinal axis (line made by the fuselage). Positive angles correspond to clockwise rotation about the longitudinal axis, e.g., from a pilot’s perspective sitting in the cockpit facing forward during level flight, the starboard (right) wing lowers during the rotation.
 
 
+Figure 25 is a simplistic illustration of platform roll using a platform flying out from the page with no platform pitch. The illustration shows the platform’s vertical axis and the edge of the roll-reference plane; the angle between these two is the Platform Roll Angle.
+
+
+```
 Platform Roll Angle Zenith
-
 Platform Flying Out of the Page Horizontal Plane
-
 Roll-Reference Plane
-
 Platform Vertical Axis
-
 - + Platform Roll Angle Earth
-
 Nadir
+```
 
 Figure 25: Platform Roll Angle
 
-The left side of Figure 26 illustrates a platform above a Horizontal Plane (green) where the platform is pitching up and rolling counterclockwise. The middle illustration depicts the definition of the Roll-Reference Plane (blue), created from the Longitudinal axis and NED Down
 
-Vector. The right figure illustrates the Roll Angle (yellow) as the angle between the Roll-Reference Plane and Vertical Axis (red).
+The left side of Figure 26 illustrates a platform above a Horizontal Plane (green) where the platform is pitching up and rolling counterclockwise. The middle illustration depicts the definition of the Roll-Reference Plane (blue), created from the Longitudinal axis and NED Down Vector. The right figure illustrates the Roll Angle (yellow) as the angle between the Roll-Reference Plane and Vertical Axis (red).
 
-| Longitudinal Axis | Longitudinal Axis |
-|---|---|
-|  | NED Down |
-|  | Vector |
-| NED Down |  |
-| Vertical Axis Vector |  |
-|  | NED Down |
-|  | Vector |
-|  | Roll Angle |
-| Horizontal Plane |  |
-|  | Vertical Axis Vertical Axis |
+```
+Longitudinal Axis Longitudinal Axis
+NED Down
+Vector
+NED Down
+Vertical Axis Vector
+NED Down
+Vector
+Roll Angle
+Horizontal Plane
+Vertical Axis Vertical Axis
+```
 
 Figure 26: Platform Roll Angle with Platform Pitch
 
@@ -1734,9 +1671,8 @@ KLV Value To Software Value                                           Soft val =
 
 ### 8.10.1 Details
 
-The platform designation metadata item distinguishes which platform is carrying the Motion
 
-Imagery generating payload equipment. Figure 27 shows example platforms.
+The platform designation metadata item distinguishes which platform is carrying the Motion Imagery generating payload equipment. Figure 27 shows example platforms.
 
 Figure 27: Example Platforms
 
@@ -1821,9 +1757,8 @@ KLV Value To Software Value                                  Soft val = KLVVal
 
 ### 8.12.1 Details
 
-The Image Coordinate System denotes the earth reference system for all geographic angles in the
 
-LS, i.e., items 13, 14, 23, 24, 26-33, 40, 41, 67, 68, and 82-89.
+The Image Coordinate System denotes the earth reference system for all geographic angles in the LS, i.e., items 13, 14, 23, 24, 26-33, 40, 41, 67, 68, and 82-89.
 
 #### 1.1.1.1 World Geodetic System – 1984 (WGS 84)
 
@@ -1881,9 +1816,7 @@ Latitude is the angular distance north or south of the earth's equator, measured
 
 In a realized system, this item accounts for the lever arm distance between a platform’s GPS antenna (or known central platform position) to a sensor’s general location (like the center of a gimbaled sensor).
 
-While accounting for a lever arm in this way is sufficient in many Motion Imagery systems, the MISB recommends exploring the use of Photogrammetric metadata sets (i.e., MISB ST 0801
-
-[13]) for improved representations of system accuracies.
+While accounting for a lever arm in this way is sufficient in many Motion Imagery systems, the MISB recommends exploring the use of Photogrammetric metadata sets (i.e., MISB ST 0801 [13]) for improved representations of system accuracies.
 
 
 ## 8.14 Item 14: Sensor Longitude
@@ -1979,9 +1912,8 @@ For legacy systems, Item 15 and Item 75 | Item 104 are allowed with preference f
 
 True altitude is the true vertical distance above mean sea level.
 
-For improved modeling accuracy use Sensor Ellipsoid Height (Item 75) or Sensor Ellipsoid
 
-Height Extended (Item 104).
+For improved modeling accuracy use Sensor Ellipsoid Height (Item 75) or Sensor Ellipsoid Height Extended (Item 104).
 
 In a realized system, this LS item accounts for the lever arm distance between a platform’s GPS antenna (or known central platform position) to a sensor’s general location (like the center of a gimbaled sensor).
 
@@ -2032,17 +1964,14 @@ The field of view of a lens is the angle over the focal plane where objects reco
 
 The angular distance between left edge and right edge is the horizontal field of view metadata item. Refer to Figure 29.
 
+```
 Zenith
-
 Right Wing Left Wing
-
 Horizontal Plane
-
 Horizontal Field of View
-
 Earth
-
 Nadir Image Center
+```
 
 Figure 29: Horizontal Field of View
 
@@ -2092,15 +2021,13 @@ The field of view of a lens is defined as the angle over the focal plane where o
 The distance between top edge and bottom edge is represented as an angle in the vertical field of view metadata item. Refer to Figure 30.
 
 
+```
 Zenith
-
 Horizontal Plane
-
 Vertical Field of View
-
 Earth
-
 Image Center Nadir
+```
 
 Figure 30: Vertical Field of View
 
@@ -2149,16 +2076,14 @@ KLV Value To Software Value             Soft val = (           ) ∗ KLVuint = (
 The relative azimuth angle of a sensor is the angle formed between the platform longitudinal axis (line made by the fuselage) and the sensor pointing direction as measured in the plane formed by the platform longitudinal and transverse axis (line from wing tip to wing tip). Refer to Figure 31.
 
 
+```
 North
-
 Angle to Longitudinal North Axis
-
 Sensor Relative Rotation Angle
-
-| West | East |
-|---|---|
-|  | Image Center |
-|  | South |
+West East
+Image Center
+South
+```
 
 Figure 31: Relative Rotation Angle
 
@@ -2206,19 +2131,15 @@ KLV Value To Software Value                   Soft val = (          ) ∗ KLVint
 
 The relative elevation angle of a sensor to the aircraft is the downward (or upward) pointing angle of the sensor relative to the plane formed by the longitudinal axis (line made by the fuselage) and the transverse axis (line from wing tip to wing tip). Sensor pointing angles below the platform longitudinal-transverse plane are negative. Refer to Figure 32:
 
+```
 Zenith
-
 90° Parallel Planes
-
 180°
-
 -180° Sensor Relative
-
 Elevation Angle Horizontal Plane -90°
-
 Earth
-
 Image Center Nadir
+```
 
 Figure 32: Sensor Relative Elevation Angle
 
@@ -2311,21 +2232,18 @@ KLV Value To Software Value                     Soft val = (           ) ∗ KLV
 
 The slant range is the distance between the sensor and image center. Refer to Figure 33.
 
+```
 Sensor Slant Range Zenith
-
 Horizontal Plane
-
 Slant Range
-
 Earth
-
 Image Center Nadir
+```
 
 Figure 33: Sensor Slant Range
 
-As of MISB ST 0601.3 Generic Flag Data 01 (Item 47) contains a flag which indicates whether
 
-Slant Range is “Computed” or “Measured.” By default, the Slant Range is set to “Computed.” “Measured” is to be used when a ranging device (radar, or laser) is providing Slant Range estimates.
+As of MISB ST 0601.3 Generic Flag Data 01 (Item 47) contains a flag which indicates whether Slant Range is “Computed” or “Measured.” By default, the Slant Range is set to “Computed.” “Measured” is to be used when a ranging device (radar, or laser) is providing Slant Range estimates.
 
 
 ## 8.22 Item 22: Target Width
@@ -2373,17 +2291,14 @@ For legacy purposes, both restricted (Item 22) and extended (Item 96) representa
 
 The target width is the linear ground distance between the center of both sides of the captured image. Refer to Figure 34.
 
+```
 Target Width Zenith
-
 Right Wing Left Wing
-
 Horizontal Plane
-
 Image Center
-
 Earth
-
 Nadir Target Width
+```
 
 Figure 34: Target Width
 
@@ -2520,9 +2435,8 @@ KLV Value To Software Value         Soft val = (           ) ∗ KLVuint − Off
 
 For legacy purposes, both MSL (Item 25) and HAE (Item 78) representations of Frame Center Elevation MAY appear in the same MISB ST 0601 packet. A single representation is preferred favoring the HAE version (Item 78).
 
-The center of the captured image or image sequence has a real earth coordinate represented by a latitude-longitude-altitude triplet. When a frame center lies above the horizon and does not correspond to a point on the earth, the MISB recommends not reporting the Frame Center
 
-Elevation.
+The center of the captured image or image sequence has a real earth coordinate represented by a latitude-longitude-altitude triplet. When a frame center lies above the horizon and does not correspond to a point on the earth, the MISB recommends not reporting the Frame Center Elevation.
 
 The altitude is represented as height above mean sea level (MSL).
 
@@ -2573,29 +2487,27 @@ KLV Value To Software Value                   Soft val = (          ) ∗ KLVint
 
 ### 8.26.1 Details
 
-The Offset Corner Latitude Point 1 is a measurement relative to the Frame Center Latitude (Item
 
-23). Adding the Frame Center Latitude to the Offset Corner Latitude Point 1 produces the absolute latitude of the corner point of an image. Convert both KLV items to software values prior to the addition.
+The Offset Corner Latitude Point 1 is a measurement relative to the Frame Center Latitude (Item 23). Adding the Frame Center Latitude to the Offset Corner Latitude Point 1 produces the absolute latitude of the corner point of an image. Convert both KLV items to software values prior to the addition.
 
 The corner points of a captured image or image sequence have real earth coordinates represented by a latitude-longitude pair (see Figure 35). Corner points which lie above the horizon typically do not correspond to a point on the earth and are reported using the special value “N/A (Off-Earth).” When any corner point offsets are outside of the mapped range, the MISB recommends not reporting corner point offsets and instead using the full precision corner points (Items 82 through 89).
 
 
+```
 Frame Center Relative Corner Points
-
 North
-
-| Sensor +Lat,-Lon | 4 |
-|---|---|
-|  | Image Center |
-|  | 1 |
-|  | +Lat,+Lon |
-| West | East |
-| 3 |  |
-| -Lat, -Lon | Image Top |
-|  | -Lat,+Lon |
-|  | 2 |
-| Corner Points |  |
-|  | South |
+Sensor +Lat,-Lon 4
+Image Center
+1
++Lat,+Lon
+West East
+3
+-Lat, -Lon Image Top
+-Lat,+Lon
+2
+Corner Points
+South
+```
 
 Figure 35: Offset Corner Point 1 (Corner Point 1 highlighted in red)
 
@@ -2698,29 +2610,27 @@ KLV Value To Software Value                    Soft val = (          ) ∗ KLVin
 
 ### 8.28.1 Details
 
-The Offset Corner Latitude Point 2 is a measurement relative to the Frame Center Latitude (Item
 
-23). Adding the Frame Center Latitude to the Offset Corner Latitude Point 2 produces the absolute latitude of the corner point of an image. Convert both KLV items to software values prior to the addition.
+The Offset Corner Latitude Point 2 is a measurement relative to the Frame Center Latitude (Item 23). Adding the Frame Center Latitude to the Offset Corner Latitude Point 2 produces the absolute latitude of the corner point of an image. Convert both KLV items to software values prior to the addition.
 
 The corner points of a captured image or image sequence have real earth coordinates represented by a latitude-longitude pair (see Figure 36). Corner points which lie above the horizon do not correspond to a point on the earth so they use the special value “N/A (Off-Earth).” When any corner point offsets are outside of the mapped range, the MISB recommends not reporting corner point offsets and instead using the full precision corner points (Items 82 through 89).
 
 
+```
 Frame Center Relative Corner Points
-
 North
-
-| Sensor +Lat,-Lon | 4 |
-|---|---|
-|  | Image Center |
-|  | 1 |
-|  | +Lat,+Lon |
-| West | East |
-| 3 |  |
-| -Lat, -Lon | Image Top |
-|  | -Lat,+Lon |
-|  | 2 |
-| Corner Points |  |
-|  | South |
+Sensor +Lat,-Lon 4
+Image Center
+1
++Lat,+Lon
+West East
+3
+-Lat, -Lon Image Top
+-Lat,+Lon
+2
+Corner Points
+South
+```
 
 Figure 36: Offset Corner Point 2 (Corner Point 2 highlighted in red)
 
@@ -2823,29 +2733,27 @@ KLV Value To Software Value                    Soft val = (          ) ∗ KLVin
 
 ### 8.30.1 Details
 
-The Offset Corner Latitude Point 3 is a measurement relative to the Frame Center Latitude (Item
 
-23). Adding the Frame Center Latitude to the Offset Corner Latitude Point 3 produces the absolute latitude of the corner point of an image. Convert both KLV items to software values prior to the addition.
+The Offset Corner Latitude Point 3 is a measurement relative to the Frame Center Latitude (Item 23). Adding the Frame Center Latitude to the Offset Corner Latitude Point 3 produces the absolute latitude of the corner point of an image. Convert both KLV items to software values prior to the addition.
 
 The corner points of a captured image or image sequence have real earth coordinates represented by a latitude-longitude pair (see Figure 37). Corner points which lie above the horizon typically do not correspond to a point on the earth and are reported using the special value “N/A (Off-Earth).” When any corner point offsets are outside of the mapped range, the MISB recommends not reporting corner point offsets and instead using the full precision corner points (Items 82 through 89).
 
 
+```
 Frame Center Relative Corner Points
-
 North
-
-| Sensor +Lat,-Lon | 4 |
-|---|---|
-|  | Image Center |
-|  | 1 |
-|  | +Lat,+Lon |
-| West | East |
-| 3 |  |
-| -Lat, -Lon | Image Top |
-|  | -Lat,+Lon |
-|  | 2 |
-| Corner Points |  |
-|  | South |
+Sensor +Lat,-Lon 4
+Image Center
+1
++Lat,+Lon
+West East
+3
+-Lat, -Lon Image Top
+-Lat,+Lon
+2
+Corner Points
+South
+```
 
 Figure 37: Offset Corner Point 3 (Corner Point 3 highlighted in red)
 
@@ -2948,29 +2856,27 @@ KLV Value To Software Value                   Soft val = (          ) ∗ KLVint
 
 ### 8.32.1 Details
 
-The Offset Corner Latitude Point 4 is a measurement relative to the Frame Center Latitude (Item
 
-23). Adding the Frame Center Latitude to the Offset Corner Latitude Point 4 produces the absolute latitude of the corner point of an image. Convert both KLV items to software values prior to the addition.
+The Offset Corner Latitude Point 4 is a measurement relative to the Frame Center Latitude (Item 23). Adding the Frame Center Latitude to the Offset Corner Latitude Point 4 produces the absolute latitude of the corner point of an image. Convert both KLV items to software values prior to the addition.
 
 The corner points of a captured image or image sequence have real earth coordinates represented by a latitude-longitude pair (see Figure 38). Corner points which lie above the horizon typically do not correspond to a point on the earth and are reported using the special value “N/A (Off-Earth).” When any corner point offsets are outside of the mapped range, the MISB recommends not reporting corner point offsets and instead using the full precision corner points (Items 82 through 89).
 
 
+```
 Frame Center Relative Corner Points
-
 North
-
-| Sensor +Lat,-Lon | 4 |
-|---|---|
-|  | Image Center |
-|  | 1 |
-|  | +Lat,+Lon |
-| West | East |
-| 3 |  |
-| -Lat, -Lon | Image Top |
-|  | -Lat,+Lon |
-|  | 2 |
-| Corner Points |  |
-|  | South |
+Sensor +Lat,-Lon 4
+Image Center
+1
++Lat,+Lon
+West East
+3
+-Lat, -Lon Image Top
+-Lat,+Lon
+2
+Corner Points
+South
+```
 
 Figure 38: Offset Corner Point 4 (Corner Point 4 highlighted in red)
 
@@ -3417,21 +3323,17 @@ The crosshair or target location of a captured image or image sequence has real 
 
 The measurement base is either MSL or HAE depending on the presence of either item 25, item 78 or both items in the metadata stream. An item is “present” in the stream if its Report-on-Change status is known (i.e., not “Unknown”) – see Report-on-Change section.
 
-- If only item 25 is present in the metadata stream, the Frame Center Elevation value is
 
-relative to MSL.
+- If only item 25 is present in the metadata stream, the Frame Center Elevation value is relative to MSL.
 
-- If only item 78 is present in the metadata stream, the Frame Center Elevation value is
 
-relative to HAE.
+- If only item 78 is present in the metadata stream, the Frame Center Elevation value is relative to HAE.
 
-- If both items 25 and 78 are present in the metadata stream, the Frame Center Elevation
 
-value is relative to HAE.
+- If both items 25 and 78 are present in the metadata stream, the Frame Center Elevation value is relative to HAE.
 
-When target locations lie above the horizon and do not correspond to a point on the earth, the
 
-MISB recommends not reporting the Target Locations Elevation.
+When target locations lie above the horizon and do not correspond to a point on the earth, the MISB recommends not reporting the Target Locations Elevation.
 
 
 ## 8.43 Item 43: Target Track Gate Width
@@ -3687,12 +3589,16 @@ KLV Value To Software Value                                    Soft val = KLVuin
                                                         2F    01                        31
 ```
 
+- See Details
+
+### 8.47.1 Details
+
 The Generic Data Flags are miscellaneous Boolean (yes / no) aircraft and image related data settings which are individual bits in a single byte value. Table 3 lists six settable bit-flags along with two reserved values for potential future use.
 
 
 Table 3: Generic Flag Data
 
-| Bit | Setting Name | Onea Indicates | Zeroa Indicates | Comments |
+| Bit | Setting Name | One<sup>a</sup> Indicates | Zero<sup>a</sup> Indicates | Comments |
 |---|---|---|---|---|
 | 0 | Laser Range | Laser on | Laser off | Laser Range Finder can be used to aid in geo-positioning |
 | 1 | Auto-Track | Auto-Track on | Auto-Track off | Sensor steering is automatically controlled by on-board tracking system |
@@ -3703,15 +3609,12 @@ Table 3: Generic Flag Data
 | 6 | Reserved | Not Used | Always Zero | Always Zero |
 | 7 | Reserved | Not Used | Always Zero | Always Zero |
 
-a Versions 13 through 16 of ST 0601 unintentionally inverted the column definitions; Versions
 
-13a - 16a uses the correct column definitions.
+<sup>a</sup> Versions 13 through 16 of ST 0601 unintentionally inverted the column definitions; Versions 13<sup>a</sup> - 16<sup>a</sup> uses the correct column definitions.
 
-Figure 40 illustrates the bit-flags within the byte value along with an example value of 0x03 which indicates the Auto-Tracker is on and the Laser Range Finder is on. The least significant bit
 
-(LSBit) is the Laser Range setting, and the most significant bit (MSBit) is a reserved value. In the future, if the MISB adds more flags which require additionally bytes, the new flags will be “Most Significant Bytes.” The current byte value shown in Figure 40 will then be the Least
 
-Significant Byte.
+Figure 40 illustrates the bit-flags within the byte value along with an example value of 0x03 which indicates the Auto-Tracker is on and the Laser Range Finder is on. The least significant bit (LSBit) is the Laser Range setting, and the most significant bit (MSBit) is a reserved value. In the future, if the MISB adds more flags which require additionally bytes, the new flags will be “Most Significant Bytes.” The current byte value shown in Figure 40 will then be the Least Significant Byte.
 
 | Bit Position | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |  |
 |---|---|---|---|---|---|---|---|---|---|
@@ -3758,17 +3661,15 @@ KLV Value To Software Value                                     See MISB ST 0102
 
 ### 8.48.1 Details
 
-MISB ST 0102 [14] allows for the use of either Universal Set or Local Set methods. However, to minimize bandwidth when incorporating MISB ST 0102 into an instance of the UAS Datalink
 
-LS, the Local Set method is required.
+MISB ST 0102 [14] allows for the use of either Universal Set or Local Set methods. However, to minimize bandwidth when incorporating MISB ST 0102 into an instance of the UAS Datalink LS, the Local Set method is required.
 
 Requirement
 
 ST 0601.14-31 When incorporating the ST 0102 Security Metadata set into an instance of the UAS Datalink Local Set, the ST 0102 format shall use the Local Set format.
 
-Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601
 
-Local Set.
+Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601 Local Set.
 
 
 ## 8.49 Item 49: Differential Pressure
@@ -3873,15 +3774,13 @@ The angle of attack of an airborne platform is the angle formed between the rela
 Positive angles for wind with a relative upward component. Refer to Figure 41.
 
 
+```
 Platform Angle of Attack Zenith
-
 Angle of Attack
-
 Horizontal Plane Relative Wind
-
 Earth
-
 Nadir
+```
 
 Figure 41: Platform Angle of Attack
 
@@ -3978,13 +3877,12 @@ For legacy purposes, both range-restricted (Item 52) and full-range (Item 93) re
 The angle formed between the platform longitudinal axis (line made by the fuselage) and the relative wind is the sideslip angle. Figure 42 illustrates a negative sideslip angle.
 
 
+```
 Platform Sideslip Angle North Relative Wind
-
 Sideslip Angle Longitudinal Axis
-
 West East
-
 South
+```
 
 Figure 42: Platform Sideslip Angle
 
@@ -4076,9 +3974,8 @@ KLV Value To Software Value          Soft val = (           ) ∗ KLVint − Off
 
 ### 8.54.1 Details
 
-Airfield Elevation is measured at the airfield location. This relates to the Airfield Barometric
 
-Pressure metadata item.
+Airfield Elevation is measured at the airfield location. This relates to the Airfield Barometric Pressure metadata item.
 
 
 ## 8.55 Item 55: Relative Humidity
@@ -4341,13 +4238,13 @@ The Weapon Load item is composed of two bytes: the first byte indicates the airc
 
 Aircraft store location is indicated by station number which starts its numbering at the outboard left wing as store location 1 and increases towards the outboard right wing (see Figure 43). Each station can have a different weapon installed, or multiple weapons on the same station. For multiple weapons per station, the substation number begins at 1. A substation number of 0 indicates a single store located at the station. The aircraft store location byte has two nibbles: the first most significant nibble indicates Station Number; the second nibble the Substation Number.
 
+```
 Aircraft Store Location
-
-| Right Wing | Left Wing |
-|---|---|
-| 7 6 | 5 3 2 1 |
-| 3 2 1 | 2 1 4 0 2 1 |
-|  | 0 |
+Right Wing Left Wing
+7 6 5 3 2 1
+3 2 1 2 1 4 0 2 1
+0
+```
 
 Figure 43: Aircraft Store Location
 
@@ -4495,9 +4392,8 @@ Table 4: Field of View Names
 | 8 | Continuous Zoom |
 | 9-255 | Reserved – Do not use |
 
-This item is for generic guidance and does not correspond to a specific field of view value. Refer to Sensor Horizontal Field of View Conversion (Item 16) and Sensor Vertical Field of
 
-View Conversion (Item 17) metadata items for specific aperture angles.
+This item is for generic guidance and does not correspond to a specific field of view value. Refer to Sensor Horizontal Field of View Conversion (Item 16) and Sensor Vertical Field of View Conversion (Item 17) metadata items for specific aperture angles.
 
 
 ## 8.64 Item 64: Platform Magnetic Heading
@@ -4542,13 +4438,12 @@ KLV Value To Software Value                     Soft val = (           ) ∗ KLV
 
 ### 8.64.1 Details
 
+```
 Platform Magnetic Heading North Magnetic North Magnetic Heading
-
 Longitudinal Axis
-
 West East
-
 South
+```
 
 Figure 44: Magnetic Heading
 
@@ -4753,9 +4648,8 @@ KLV Value To Software Value       Soft val = (           ) ∗ KLVuint − Offse
 
 For Legacy systems, Item 69 and Item 76 | Item 105 are allowed with preference for Item 76 | Item 105.
 
-The Alternate Platform Altitude is the altitude of an airborne or ground based platform connected via direct datalink to a UAS generating Motion Imagery and metadata. The Alternate Platform
 
-Altitude is a true altitude or true vertical distance above mean sea level.
+The Alternate Platform Altitude is the altitude of an airborne or ground based platform connected via direct datalink to a UAS generating Motion Imagery and metadata. The Alternate Platform Altitude is a true altitude or true vertical distance above mean sea level.
 
 
 ## 8.70 Item 70: Alternate Platform Name
@@ -4798,9 +4692,8 @@ KLV Value To Software Value                                          Soft val = 
 
 The Alternate Platform Name metadata item distinguishes a platform which is generating Motion Imagery and metadata products and relates to the referring UAS. The alternate platform can be airborne, or ground based and is to be described sufficiently (yet with brevity) in text using this metadata item.
 
-An alternate platform is an airborne or ground based platform connected via direct datalink to a
 
-UAS generating Motion Imagery and metadata.
+An alternate platform is an airborne or ground based platform connected via direct datalink to a UAS generating Motion Imagery and metadata.
 
 
 ## 8.71 Item 71: Alternate Platform Heading
@@ -4847,9 +4740,8 @@ KLV Value To Software Value                   Soft val = (          ) ∗ KLVint
 
 Alternate Platform Heading uses the same definition for heading angle as Item 5, but for the alternate platform.
 
-The alternate platform is an airborne or ground based platform connected via direct datalink to a
 
-UAS generating Motion Imagery and metadata.
+The alternate platform is an airborne or ground based platform connected via direct datalink to a UAS generating Motion Imagery and metadata.
 
 
 ## 8.72 Item 72: Event Start Time
@@ -4933,9 +4825,8 @@ The RVT Local Set item allows users to include, or nest, RVT LS (MISB ST 0806 [7
 
 This provides users who are required to use the RVT LS metadata items (Points of Interest, Areas of Interest, etc.) a method to leverage the data field contained within MISB ST 0601 (i.e., platform location, and sensor pointing angles).
 
-Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601
 
-Local Set.
+Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601 Local Set.
 
 
 ## 8.74 Item 74: VMTI Local Set
@@ -4977,13 +4868,11 @@ KLV Value To Software Value                                      See MISB ST 090
 
 The VMTI Local Set allows users to include, or nest, VMTI LS (MISB ST 0903 [16]) metadata items within MISB ST 0601.
 
-This provides users who are required to use the VMTI LS a method to leverage the items within
 
-MISB ST 0601 (like platform location, and sensor pointing angles, or frame center).
+This provides users who are required to use the VMTI LS a method to leverage the items within MISB ST 0601 (like platform location, and sensor pointing angles, or frame center).
 
-Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601
 
-Local Set.
+Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601 Local Set.
 
 
 ## 8.75 Item 75: Sensor Ellipsoid Height
@@ -5029,9 +4918,8 @@ KLV Value To Software Value       Soft val = (           ) ∗ KLVuint − Offse
 
 For legacy systems, Item 15 and Item 75 | Item 104 are allowed with preference for Item 75 | Item 104.
 
-Sensor Ellipsoid Height is the vertical distance between the sensor and the WGS84 Reference
 
-Ellipsoid. Measurement is GPS derived.
+Sensor Ellipsoid Height is the vertical distance between the sensor and the WGS84 Reference Ellipsoid. Measurement is GPS derived.
 
 
 ## 8.76 Item 76: Alternate Platform Ellipsoid Height
@@ -5077,9 +4965,8 @@ KLV Value To Software Value       Soft val = (           ) ∗ KLVuint − Offse
 
 For Legacy systems, Item 69 and Item 76 | Item 105 are allowed with preference for Item 76 | Item 105.
 
-The Alternate Platform Ellipsoid Height is the vertical distance between the sensor and the
 
-WGS84 Reference Ellipsoid. Measurement is GPS derived.
+The Alternate Platform Ellipsoid Height is the vertical distance between the sensor and the WGS84 Reference Ellipsoid. Measurement is GPS derived.
 
 An alternate platform is an airborne or ground based platform that is connected via direct datalink to a UAS generating Motion Imagery and metadata.
 
@@ -5325,9 +5212,8 @@ Note that the pixel points p0 through p4 do not always directly correspond with 
 
 By its definition, the intent of the Horizon Vector is as an estimate of the horizon location since it does not include the curvature of the earth and with most airborne systems the horizon is far away and difficult to precisely pinpoint using pixel accurate values.
 
-Therefore, instead of pixel locations, integer percentages of image width and height provide the Horizon Vector starting and ending coordinates. Integer resolution is sufficient as an estimate for the horizon. For example, the resolution for 1% of an image with a width of 1280 pixels is
 
-1280x0.01 = 12.8 pixels. The upper left corner of the image has coordinates (x, y) equal to (0%,0%); the upper right has image coordinates of (100%, 0%), etc. Percentages also have the advantage that they are scale invariant – if scaling the image the percentages still represent the horizon line.
+Therefore, instead of pixel locations, integer percentages of image width and height provide the Horizon Vector starting and ending coordinates. Integer resolution is sufficient as an estimate for the horizon. For example, the resolution for 1% of an image with a width of 1280 pixels is 1280x0.01 = 12.8 pixels. The upper left corner of the image has coordinates (x, y) equal to (0%,0%); the upper right has image coordinates of (100%, 0%), etc. Percentages also have the advantage that they are scale invariant – if scaling the image the percentages still represent the horizon line.
 
 ### 8.81.2 Example
 
@@ -5343,18 +5229,15 @@ When the latitudes and longitudes of the Horizon Vector are included, these geo-
 
 ### 8.81.4 Floating Length Pack Definition for the Image Horizon Pixel Pack
 
-The Image Horizon Pixel Pack makes use of a Floating Length Pack (see Motion Imagery
 
-Handbook) which allows a user to include or exclude data items as necessary. The first items defined within this pack are the mandatory Start x0, Start y0 and End x1, End y1 coordinates representing the start and end of the Horizon Vector. These four values are each a single byte unsigned integer ranging from 0 to 100 percent. The optional real earth latitude-longitude geo-coordinate pairs follow the start and end points of the Horizon Vector.
-
-The minimum required components are the Start x0, Start y0 and End x1, End y1 points defining the Horizon Vector in image space. The latitudes/longitudes of these points are optional, but the MISB recommends providing them. Table 6 defines the order and bytes sizes of the values in the
-
-Image Horizon Pixel Pack.
+The Image Horizon Pixel Pack makes use of a Floating Length Pack (see Motion Imagery Handbook) which allows a user to include or exclude data items as necessary. The first items defined within this pack are the mandatory Start x0, Start y0 and End x1, End y1 coordinates representing the start and end of the Horizon Vector. These four values are each a single byte unsigned integer ranging from 0 to 100 percent. The optional real earth latitude-longitude geo-coordinate pairs follow the start and end points of the Horizon Vector.
 
 
-The “Name” column is the corresponding name of the metadata item. The “Units/Range” column provides the units of measurement for the item’s value, and the range of allowed values. The “Type” column indicates the data type used for the value of the item. This is directly related to the “Length” column, which indicates the number of bytes allotted to the item value. Finally, the
+The minimum required components are the Start x0, Start y0 and End x1, End y1 points defining the Horizon Vector in image space. The latitudes/longitudes of these points are optional, but the MISB recommends providing them. Table 6 defines the order and bytes sizes of the values in the Image Horizon Pixel Pack.
 
-“M/O” column indicates whether the corresponding metadata item is mandatory (i.e., “M”), or optional (i.e. “O”). However, the MISB recommends providing the optional values.
+
+
+The “Name” column is the corresponding name of the metadata item. The “Units/Range” column provides the units of measurement for the item’s value, and the range of allowed values. The “Type” column indicates the data type used for the value of the item. This is directly related to the “Length” column, which indicates the number of bytes allotted to the item value. Finally, the “M/O” column indicates whether the corresponding metadata item is mandatory (i.e., “M”), or optional (i.e. “O”). However, the MISB recommends providing the optional values.
 
 Table 6: Image Horizon Pixel Pack
 
@@ -5416,15 +5299,15 @@ For legacy purposes, both range-restricted (Items 26-33) and full-range (Item 82
 
 The corner points of a captured image or image sequence have real earth coordinates represented by a latitude-longitude pair (see Figure 48). Corner points that lie above the horizon typically do not correspond to a point on the earth and are reported using the special value “N/A (Off-Earth).”
 
+```
 Frame Center Relative Corner Points North Sensor +Lat,-Lon 4 Image Center 1 +Lat,+Lon
-
-| West | East |
-|---|---|
-|  | 3 |
-| -Lat, | -Lon Image Top |
-|  | -Lat,+Lon |
-|  | Corner Points 2 |
-|  | South |
+West East
+3
+-Lat, -Lon Image Top
+-Lat,+Lon
+Corner Points 2
+South
+```
 
 Figure 48: Offset Corner Point 1 (Corner Point 1 highlighted in red)
 
@@ -5526,15 +5409,15 @@ For legacy purposes, both range-restricted (Items 26-33) and full-range (Item 82
 
 The corner points of a captured image or image sequence have real earth coordinates represented by a latitude-longitude pair (see Figure 49). Corner points that lie above the horizon typically do not correspond to a point on the earth and are reported using the special value “N/A (Off-Earth).”
 
+```
 Frame Center Relative Corner Points North Sensor +Lat,-Lon 4 Image Center 1 +Lat,+Lon
-
-| West | East |
-|---|---|
-|  | 3 |
-| -Lat, | -Lon Image Top |
-|  | -Lat,+Lon |
-|  | Corner Points 2 |
-|  | South |
+West East
+3
+-Lat, -Lon Image Top
+-Lat,+Lon
+Corner Points 2
+South
+```
 
 Figure 49: Offset Corner Point 2 (Corner Point 2 highlighted in red)
 
@@ -5636,15 +5519,15 @@ For legacy purposes, both range-restricted (Items 26-33) and full-range (Items 8
 
 The corner points of a captured image or image sequence have real earth coordinates represented by a latitude-longitude pair (see Figure 50). Corner points that lie above the horizon typically do not correspond to a point on the earth and are reported using the special value “N/A (Off-Earth).”
 
+```
 Frame Center Relative Corner Points North Sensor +Lat,-Lon 4 Image Center 1 +Lat,+Lon
-
-| West | East |
-|---|---|
-|  | 3 |
-| -Lat, | -Lon Image Top |
-|  | -Lat,+Lon |
-|  | Corner Points 2 |
-|  | South |
+West East
+3
+-Lat, -Lon Image Top
+-Lat,+Lon
+Corner Points 2
+South
+```
 
 Figure 50: Offset Corner Point 3 (Corner Point 3 highlighted in red)
 
@@ -5748,15 +5631,15 @@ For legacy purposes, both range-restricted (Items 26-33) and full-range (Items 8
 
 The corner points of a captured image or image sequence have real earth coordinates represented by a latitude-longitude pair (see Figure 51). Corner points that lie above the horizon typically do not correspond to a point on the earth and are reported using the special value “N/A (Off-Earth).”
 
+```
 Frame Center Relative Corner Points North Sensor +Lat,-Lon 4 Image Center 1 +Lat,+Lon
-
-| West | East |
-|---|---|
-|  | 3 |
-| -Lat, | -Lon Image Top |
-|  | -Lat,+Lon |
-|  | Corner Points 2 |
-|  | South |
+West East
+3
+-Lat, -Lon Image Top
+-Lat,+Lon
+Corner Points 2
+South
+```
 
 Figure 51: Offset Corner Point 4 (Corner Point 4 highlighted in Red)
 
@@ -5858,23 +5741,19 @@ For legacy purposes, both range-restricted (Item 6) and full-range (Items 90) re
 The pitch angle of the platform is the angle between the longitudinal axis (line made by the fuselage) and the horizontal plane. Angles are positive when the platform nose is above the horizontal plane. Figure 52 illustrates a side view of a platform with the platform’s longitudinal (red) and vertical (blue) axes. The figure shows a side view of the Horizontal Plane (yellow) relative to the earth’s ellipsoid (green). In this diagram the Platform Pitch is a positive angle between the Horizontal Plane and the Longitudinal Axis; negative angles are when the platform’s nose goes below the Horizontal Plane.
 
 
+```
 Platform Pitch Zenith Angle Longitudinal Axis
-
 + Horizontal Plane
-
 -
-
 Vertical Axis
-
 Earth
-
 Nadir
+```
 
 Figure 52: Platform Pitch Angle
 
-When the Platform Pitch Angle equals exactly ± 90 gimbal lock occurs and the Platform
 
-Heading and Platform Pitch angles affected. Section 7.2.2.1 provides suggestions on addressing gimbal lock.
+When the Platform Pitch Angle equals exactly ± 90 gimbal lock occurs and the Platform Heading and Platform Pitch angles affected. Section 7.2.2.1 provides suggestions on addressing gimbal lock.
 
 
 ## 8.91 Item 91: Platform Roll Angle (Full)
@@ -5913,52 +5792,49 @@ KLV Value To Software Value              Soft val = (          ) ∗ KLVint = ( 
                                                         5B    04                     04D8 04DF
 ```
 
-- Angle between platform vertical vector and the plane constructed from the NED down and longitudinal
 
-vectors. • Positive angles for lowered right wing • Map -((2^31)-1)..(2^31)-1 to +/-90 • See Requirement ST 0601.13-27 when the value is not within the specified KLV min/max range.
+- Angle between platform vertical vector and the plane constructed from the NED down and longitudinal vectors.
+- Positive angles for lowered right wing
+- Map -((2^31)-1)..(2^31)-1 to +/-90
+- See Requirement ST 0601.13-27 when the value is not within the specified KLV min/max range.
 
 ### 8.91.1 Details
 
 For legacy purposes, both range-restricted (Item 7) and full-range (Item 91) representations of Platform Roll Angle MAY appear in the same MISB ST 0601 packet. A single representation is preferred favoring the full-range version (Item 91) as per Section 6.1.
 
-The platform roll angle is the angle of rotation about the longitudinal axis measured from the platform’s vertical axis to the roll-reference plane. The roll-reference plane is the mathematical plane formed by the NED down vector and platform longitudinal axis (line made by the fuselage). Positive angles correspond to clockwise rotation about the longitudinal axis, e.g., from a pilot’s perspective sitting in the cockpit facing forward during level flight, the starboard (right)
 
-wing lowers during the rotation.
-
-Figure 53 is a simplistic illustration of platform roll using a platform flying out from the page with no platform pitch. The illustration shows the platform’s vertical axis and the edge of the
-
-roll-reference plane; the angle between these two is the Platform Roll Angle.
+The platform roll angle is the angle of rotation about the longitudinal axis measured from the platform’s vertical axis to the roll-reference plane. The roll-reference plane is the mathematical plane formed by the NED down vector and platform longitudinal axis (line made by the fuselage). Positive angles correspond to clockwise rotation about the longitudinal axis, e.g., from a pilot’s perspective sitting in the cockpit facing forward during level flight, the starboard (right) wing lowers during the rotation.
 
 
+Figure 53 is a simplistic illustration of platform roll using a platform flying out from the page with no platform pitch. The illustration shows the platform’s vertical axis and the edge of the roll-reference plane; the angle between these two is the Platform Roll Angle.
+
+
+```
 Platform Roll Angle Zenith
-
 Platform Flying Out of the Page Horizontal Plane
-
 Roll-Reference Plane
-
 Platform Vertical Axis
-
 - + Platform Roll Angle Earth
-
 Nadir
+```
 
 Figure 53: Platform Roll Angle
 
-The left side of Figure 54 illustrates a platform above a Horizontal Plane (green) where the platform is pitching up and rolling counterclockwise. The middle illustration depicts the definition of the Roll-Reference Plane (blue), created from the Longitudinal axis and NED Down
 
-Vector. The right figure illustrates the Roll Angle (yellow) as the angle between the Roll-Reference Plane and Vertical Axis (red).
+The left side of Figure 54 illustrates a platform above a Horizontal Plane (green) where the platform is pitching up and rolling counterclockwise. The middle illustration depicts the definition of the Roll-Reference Plane (blue), created from the Longitudinal axis and NED Down Vector. The right figure illustrates the Roll Angle (yellow) as the angle between the Roll-Reference Plane and Vertical Axis (red).
 
-| Longitudinal Axis | Longitudinal Axis |
-|---|---|
-|  | NED Down |
-|  | Vector |
-| NED Down |  |
-| Vertical Axis Vector |  |
-|  | NED Down |
-|  | Vector |
-|  | Roll Angle |
-| Horizontal Plane |  |
-|  | Vertical Axis Vertical Axis |
+```
+Longitudinal Axis Longitudinal Axis
+NED Down
+Vector
+NED Down
+Vertical Axis Vector
+NED Down
+Vector
+Roll Angle
+Horizontal Plane
+Vertical Axis Vertical Axis
+```
 
 Figure 54: Platform Roll Angle with Platform Pitch
 
@@ -6012,15 +5888,13 @@ For legacy purposes, both range-restricted (Item 50) and full-range (Items 92) r
 
 The angle of attack of an airborne platform is the angle formed between the relative wind and platform longitudinal axis (line made by the fuselage). Positive angles for wind with a relative upward component. Refer to Figure 55.
 
+```
 Platform Angle of Attack Zenith
-
 Angle of Attack
-
 Horizontal Plane Relative Wind
-
 Earth
-
 Nadir
+```
 
 Figure 55: Platform Angle of Attack
 
@@ -6074,13 +5948,12 @@ For legacy purposes, both range-restricted (Item 52) and full-range (Items 93) r
 The angle formed between the platform longitudinal axis (line made by the fuselage) and the relative wind is the sideslip angle. Figure 56 illustrates a negative sideslip angle.
 
 
+```
 Platform Sideslip Angle North Relative Wind
-
 Sideslip Angle Longitudinal Axis
-
 West East
-
 South
+```
 
 Figure 56: Platform Sideslip Angle
 
@@ -6167,15 +6040,13 @@ KLV Value To Software Value                                   See MISB ST 1206
 
 ### 8.95.1 Details
 
-The SAR Motion Imagery Local Set item allows users to include the SAR Motion Imagery
 
-Metadata (MISB ST 1206) within MISB ST 0601. The SARMI metadata set allows users to exploit both sequential synthetic aperture radar (SAR) imagery and sequential SAR coherent change products as Motion Imagery.
+The SAR Motion Imagery Local Set item allows users to include the SAR Motion Imagery Metadata (MISB ST 1206) within MISB ST 0601. The SARMI metadata set allows users to exploit both sequential synthetic aperture radar (SAR) imagery and sequential SAR coherent change products as Motion Imagery.
 
 See MISB ST 1206 [18] for generation and usage requirements.
 
-Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601
 
-Local Set.
+Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601 Local Set.
 
 
 ## 8.96 Item 96: Target Width Extended
@@ -6220,17 +6091,14 @@ For legacy purposes, both distance-restricted (Item 22) and extended (Item 96) r
 The target width is the linear ground distance between the center of both sides of the captured image. Refer to Figure 57. As Target Width (Item 22) limits the distance to 10,000 meters, this limit is no longer sufficient to support current capabilities. Target Width Extended is intended to allow for the maximum viewable distance from an altitude of 40,000 meters which is sufficient for all airborne UAS systems.
 
 
+```
 Target Width Zenith
-
 Right Wing Left Wing
-
 Horizontal Plane
-
 Image Center
-
 Earth
-
 Nadir Target Width
+```
 
 Figure 57: Target Width
 
@@ -6271,17 +6139,12 @@ KLV Value To Software Value                                  See MISB ST 1002
 
 ### 8.97.1 Details
 
-The Range Image Local Set item allows users to include the Range Image LS (MISB ST 1002
-
-[19]) within MISB ST 0601. Range Motion Imagery is a temporal sequence of range images. Each range image is a collection of range measurements from a sensor to target scene. A range measurement is the distance (e.g., meters) from an object (or area) in the scene to the sensor. The KLV structures of this standard are intended to allow for flexibility, efficient packing, and future extensions. Range Motion Imagery can be used standalone, or in collaboration with other Motion
-
-Imagery.
+The Range Image Local Set item allows users to include the Range Image LS (MISB ST 1002 [19]) within MISB ST 0601. Range Motion Imagery is a temporal sequence of range images. Each range image is a collection of range measurements from a sensor to target scene. A range measurement is the distance (e.g., meters) from an object (or area) in the scene to the sensor. The KLV structures of this standard are intended to allow for flexibility, efficient packing, and future extensions. Range Motion Imagery can be used standalone, or in collaboration with other Motion Imagery.
 
 See MISB ST 1002 for generation and usage requirements.
 
-Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601
 
-Local Set.
+Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601 Local Set.
 
 
 ## 8.98 Item 98: Geo-Registration Local Set
@@ -6324,9 +6187,8 @@ The Geo-Registration Local Set item allows users to include the Geo-Registration
 
 See MISB ST 1601 for generation and usage requirements.
 
-Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601
 
-Local Set.
+Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601 Local Set.
 
 
 ## 8.99 Item 99: Composite Imaging Local Set
@@ -6369,9 +6231,8 @@ The Composite Imaging Local Set item supports the composition of several Motion 
 
 See MISB ST 1602 [21] for generation and usage requirements.
 
-Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601
 
-Local Set.
+Section 6.3.3 describes the concept and rules of nesting a Local Set within a MISB ST 0601 Local Set.
 
 
 ## 8.100 Item 100: Segment Local Set
@@ -6410,19 +6271,16 @@ KLV Value To Software Value                                  See MISB ST 1607
 
 ### 8.100.1 Details
 
-Refer to Section 7.6 for information and requirements about using the Segment LS. The Motion Imagery Handbook defines the principles underlying the Segment LS construct and MISB ST
 
-1607 [22] defines the Segment LS rules of usage.
+Refer to Section 7.6 for information and requirements about using the Segment LS. The Motion Imagery Handbook defines the principles underlying the Segment LS construct and MISB ST 1607 [22] defines the Segment LS rules of usage.
 
 Per requirements in Section 7.6, every Segment LS must include a Metadata Substream ID (MSID) (Item 143). Adding a MSID in the Segment LS defines a metadata substream thereby providing a means to relate multiple Segment LSs in different packets, refer to Motion Imagery Handbook for further information.
 
-At a high level, consider a UAS Datalink LS as consisting of a parent set of items, and one or more child sets of items. Segment LS enables use of MISB ST 0601 items at the parent level, and reuse of the same items – with different item values – or other items not specified at the parent level or at the child level, effectively adding items with new values. A use of an item at the parent level is applicable across the MISB ST 0601 set, whereas use of the same item within the Segment LS signals its use as restricted to the purpose indicated by other items present within the
 
-Segment LS. For example, an Item 94 MIIS Core Identifier at the parent level applies to the entire Motion Imagery frame; an Item 94 within a Segment LS may apply to a second senor image overlay and its specific sensor MIIS Core Identifier.
+At a high level, consider a UAS Datalink LS as consisting of a parent set of items, and one or more child sets of items. Segment LS enables use of MISB ST 0601 items at the parent level, and reuse of the same items – with different item values – or other items not specified at the parent level or at the child level, effectively adding items with new values. A use of an item at the parent level is applicable across the MISB ST 0601 set, whereas use of the same item within the Segment LS signals its use as restricted to the purpose indicated by other items present within the Segment LS. For example, an Item 94 MIIS Core Identifier at the parent level applies to the entire Motion Imagery frame; an Item 94 within a Segment LS may apply to a second senor image overlay and its specific sensor MIIS Core Identifier.
 
-In cases where the MISB ST 0902 [23] mandatory set of items (which are a subset of MISB ST
 
-0601) distribute between a parent/child set, the MISP requirement for the MISB ST 0902 set is still satisfied.
+In cases where the MISB ST 0902 [23] mandatory set of items (which are a subset of MISB ST 0601) distribute between a parent/child set, the MISP requirement for the MISB ST 0902 set is still satisfied.
 
 It is incumbent on the system implementer to meet all required metadata items for conformance, such as MISB ST 0902 metadata, regardless of whether the items are present in a parent or a child set.
 
@@ -6463,17 +6321,14 @@ KLV Value To Software Value                                  See MISB ST 1607
 
 ### 8.101.1 Details
 
-Refer to Section 7.6 for information and requirements about using the Amend LS. The Motion
 
-Imagery Handbook describes the principles underlying the Amend LS construct. MISB ST 1607 [22] defines the Amend LS rules for usage and MISB ST 1601 [20] provides an application of its use.
+Refer to Section 7.6 for information and requirements about using the Amend LS. The Motion Imagery Handbook describes the principles underlying the Amend LS construct. MISB ST 1607 [22] defines the Amend LS rules for usage and MISB ST 1601 [20] provides an application of its use.
 
-Per requirements in Section 7.6, every Amend LS must include a Metadata Substream ID (MSID) (Item 143). Adding a MSID in the Amend LS defines a metadata substream thereby providing a means to relate multiple Amend LSs in different packets, refer to Motion Imagery
 
-Handbook for further information.
+Per requirements in Section 7.6, every Amend LS must include a Metadata Substream ID (MSID) (Item 143). Adding a MSID in the Amend LS defines a metadata substream thereby providing a means to relate multiple Amend LSs in different packets, refer to Motion Imagery Handbook for further information.
 
-In applying the Amend Local Set, it is best to take the perspective of the receiver of the data. Described in Section 6.3.3 is the concept of nesting a Local Set within a MISB ST 0601 Local
 
-Set.
+In applying the Amend Local Set, it is best to take the perspective of the receiver of the data. Described in Section 6.3.3 is the concept of nesting a Local Set within a MISB ST 0601 Local Set.
 
 At a high level, consider a UAS Datalink LS as consisting of a parent set of items, and one or more child sets of items. The Amend LS enables use of MISB ST 0601 items at the parent level, and an alternative value-set at the child level. The alternative value-set can include value changes, additions, or deletions to the parent set’s values. A use of an item at the parent level is applicable across the MISB ST 0601 LS, whereas use of the same item within the Amend LS signals its use as restricted to the purpose indicated by other items present within the Amend LS.
 
@@ -6520,9 +6375,8 @@ KLV Value To Software Value                                  See MISB ST 1010
 
 In applying the SDCC-FLP item, it is advised to review the usage of the SDCC-FLP (Standard Deviation Correlation Coefficient Floating Length Pack) construct presented in MISB ST 1010 [10]. The allowed metadata items from MISB ST 0601 for use in the SDCC-FLP are denoted with a “Y” in the MISB ST 0601 Table 1 column labeled SDCC FLP.
 
-The SDCC defines a compact structure for two data lists: Standard Deviation and Cross
 
-Correlation values. The data type and size for each list must be self-consistent; all Standard Deviation values must be the same type and size; all Cross Correlation values must be the same type and size. The type and size of each list can be determined at runtime.
+The SDCC defines a compact structure for two data lists: Standard Deviation and Cross Correlation values. The data type and size for each list must be self-consistent; all Standard Deviation values must be the same type and size; all Cross Correlation values must be the same type and size. The type and size of each list can be determined at runtime.
 
 Important: In version 10 of MISB ST 0601 the Standard Deviation values are restricted to IEEE floating point values. Future versions of MISB ST 0601 may allow for the use IMAP values after appropriate limits are defined for each Standard Deviation.
 
@@ -6547,27 +6401,22 @@ ST 0601.10-22 The UAS Datalink Local Set shall only include SDCC-FLPs using Mode
 
 Five values in the Mode 2 Parse Control are computed at runtime: Cs, Sf, Slen, Cf, and Clen.
 
-- The Cs value indicates the SDCC-FLP uses a sparse representation of the correlation
 
-coefficient values.
+- The Cs value indicates the SDCC-FLP uses a sparse representation of the correlation coefficient values.
 
 The Sf value defines the data format type of the standard deviation values, either IMAP (see MISB ST 1201 [12]) or IEEE Floating Point values. MISB ST 1010 does not allow the mixing of types; therefore, convert all standard deviation values to one type.
 
-- The MISB recommends using four-byte IEEE Floating Point values for standard
 
-deviation values.
+- The MISB recommends using four-byte IEEE Floating Point values for standard deviation values.
 
-- The Slen value defines the number of bytes each standard deviation value uses. Add more
 
-bytes if a system requires greater precision.
+- The Slen value defines the number of bytes each standard deviation value uses. Add more bytes if a system requires greater precision.
 
-- The Cf value defines the data format type of the correlation coefficient values (i.e., either
 
-IEEE Floating Point or MISB ST 1201 mapped values).
+- The Cf value defines the data format type of the correlation coefficient values (i.e., either IEEE Floating Point or MISB ST 1201 mapped values).
 
-- The Clen value defines the number of bytes for each correlation coefficient value. Systems
 
-requiring greater precision can use more bytes.
+- The Clen value defines the number of bytes for each correlation coefficient value. Systems requiring greater precision can use more bytes.
 
 #### 1.1.1.4 Bit Vector
 
@@ -6580,9 +6429,8 @@ The standard deviation values in IEEE Floating Point and included in the SDCC-FL
 
 #### 1.1.1.6 Correlation Coefficient Values
 
-The correlation coefficient values converted to the desired data format, either IEEE Floating
 
-Point or MISB ST 1201 mapped values, and included in the SDCC-FLP. The rows and columns of the correlation coefficient matrix are in the same order as the Refined Source List.
+The correlation coefficient values converted to the desired data format, either IEEE Floating Point or MISB ST 1201 mapped values, and included in the SDCC-FLP. The rows and columns of the correlation coefficient matrix are in the same order as the Refined Source List.
 
 
 ## 8.103 Item 103: Density Altitude Extended
@@ -6860,9 +6708,8 @@ KLV Value To Software Value                    Soft val = RIMAPB(0,21000, Length
 
 The Range To Recovery Location is the minimum distance from the current aircraft position to the aircraft recovery position. The distance is computed over the surface of the earth at the given altitude of the aircraft (i.e., not a straight-line distance potentially through the earth). The furtherst distance is a point on the opposite side of the earth, at the given altitude.
 
-The maximum value for the IMAPB computation results from the recovery location on the opposite side of the earth from the aircraft flying at the maximum altitude of 40,000 m. The largest radius of the ellipsoid earth is at the equator, with the WGS84 radius equal to
 
-6,378,137.0 m. This radius plus the maximum altitude is 6,418,137 meters, which equals r. Half the circumference, C, of a circle with this radius is the maximum value.
+The maximum value for the IMAPB computation results from the recovery location on the opposite side of the earth from the aircraft flying at the maximum altitude of 40,000 m. The largest radius of the ellipsoid earth is at the equator, with the WGS84 radius equal to 6,378,137.0 m. This radius plus the maximum altitude is 6,418,137 meters, which equals r. Half the circumference, C, of a circle with this radius is the maximum value.
 
 ```
 𝐶 = 2𝜋𝑟 = 2 ∗ 6,418,137 ∗ 𝜋 = 40,326,344
@@ -6909,19 +6756,24 @@ KLV Value To Software Value                                     Soft val = KLVui
 
 ### 8.110.1 Details
 
-Time Airborne is a continual count of the number of seconds since the aircraft took off from the ground (or ship). The Take-Off time (Item 131) is the timestamp indicating when the aircraft became airborne. The Time Airborne and Take-Off Time are related mathematically using the
 
-Precision Time Stamp (Item 2), so the Local Set needs only one of these items to compute the other.
+Time Airborne is a continual count of the number of seconds since the aircraft took off from the ground (or ship). The Take-Off time (Item 131) is the timestamp indicating when the aircraft became airborne. The Time Airborne and Take-Off Time are related mathematically using the Precision Time Stamp (Item 2), so the Local Set needs only one of these items to compute the other.
 
-To compute the Time Airborne (TAir) from the Take-Off Time (TTakeoff) and the current Precision
+To compute the Time Airborne (TAir) from the Take-Off Time (TTakeoff) and the current Precision Time Stamp (TPrecision) use Equation 2.
 
-Time Stamp (TPrecision) use Equation 2.
+```
+                𝑇𝑃𝑟𝑒𝑐𝑖𝑠𝑖𝑜𝑛 − 𝑇𝑇𝑎𝑘𝑒𝑜𝑓𝑓
+𝑇𝐴𝑖𝑟 = 𝑅𝑜𝑢𝑛𝑑 [                         ]                      Equation 2
+                      1000000
+```
 
-− 𝑇𝑇𝑎𝑘𝑒𝑜𝑓𝑓 1000000] Equation 2 To 𝑇𝐴𝑖𝑟 = 𝑅𝑜𝑢𝑛𝑑 [𝑇𝑃𝑟𝑒𝑐𝑖𝑠𝑖𝑜𝑛 the Take-Off compute
+To compute the Take-Off Time (TTakeoff) from the Time Airborne (TAir) and the Precision Time Stamp (TPrecision) use Equation 3.
 
-Time (TTakeoff) from the Time Airborne (TAir) and the Precision Time Stamp (TPrecision) use Equation 3. 𝑇𝑇𝑎𝑘𝑒𝑜𝑓𝑓 = 𝑇𝑃𝑟𝑒𝑐𝑖𝑠𝑖𝑜𝑛 − (
+```
+𝑇𝑇𝑎𝑘𝑒𝑜𝑓𝑓 = 𝑇𝑃𝑟𝑒𝑐𝑖𝑠𝑖𝑜𝑛 − (𝑇𝐴𝑖𝑟 ∗ 1000000)                           Equation 3
+```
 
-𝑇𝐴𝑖𝑟 ∗ 1000000) Equation 3 The Time Airborne value supports flight times up to 232 -1 seconds or 136 years.
+The Time Airborne value supports flight times up to 2<sup>32</sup> -1 seconds or 136 years.
 
 
 ## 8.111 Item 111: Propulsion Unit Speed
@@ -7003,13 +6855,12 @@ The Platform Course is the direction the platform is moving (not necessarily the
 Angle (Full) (Item 52). Platform Course is directly measurable by on-board navigation or estimated computationally by comparing the last known position to current position.
 
 
+```
 True North
-
 Wind Direction
-
 Wind
-
 Side Slip
+```
 
 Figure 58: Platform Course compared to other directional data.
 
@@ -7136,27 +6987,24 @@ KLV Value To Software Value                                         See Details
 
 The purpose of the Control Command (Item 115) and Command Acknowledgement (Item 116) items are to report the commands issued to the platform/sensor and the acknowledgement of those commands. The Control Command defines a command ID and the command string which describes the command or action to perform. At some later time, the command is acknowledged by the platform and Item 116 records the acknowledgement, by just restating the Command ID.
 
-Figure 60 provides an illustration of the data flow where the GCS issues a command (A) to the platform and at the same time records the command with a Command ID (#5) in the metadata
 
-stream. The platform receives and acknowledges the command (B) by sending some form of acknowledgement to the GCS. The GCS matches the Command ID with the original command and records the acknowledgement of the command in the KLV.
+Figure 60 provides an illustration of the data flow where the GCS issues a command (A) to the platform and at the same time records the command with a Command ID (#5) in the metadata stream. The platform receives and acknowledges the command (B) by sending some form of acknowledgement to the GCS. The GCS matches the Command ID with the original command and records the acknowledgement of the command in the KLV.
 
 
+```
 A
-
 Command to UAS B Command Ground Control
-
-| Station | Acknowledged |
-|---|---|
-|  | A B |
-| KLV Metadata |  |
-| Timeline |  |
-| #5 | Command to UAS #5 |
+Station Acknowledged
+A B
+KLV Metadata
+Timeline
+#5 Command to UAS #5
+```
 
 Figure 60: Control Command Usage
 
-This Control Command value has four components combined into a KLV Pack: Command ID,
 
-Command String Length, Command String and Command Time.
+This Control Command value has four components combined into a KLV Pack: Command ID, Command String Length, Command String and Command Time.
 
 The Command ID is a BER-OID integer value to track the command. This is an increasing and unique number assigned to each command as it is issued. Item 116 uses the command ID to show the command acknowledgement.
 
@@ -7381,9 +7229,8 @@ KLV Value To Software Value                       Soft val = RIMAPB(0,100, Lengt
                                                          78   02                       4800
 ```
 
-- Used with "On-board MI Storage Capacity" (Item 133), if available, to determine remaining recording storage
 
-space
+- Used with "On-board MI Storage Capacity" (Item 133), if available, to determine remaining recording storage space
 
 
 ## 8.121 Item 121: Active Wavelength List
@@ -7422,9 +7269,8 @@ KLV Value To Software Value                                         See Details
 
 ### 8.121.1 Details
 
-The Active Wavelength List provides a list of wavelengths used by the sensor to generate the
 
-Motion Imagery. This value updates when the sensor changes and the new sensor has a different wavelength than the last sensor used. For example, the sensor changes from a visible light to an infrared sensor. Multiple wavelengths identifiers support multi-band sensors or sensors which fuse multiple wavelength bands.
+The Active Wavelength List provides a list of wavelengths used by the sensor to generate the Motion Imagery. This value updates when the sensor changes and the new sensor has a different wavelength than the last sensor used. For example, the sensor changes from a visible light to an infrared sensor. Multiple wavelengths identifiers support multi-band sensors or sensors which fuse multiple wavelength bands.
 
 As illustrated in Figure 63, the Local Set item consists of the item, followed by the Length and then one or more BER-OID identifiers from the Wavelength List (see Item 128).
 
@@ -7437,20 +7283,17 @@ Combined length of this pack is used for the Tag s length
 
 Figure 63: Illustration of Active Sensor Wavelength List VLP
 
-The Wavelength ID’s reference the sensors wavelength information from the Wavelength table defined in Item 128. The Wavelength ID’s must be within the bounds of the current contents of
 
-Wavelength table. The current contents are the values in the table defined within the last 30 seconds.
+The Wavelength ID’s reference the sensors wavelength information from the Wavelength table defined in Item 128. The Wavelength ID’s must be within the bounds of the current contents of Wavelength table. The current contents are the values in the table defined within the last 30 seconds.
 
 Requirement
 
-ST 0601.17-37 A Wavelength ID in Item 121 shall be one of the current values (i.e., specified
 
 
-within the last 30 seconds) from the Wavelength Table defined in Item 128.
+ST 0601.17-37 A Wavelength ID in Item 121 shall be one of the current values (i.e., specified within the last 30 seconds) from the Wavelength Table defined in Item 128.
 
-Figure 64 illustrates three examples of different Active Sensors. The first two are nominal Visible light and IR sensors. The third example shows a blended sensor which uses both Visible
 
-light and NIR to form the image.
+Figure 64 illustrates three examples of different Active Sensors. The first two are nominal Visible light and IR sensors. The third example shows a blended sensor which uses both Visible light and NIR to form the image.
 
 | Tag121 | 1 | 0x01 | Visible Light Sensor |
 |---|---|---|---|
@@ -7527,9 +7370,8 @@ Table 8: Country Definitions
 | Object Country | The country within the Motion Imagery scene or the “Object” of the Motion Imagery. Note: This value is an item in MISB ST 0102 and is not included in this item’s country codes list. |
 | Classifying Country | The country which initially analyzes or classified the Motion Imagery. Note: This value is an item in MISB ST 0102 and is not included in this item’s country codes list. |
 
-The Country Codes item is a four item Variable Length Pack (VLP), which contains: Country
 
-Coding Method, Overflight Country Code, Operator Country Code, and Country Code of Manufacture. The first VLP item is the Country Coding Method, an enumeration integer from the list of methods in MISB ST 0102 – Table 2: Security Metadata Local Set Elements, Item 12. The value indicates how to interpret the country codes specified in the VLP. Each country code is a string (utf8) encoded according to the coding method specified in the first item of the VLP.
+The Country Codes item is a four item Variable Length Pack (VLP), which contains: Country Coding Method, Overflight Country Code, Operator Country Code, and Country Code of Manufacture. The first VLP item is the Country Coding Method, an enumeration integer from the list of methods in MISB ST 0102 – Table 2: Security Metadata Local Set Elements, Item 12. The value indicates how to interpret the country codes specified in the VLP. Each country code is a string (utf8) encoded according to the coding method specified in the first item of the VLP.
 
 Figure 65 illustrates the VLP structure for the item. Construct the Local Set item by first encoding Item 122 then include the Length (Total) using the BER short or long form method.
 
@@ -7808,9 +7650,8 @@ KLV Value To Software Value                                        See Details
 
 ### 8.127.1 Details
 
-The Sensor Frame Rate Pack consists of two unsigned integers used to compute the frame rate. The ratio of the two integers provides the capability to compute both integer and drop-frame frame rates. For example, typical integer frame rates of 30, 60 are the ratio of 30/1 and 60/1, respectively. While drop-frame rates of 29.97 and 59.94 are the ratio of 30000/1001 and
 
-60000/1001, respectively.
+The Sensor Frame Rate Pack consists of two unsigned integers used to compute the frame rate. The ratio of the two integers provides the capability to compute both integer and drop-frame frame rates. For example, typical integer frame rates of 30, 60 are the ratio of 30/1 and 60/1, respectively. While drop-frame rates of 29.97 and 59.94 are the ratio of 30000/1001 and 60000/1001, respectively.
 
 The Sensor Frame Rate Pack is a two-element truncation pack where the first element is the numerator in BER-OID format, and the second element is the denominator in BER-OID format, as shown in Figure 67.
 
@@ -8713,9 +8554,8 @@ Table 24: Waypoint Record Pack values
 
 When a platform has made it to a waypoint destination, the producer may change it into a historical waypoint by setting its Prosecution Order to the “next” negative number less than the smallest Prosecution Order in the list; the values do not have to be sequential. This enables receivers to determine the last waypoint by taking the min value of all Prosecution Orders. The producer chooses the next historical waypoint Prosecution Order value to aid in its list management. For example, if a waypoint list contains three historical waypoints with Prosecution Orders -5, -2, -1 and the producer add a new historical waypoint, the producer would assign a value of -6. Alternatively, the producer could cancel all the historical waypoints (via setting the Prosecution Orders to 0x7FFF) and set the new historical waypoint Prosecution Order to -1. Producers may not report historical waypoints, so receivers may receive lists with “holes” in the Prosecution Orders.
 
-Historical waypoints change infrequently, requiring updates only once every 30 seconds if retained. Producers may optionally reactivate a historical waypoint by updating the Prosecution
 
-Order to a positive value.
+Historical waypoints change infrequently, requiring updates only once every 30 seconds if retained. Producers may optionally reactivate a historical waypoint by updating the Prosecution Order to a positive value.
 
 Requirement
 
@@ -8854,21 +8694,18 @@ KLV Value To Software Value                                         Soft val = K
 
 ### 8.143.1 Details
 
-The Metadata Substream ID (MSID) Pack identifies a particular Segment LS (Item 100) or Amend LS (Item 101) throughout the UAS metadata stream. When including a MSID within an
 
-Amend or Segment LS, the LS defines a metadata substream, see the Motion Imagery Handbook for full discussion of substreams. Each substream has a unique identifier different than other substreams in the overall metadata stream.
+The Metadata Substream ID (MSID) Pack identifies a particular Segment LS (Item 100) or Amend LS (Item 101) throughout the UAS metadata stream. When including a MSID within an Amend or Segment LS, the LS defines a metadata substream, see the Motion Imagery Handbook for full discussion of substreams. Each substream has a unique identifier different than other substreams in the overall metadata stream.
 
-Because the MSID (Item 143) only provides context within the Amend and Segment LSs, this standard restricts MSID use to Item 100 and Item 101. Do not use Item 143 in the parent UAS
 
-Datalink LS.
+Because the MSID (Item 143) only provides context within the Amend and Segment LSs, this standard restricts MSID use to Item 100 and Item 101. Do not use Item 143 in the parent UAS Datalink LS.
 
 Requirement
 
 ST 0601.19-45 No Metadata Substream ID (Item 143) shall be present at the root level UAS Datalink LS.
 
-The MSID Pack consists of two elements, a local identifier and universal identifier. Figure 90 illustrates the two-element pack structure of the MSID Pack. The local identifier is a single unsigned integer encoded using BER-OID. The universal identifier is a 16-byte Universally
 
-Unique Identifier (UUID) [24].
+The MSID Pack consists of two elements, a local identifier and universal identifier. Figure 90 illustrates the two-element pack structure of the MSID Pack. The local identifier is a single unsigned integer encoded using BER-OID. The universal identifier is a 16-byte Universally Unique Identifier (UUID) [24].
 
 
 | MSID Pack | Local Id | Universal Id |
@@ -8885,9 +8722,8 @@ ST 0601.19-46 Where a Metadata Substream ID (MSID) Pack includes a local identif
 
 ST 0601.19-47 Where a Metadata Substream ID (MSID) Pack includes a local identifier (BER-OID) equal to zero, the producer shall provide the substream universal identifier (UUID).
 
-To prevent conflicts, the MISB recommends using the local identifier only in bandwidth constrained situations at the sensor/metadata source, i.e., immediate insertion of Amend or Segments items at or near the “sensor” in real time. The local identifier provides the benefit of less bandwidth but at the expense of requiring systems to deconflict local identifiers when systems include more than one substream within the metadata stream. For down-stream and post processing the MISB highly recommends the use of the universal identifier to prevent conflicts with local identifiers (i.e., already in the stream or new local ids created upstream after defining the same local identifier value downstream).
 
-(Note: The Example Software Value separates the local identifier from the universal identifier with a colon “:”. The UUID value is a Version 5 UUID using the MISB namespace UUID (6cff4007-7cb5-5656-a86e-e9bbba2d65ea – see MISP) and the string “Metadata Substream ID”).
+To prevent conflicts, the MISB recommends using the local identifier only in bandwidth constrained situations at the sensor/metadata source, i.e., immediate insertion of Amend or Segments items at or near the “sensor” in real time. The local identifier provides the benefit of less bandwidth but at the expense of requiring systems to deconflict local identifiers when systems include more than one substream within the metadata stream. For down-stream and post processing the MISB highly recommends the use of the universal identifier to prevent conflicts with local identifiers (i.e., already in the stream or new local ids created upstream after defining the same local identifier value downstream). (Note: The Example Software Value separates the local identifier from the universal identifier with a colon “:”. The UUID value is a Version 5 UUID using the MISB namespace UUID (6cff4007-7cb5-5656-a86e-e9bbba2d65ea – see MISP) and the string “Metadata Substream ID”).
 
 
 # Appendix A – Retired Requirements
