@@ -5,12 +5,7 @@ use motion_imagery_metadata::{
 
 #[test]
 fn st0102_enumerations_match_the_transcription() {
-    let Some(text) = spec(
-        "misc/misb/st0102-security-ls.md",
-        "st0102_enumerations_match_the_transcription",
-    ) else {
-        return;
-    };
+    let text = spec("misb/st0102-security-ls.md");
     let methods = enum_rows(section(&text, "## 3. Item 2", "## 4. Item 12"));
     assert_eq!(methods.len(), 16, "item 2 enumeration rows");
     for (value, label) in methods {
@@ -57,12 +52,7 @@ fn st0102_enumerations_match_the_transcription() {
 
 #[test]
 fn st0903_tables_cover_every_decoded_and_raw_item() {
-    let Some(text) = spec(
-        "misc/misb/st0903-vmti-ls.md",
-        "st0903_tables_cover_every_decoded_and_raw_item",
-    ) else {
-        return;
-    };
+    let text = spec("misb/st0903-vmti-ls.md");
     let vmti_rows = tagged_rows(section(&text, "## 2. VMTI LS", "## 3. VTarget Pack"));
     let target_rows = tagged_rows(section(&text, "## 3. VTarget Pack", "## 4. Algorithm LS"));
 
@@ -187,12 +177,7 @@ fn item_value(encoding: &str, bytes: &str) -> Vec<u8> {
 
 #[test]
 fn st0601_tag_table_kinds_match_the_decoder() {
-    let Some(text) = spec(
-        "misc/misb/st0601-tag-table.md",
-        "st0601_tag_table_kinds_match_the_decoder",
-    ) else {
-        return;
-    };
+    let text = spec("misb/st0601-tag-table.md");
     let rows = tag_rows(&text);
     assert_eq!(rows.len(), 143, "ST 0601 items 1-143");
 

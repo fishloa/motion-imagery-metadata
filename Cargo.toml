@@ -11,6 +11,7 @@ repository   = "https://github.com/fishloa/motion-imagery-metadata"
 homepage     = "https://github.com/fishloa/motion-imagery-metadata"
 readme       = "README.md"
 rust-version = "1.95.0"
+exclude = ["/specs/", "/specs-md/", "/specs-verified/"]
 
 [package.metadata.docs.rs]
 all-features = true

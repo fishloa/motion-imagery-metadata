@@ -41,8 +41,7 @@
 //! - MISB ST 0903.6 Video Moving Target Indicator Local Set.
 //! - MISB ST 1201.5 Floating Point to Integer Mapping.
 //!
-//! The standards are published by the NSG MISB; this crate contains no spec
-//! text.
+//! The standards are published by the NSG MISB.
 //!
 //! `no_std` + `alloc`.
 

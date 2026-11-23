@@ -62,9 +62,12 @@ public API or in any trait impl.
 The ST 0601 tag table and the ST 0102 / ST 0903 / ST 1201 decoders come from
 the [`misb`](https://crates.io/crates/misb) crate by Matt Busel.
 
-MISB standards are published by the NSG MISB. This repository contains no spec
-text; the test suite reads optional spec transcriptions from a directory named
-by `MIM_PRIVATE_DIR`.
+MISB standards are published by the NSG MISB as US Government public-domain
+works. The repository keeps the standards this crate relies on in `specs/`
+(with a provenance file each), their full Markdown conversions in `specs-md/`,
+and verified table transcriptions in `specs-verified/`; the test suite checks
+the decoder against those transcriptions. None of the three directories is part
+of the published crate.
 
 ## License
 
