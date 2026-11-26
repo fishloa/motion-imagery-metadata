@@ -18,12 +18,16 @@ all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
-broadcast-common = { version = "14", default-features = false }
+broadcast-core = { version = "0.1", default-features = false }
 # ST 0601 / ST 0102 / ST 0903 / ST 1201 decoding. no_std, no dependencies. Its
 # types never appear in this crate's public API.
 misb = { version = "0.5", default-features = false }
 # UTC instants, no_std by default.
 jiff = { version = "1", default-features = false }
+
+[dev-dependencies]
+# KLV framing for the tests and examples that walk a local set.
+broadcast-common = { version = "14", default-features = false }
 
 [features]
 default = []

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- The crate depends on `broadcast-core` in place of `broadcast-common`. `impl_spec_display!` and `Parse` come from it; `broadcast-common` is now a dev-dependency, for the KLV framing the tests and examples use.
+
 ## [0.2.0] - 2026-11-23
 
 ### Added

@@ -73,7 +73,7 @@ pub use st0903::{
     St0903Vmti, St0903VmtiItem,
 };
 
-use broadcast_common::impl_spec_display;
+use broadcast_core::impl_spec_display;
 
 #[cfg(doctest)]
 #[doc = include_str!("../README.md")]

@@ -1,4 +1,4 @@
-use broadcast_common::Parse;
+use broadcast_core::Parse;
 use broadcast_common::klv::{KlvItem, decode_ber_length};
 
 const BER_OID_CONTINUATION: u8 = 0x80;

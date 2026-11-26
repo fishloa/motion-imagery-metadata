@@ -14,7 +14,7 @@
 
 use core::fmt;
 
-use broadcast_common::impl_spec_display;
+use broadcast_core::impl_spec_display;
 
 /// Security Classification (ST 0102.12 item 1).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]

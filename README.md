@@ -58,7 +58,7 @@ transmux = { version = "0.33", features = ["motion-imagery-metadata"] }
 motion-imagery-metadata = "0.2"
 ```
 
-Depends on `broadcast-common`, `misb` and `jiff`. No `misb` type appears in the
+Depends on `broadcast-core`, `misb` and `jiff`. No `misb` type appears in the
 public API or in any trait impl.
 
 ## Credits

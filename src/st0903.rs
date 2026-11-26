@@ -16,7 +16,7 @@
 
 use core::fmt;
 
-use broadcast_common::impl_spec_display;
+use broadcast_core::impl_spec_display;
 
 use crate::geo::{self, GeoPoint};
 
